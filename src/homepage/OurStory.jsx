@@ -16,7 +16,7 @@ const OurStory = () => {
         <img
           src={Logo}
           alt="IEEE Computer Society Logo"
-          className="w-[30vw] max-w-[160px] min-w-[80px] object-contain"
+          className="w-[40vw] max-w-[200px] min-w-[100px] object-contain"
         />
       </div>
 

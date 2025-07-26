@@ -1,14 +1,15 @@
 import React from 'react';
-import Background from './images/bg.png';
+import Background from './images/bg2.png';
 import Logo from './images/ieee_logo.png';
 
 const HeroSection = () => {
   return (
-    <div className="relative w-screen min-h-screen overflow-hidden text-white">
+    <div className="relative w-screen min-h-screen overflow-hidden  text-white">
 
       <div
-        className="absolute inset-0 bg-contain z-0 brightness-50"
-        style={{ backgroundImage: `url(${Background})` }}
+        className="absolute bg-cover bg-no-repeat inset-0 z-0 brightness-100"
+        style={{ backgroundImage: `url(${Background})`,
+      backgroundSize: '100% 100%', }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent z-10" />
 
@@ -18,7 +19,7 @@ const HeroSection = () => {
         <img
           src={Logo}
           alt="IEEE Logo"
-          className="absolute top-4 left-4 w-[20vw] max-w-[120px] min-w-[60px] object-contain"
+          className="absolute top-4 left-4 w-[40vw] max-w-[200px] min-w-[100px] object-contain"
         />
 
         <h1
