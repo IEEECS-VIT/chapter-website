@@ -5,13 +5,12 @@ import OurStory from './homepage/OurStory';
 const App = () => {
   return (
 <>
-<div className="relative z-0">
-  <HeroSection />
-</div>
+    <div className="relative w-screen h-screen overflow-hidden">
 
-<div className="relative z-10">
-  <OurStory />
-</div>
+      <HeroSection />   
+
+
+    </div>
 </>
 
   );

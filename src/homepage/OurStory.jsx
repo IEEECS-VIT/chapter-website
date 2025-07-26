@@ -5,7 +5,7 @@ import Team from './images/team.png';
 
 const OurStory = () => {
   return (
-    <div className="relative w-screen min-h-screen overflow-hidden bg-white text-black">
+    <div className="relative w-screen min-h-screen overflow-hidden bg-white text-black z-0">
 
       <div
         className="absolute inset-0 bg-cover bg-center brightness-100 z-10"

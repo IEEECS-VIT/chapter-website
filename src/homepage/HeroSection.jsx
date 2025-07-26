@@ -1,21 +1,82 @@
-import React from 'react';
-import Background from './images/bg2.png';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import Logo from './images/ieee_logo.png';
+import Left from './images/leftside1.png';
+import Right from './images/rightside1.png';
+import OurStory from '../homepage/OurStory';
 
 const HeroSection = () => {
+  const leftRef = useRef(null);
+  const rightRef = useRef(null);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    const tl = gsap.timeline({ delay: 3 });
+
+    tl.to(contentRef.current, {
+      opacity: 0,
+      filter: 'blur(5px)',
+      duration: 1.2,
+      ease: 'power2.out',
+    })
+
+      .to(
+        leftRef.current,
+        {
+          x: '-110%',
+          rotate: -5,
+          duration: 1.5,
+          ease: 'power4.inOut',
+        },
+        '-=0.8'
+      )
+      .to(
+        rightRef.current,
+        {
+          x: '110%',
+          rotate: 5,
+          duration: 1.5,
+          ease: 'power4.inOut',
+        },
+        '-=1.5'
+      );
+  }, []);
+
   return (
-    <div className="relative w-screen min-h-screen overflow-hidden  text-white">
+    <div className="relative w-screen h-screen overflow-hidden text-white bg-cover bg-center z-0">
+
+      <div className="absolute inset-0 z-0">
+        <OurStory />
+      </div>
+      <div
+        ref={leftRef}
+        className="absolute top-0 left-0 w-1/2 h-full z-30 shadow-xl"
+        style={{
+          backgroundImage: `url(${Left})`,
+          backgroundSize: '100% 100%',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
+          transformOrigin: 'left center',
+        }}
+      />
+      <div
+        ref={rightRef}
+        className="absolute top-0 right-0 w-1/2 h-full z-30 shadow-xl"
+        style={{
+          backgroundImage: `url(${Right})`,
+          backgroundSize: '100% 100%',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
+          transformOrigin: 'right center',
+        }}
+      />
 
       <div
-        className="absolute bg-cover bg-no-repeat inset-0 z-0 brightness-100"
-        style={{ backgroundImage: `url(${Background})`,
-      backgroundSize: '100% 100%', }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent z-10" />
-
-
-      <div className="relative z-20 flex flex-col justify-center items-center h-screen px-4 text-center">
-        
+        ref={contentRef}
+        className="relative z-40 flex flex-col justify-center items-center h-full text-center transition-all duration-1000"
+      >
         <img
           src={Logo}
           alt="IEEE Logo"
@@ -23,9 +84,9 @@ const HeroSection = () => {
         />
 
         <h1
-          className="tracking-tight"
+          className="tracking-tight text-white"
           style={{
-            fontSize: 'clamp(12.5rem, 10vw, 10rem)',  
+            fontSize: 'clamp(12.5rem, 10vw, 10rem)',
             fontFamily: 'Karantina',
             lineHeight: '1.0',
           }}
@@ -36,7 +97,7 @@ const HeroSection = () => {
         <h2
           className="text-[#EF9E00] mt-2"
           style={{
-            fontSize: 'clamp(12rem, 7vw, 7rem)',  
+            fontSize: 'clamp(12rem, 7vw, 7rem)',
             fontFamily: 'Karantina',
             lineHeight: '1.0',
           }}
