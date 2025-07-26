@@ -8,11 +8,11 @@ const OurStory = () => {
     <div className="relative w-screen min-h-screen overflow-hidden bg-white text-black">
 
       <div
-        className="absolute inset-0 bg-cover bg-center brightness-90 z-0"
-
+        className="absolute inset-0 bg-cover bg-center brightness-100 z-10"
+        style={{ backgroundImage: `url(${Background})`}}
       />
 
-      <div className="absolute top-4 left-4 bg-white/60 p-2 z-10">
+      <div className="absolute top-4 left-4 bg-white/20 p-2 z-10">
         <img
           src={Logo}
           alt="IEEE Computer Society Logo"
@@ -22,36 +22,39 @@ const OurStory = () => {
 
       <div className="relative z-10 flex flex-col items-center justify-start pt-28 px-6 md:px-16 text-center">
 
-        <h1
-          className="text-[#0b0b0a] font-bold tracking-wide"
-          style={{
-            fontFamily: 'Special Elite',
-            fontSize: 'clamp(3rem, 10vw, 100px)',
-            lineHeight: '1.0',
-          }}
-        >
-          OUR STORY
-        </h1>
+<div className="flex flex-col items-center text-center px-4 sm:px-8">
+  <h1
+    className="text-[#0b0b0a] tracking-wide"
+    style={{
+      fontFamily: 'Special Elite, serif',
+      fontSize: 'clamp(3rem, 10vw, 100px)',
+      lineHeight: '1.0',
+    }}
+  >
+    OUR STORY
+  </h1>
 
-        <p
-          className="mt-1 text-[#0b0b0a] text-lg md:text-xl max-w-4xl leading-relaxed text-justify"
-          style={{ fontFamily: 'Inter' }}
-        >
-          IEEE Computer Society, VIT—established in February 2012 under IEEE Region 10, Madras Section—
-          drives innovation by leveraging cutting-edge technology to solve real-world problems. We foster ideas,
-          empower talent, and deliver impactful projects through elite events, workshops, and collaborations.
-          As a globally recognized hub of technical excellence, we inspire and shape inquisitive minds for the
-          challenges of tomorrow.
-        </p>
+  <p
+    className="mt-1 text-[#0b0b0a] text-lg md:text-2xl max-w-4xl leading-loose"
+    style={{
+      fontFamily: 'Inter, sans-serif',
+      whiteSpace: 'pre-line',
+    }}
+  >
+    {`IEEE Computer Society, VIT—established in February 2012 under IEEE Region 10, Madras Section—drives innovation by leveraging cutting-edge technology to solve real-world problems. We foster ideas, empower talent, and deliver impactful projects through elite events,workshops, and collaborations. As a globally recognized hub of technical excellence, we inspire and shape inquisitive minds for the challenges of tomorrow.`}
+  </p>
+</div>
 
-        <div className="w-screen flex justify-center -mt-60 mb-0">
-          <img
-            src={Team}
-            alt="IEEE Computer Society Team"
-            className="w-screen max-w-screen-xl h-auto object-cover"
-            style={{ marginBottom: '0px' }} 
-          />
-        </div>
+
+
+    <div className="absolute inset-0 w-screen h-auto z-[-1] top-40">
+      <img
+        src={Team}
+        alt="IEEE Computer Society Team"
+        className="w-full h-auto object-cover"
+      />
+    </div>
+
       </div>
     </div>
   );

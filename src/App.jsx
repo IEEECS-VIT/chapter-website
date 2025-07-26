@@ -1,13 +1,15 @@
-import HeroSection from "./homepage/HeroSection";
-import OurStory from "./homepage/OurStory";
+import React from 'react';
+import HeroSection from './homepage/HeroSection';
+import OurStory from './homepage/OurStory';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-    <OurStory />
-      
-    </div>
+<>
+
+<OurStory />
+</>
+
   );
-}
+};
 
 export default App;

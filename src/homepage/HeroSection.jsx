@@ -40,7 +40,7 @@ const HeroSection = () => {
             lineHeight: '1.0',
           }}
         >
-          WE LIVE IN A COMPUTER SOCIETY
+          WE LIVE IN A COMPUTER SOCIETY.
         </h2>
       </div>
     </div>
