@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from './images/ieee_logo.png';
 import Background from './images/paper_effect.png';
 import Team from './images/team.png';
@@ -12,7 +12,7 @@ const OurStory = () => {
         style={{ backgroundImage: `url(${Background})`}}
       />
 
-      <div className="absolute top-4 left-4 bg-white/20 p-2 z-10">
+      <div className="absolute top-4 left-4 p-2 z-10">
         <img
           src={Logo}
           alt="IEEE Computer Society Logo"
@@ -47,7 +47,7 @@ const OurStory = () => {
 
 
 
-    <div className="absolute inset-0 w-screen h-auto z-[-1] top-40">
+    <div className="absolute inset-0 w-screen h-auto z-0 top-40">
       <img
         src={Team}
         alt="IEEE Computer Society Team"
