@@ -19,14 +19,14 @@ const HeroSection = () => {
         trigger: heroRef.current,
         start: 'top top',
         end: '+=600',
-        scrub: true,
+        scrub: 1.5,
         pin: true,
       },
     });
 
     tl.to(bgRef.current, {
       clipPath: 'circle(0% at 50% 50%)',
-      duration: 1.8,
+      duration: 2,
       ease: 'power2.inOut',
     });
 
@@ -46,13 +46,13 @@ const HeroSection = () => {
       scrollTrigger: {
         trigger: heroRef.current,
         start: 'top-=15 top',
-        end: '+=600',
+        end: '+=900',
         scrub: true,
       },
       opacity: 1,
       scale: 1,
       filter: 'blur(0px)',
-      ease: 'power4.out',
+      ease: 'power3.out',
     });
 
     return () => {
@@ -76,10 +76,10 @@ const HeroSection = () => {
       />
       <div
         ref={ourStoryRef}
-        className="absolute top-0 left-0 w-full h-full opacity-0 scale-[0.84] z-0"
+        className="absolute top-0 left-0 w-full h-full opacity-0 scale-[0.99] z-0"
         style={{
           filter: 'blur(0px)',
-          transition: 'all 1.3s ease-out',
+          transition: 'all 0.3s ease-out',
         }}
       >
         <OurStory />
