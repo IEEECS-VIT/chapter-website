@@ -19,7 +19,7 @@ const HeroSection = () => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ourStoryWrapperRef.current,
-        start: 'top+=0.5 top',
+        start: 'top top',
         end: '+=800',
         scrub: 1.5,
         pin: true,
@@ -29,16 +29,17 @@ const HeroSection = () => {
 
     tl.to(contentRef.current, {
       opacity: 0,
-      filter: 'blur(5px)',
+      scale: 1.05,
+      filter: 'blur(6px)',
       ease: 'power3.inOut',
     });
 
     tl.to(
       leftRef.current,
       {
-        x: '-110%',
-        rotate: -6,
+        rotateY: -90,
         ease: 'power3.inOut',
+        transformOrigin: 'left center',
       },
       '<'
     );
@@ -46,9 +47,9 @@ const HeroSection = () => {
     tl.to(
       rightRef.current,
       {
-        x: '110%',
-        rotate: 6,
+        rotateY: 90,
         ease: 'power3.inOut',
+        transformOrigin: 'right center',
       },
       '<'
     );
@@ -75,6 +76,7 @@ const HeroSection = () => {
   return (
     <div className="relative w-screen overflow-x-hidden text-white bg-black">
       <div ref={ourStoryWrapperRef} className="relative h-auto">
+
         <div
           ref={ourStoryRef}
           className="absolute top-0 left-0 w-screen h-full opacity-0 scale-[0.94] z-0 transition-all duration-200 ease-in-out"
@@ -82,7 +84,11 @@ const HeroSection = () => {
           <OurStory />
         </div>
 
-        <div className="sticky top-0 z-20 h-screen pointer-events-auto">
+        <div
+          className="sticky top-0 z-20 h-screen pointer-events-auto"
+          style={{ perspective: '1000px' }}
+        >
+
           <div
             ref={leftRef}
             className="absolute -top-0.5 left-0 w-1/2 h-screen z-30"
@@ -91,8 +97,9 @@ const HeroSection = () => {
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'center',
-              clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
               transformOrigin: 'left center',
+              boxShadow: 'inset -10px 0 20px rgba(0,0,0,0.3)',
+              backfaceVisibility: 'hidden',
             }}
           />
 
@@ -104,8 +111,9 @@ const HeroSection = () => {
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'center',
-              clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
               transformOrigin: 'right center',
+              boxShadow: 'inset 10px 0 20px rgba(0,0,0,0.3)',
+              backfaceVisibility: 'hidden',
             }}
           />
 
