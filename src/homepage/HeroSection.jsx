@@ -11,48 +11,37 @@ const HeroSection = () => {
   const heroRef = useRef(null);
   const bgRef = useRef(null);
   const contentRef = useRef(null);
-  const ourStoryRef = useRef(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({
+    const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: heroRef.current,
         start: 'top top',
-        end: '+=600',
-        scrub: 1.5,
+        end: '+=1600',
+        scrub: 1.8,
         pin: true,
+        anticipatePin: 1,
       },
     });
 
-    tl.to(bgRef.current, {
-      clipPath: 'circle(0% at 50% 50%)',
-      duration: 2,
+    timeline.to(contentRef.current, {
+      opacity: 0,
+      scale: .92,
+      filter: 'blur(40px)',
+      duration: 3,
       ease: 'power2.inOut',
     });
 
-    tl.to(
-      contentRef.current,
-      {
-        opacity: 0,
-        filter: 'blur(20px)',
-        scale: 0.9,
-        duration: 1.6,
-        ease: 'power2.out',
-      },
-      '<'
-    );
+    timeline.to(bgRef.current, {
+      clipPath: 'polygon(49.9% 0%, 50.1% 0%, 50.1% 100%, 49.9% 100%)',
+      duration: 2.2,
+      ease: 'power2.inOut',
+    });
 
-    gsap.to(ourStoryRef.current, {
-      scrollTrigger: {
-        trigger: heroRef.current,
-        start: 'top-=15 top',
-        end: '+=900',
-        scrub: true,
-      },
-      opacity: 1,
-      scale: 1,
-      filter: 'blur(0px)',
-      ease: 'power3.out',
+    timeline.to(bgRef.current, {
+      clipPath: 'polygon(50% 50%, 50.1% 50%, 50.1% 50.1%, 50% 50.1%)',
+      duration: 2,
+      ease: 'power2.inOut',
     });
 
     return () => {
@@ -63,32 +52,34 @@ const HeroSection = () => {
   return (
     <div ref={heroRef} className="relative w-screen min-h-screen overflow-hidden text-white">
 
-
-
       <div
         ref={bgRef}
-        className="absolute inset-0 z-10 bg-cover bg-no-repeat"
+        className="absolute inset-0 z-10 bg-cover bg-no-repeat will-change-transform"
         style={{
           backgroundImage: `url(${Background})`,
-          backgroundSize: '100% 100%',
-          clipPath: 'circle(100% at 50% 50%)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+          backgroundColor: '#000', // fallback in case image doesn't cover
         }}
       />
+
       <div
-        ref={ourStoryRef}
-        className="absolute top-0 left-0 w-full h-full opacity-0 scale-[0.99] z-0"
+        className="absolute top-0 left-0 w-full h-full z-0"
         style={{
-          filter: 'blur(0px)',
-          transition: 'all 0.3s ease-out',
+          opacity: 1,
+          filter: 'none',
+          pointerEvents: 'auto',
         }}
       >
         <OurStory />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent z-20" />
+
+      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent z-20 pointer-events-none" />
 
       <div
         ref={contentRef}
-        className="relative z-30 flex flex-col justify-center items-center h-screen px-4 text-center"
+        className="relative z-30 flex flex-col justify-center items-center h-screen px-4 text-center will-change-transform"
       >
         <img
           src={Logo}
