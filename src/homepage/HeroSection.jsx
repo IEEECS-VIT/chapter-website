@@ -20,8 +20,8 @@ const HeroSection = () => {
       scrollTrigger: {
         trigger: ourStoryWrapperRef.current,
         start: 'top top',
-        end: '+=800',
-        scrub: 1.5,
+        end: '+=850',
+        scrub: 2.0,
         pin: true,
         anticipatePin: 1,
       },
@@ -38,9 +38,6 @@ const HeroSection = () => {
       leftRef.current,
       {
         x: '-120%',
-        rotateY: 55,
-        rotateZ: -6,
-        skewY: 5,
         transformOrigin: 'left center',
         ease: 'power4.inOut',
         duration: 2,
@@ -52,9 +49,6 @@ const HeroSection = () => {
       rightRef.current,
       {
         x: '120%',
-        rotateY: -55,
-        rotateZ: 6,
-        skewY: -5,
         transformOrigin: 'right center',
         ease: 'power4.inOut',
         duration: 2,
