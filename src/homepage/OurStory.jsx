@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Logo from './images/ieee_logo.png';
+import Logo from './images/IEEECS.png';
 import Background from './images/paper_effect.png';
 import Team from './images/team.png';
 

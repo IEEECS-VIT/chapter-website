@@ -1,48 +1,66 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Background from './images/bg2.png';
 import Logo from './images/ieee_logo.png';
-import OurStory from './OurStory';
+import Left from './images/1.png';
+import Right from './images/2.png';
+import OurStory from '../homepage/OurStory';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const HeroSection = () => {
-  const heroRef = useRef(null);
-  const bgRef = useRef(null);
+  const leftRef = useRef(null);
+  const rightRef = useRef(null);
   const contentRef = useRef(null);
+  const ourStoryWrapperRef = useRef(null);
+  const ourStoryRef = useRef(null);
 
   useEffect(() => {
-    const timeline = gsap.timeline({
+    const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: heroRef.current,
+        trigger: ourStoryWrapperRef.current,
         start: 'top top',
-        end: '+=1600',
-        scrub: 1.8,
+        end: '+=800',
+        scrub: 1.5,
         pin: true,
         anticipatePin: 1,
       },
     });
 
-    timeline.to(contentRef.current, {
+    tl.to(contentRef.current, {
       opacity: 0,
-      scale: .92,
-      filter: 'blur(40px)',
-      duration: 3,
-      ease: 'power2.inOut',
+      filter: 'blur(5px)',
+      scale: 0.97,
+      ease: 'power3.inOut',
     });
 
-    timeline.to(bgRef.current, {
-      clipPath: 'polygon(49.9% 0%, 50.1% 0%, 50.1% 100%, 49.9% 100%)',
-      duration: 2.2,
-      ease: 'power2.inOut',
-    });
+    tl.to(
+      leftRef.current,
+      {
+        x: '-120%',
+        rotateY: 55,
+        rotateZ: -6,
+        skewY: 5,
+        transformOrigin: 'left center',
+        ease: 'power4.inOut',
+        duration: 2,
+      },
+      '<'
+    );
 
-    timeline.to(bgRef.current, {
-      clipPath: 'polygon(50% 50%, 50.1% 50%, 50.1% 50.1%, 50% 50.1%)',
-      duration: 2,
-      ease: 'power2.inOut',
-    });
+    tl.to(
+      rightRef.current,
+      {
+        x: '120%',
+        rotateY: -55,
+        rotateZ: 6,
+        skewY: -5,
+        transformOrigin: 'right center',
+        ease: 'power4.inOut',
+        duration: 2,
+      },
+      '<'
+    );
 
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
@@ -50,64 +68,78 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <div ref={heroRef} className="relative w-screen min-h-screen overflow-hidden text-white">
-
-      <div
-        ref={bgRef}
-        className="absolute inset-0 z-10 bg-cover bg-no-repeat will-change-transform"
-        style={{
-          backgroundImage: `url(${Background})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-          backgroundColor: '#000', // fallback in case image doesn't cover
-        }}
-      />
-
-      <div
-        className="absolute top-0 left-0 w-full h-full z-0"
-        style={{
-          opacity: 1,
-          filter: 'none',
-          pointerEvents: 'auto',
-        }}
-      >
-        <OurStory />
-      </div>
-
-      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent z-20 pointer-events-none" />
-
-      <div
-        ref={contentRef}
-        className="relative z-30 flex flex-col justify-center items-center h-screen px-4 text-center will-change-transform"
-      >
-        <img
-          src={Logo}
-          alt="IEEE Logo"
-          className="absolute top-4 left-4 w-[40vw] max-w-[200px] min-w-[100px] object-contain"
-        />
-
-        <h1
-          className="tracking-tight"
-          style={{
-            fontSize: 'clamp(12.5rem, 10vw, 10rem)',
-            fontFamily: 'Karantina',
-            lineHeight: '1.0',
-          }}
+    <div className="relative w-screen overflow-x-hidden text-white bg-black">
+      <div ref={ourStoryWrapperRef} className="relative h-screen">
+        <div
+          ref={ourStoryRef}
+          className="absolute top-0 left-0 w-full h-full z-0"
         >
-          IEEE-CS
-        </h1>
+          <OurStory />
+        </div>
 
-        <h2
-          className="text-[#EF9E00] mt-2"
-          style={{
-            fontSize: 'clamp(12rem, 7vw, 7rem)',
-            fontFamily: 'Karantina',
-            lineHeight: '1.0',
-          }}
+        <div
+          className="sticky top-0 z-20 h-screen pointer-events-auto overflow-hidden"
+          style={{ perspective: '2000px' }}
         >
-          WE LIVE IN A COMPUTER SOCIETY.
-        </h2>
+          <div
+            ref={leftRef}
+            className="absolute top-0 left-0 w-[634px] h-screen z-30"
+            style={{
+              backgroundImage: `url(${Left})`,
+              backgroundSize: '100% 100%',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
+              transformOrigin: 'left center',
+              boxShadow: '4px 0 20px rgba(0,0,0,0.25)',
+            }}
+          />
+
+          <div
+            ref={rightRef}
+            className="absolute top-0 right-0 w-[630px] h-screen z-30"
+            style={{
+              backgroundImage: `url(${Right})`,
+              backgroundSize: '100% 100%',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
+              transformOrigin: 'right center',
+              boxShadow: '-4px 0 20px rgba(0,0,0,0.25)',
+            }}
+          />
+
+          <div
+            ref={contentRef}
+            className="relative z-40 flex flex-col justify-center items-center h-screen text-center"
+          >
+            <img
+              src={Logo}
+              alt="IEEE Logo"
+              className="absolute top-4 left-4 w-[40vw] max-w-[200px] min-w-[100px] object-contain"
+            />
+            <h1
+              className="tracking-tight text-white"
+              style={{
+                fontSize: 'clamp(12.5rem, 10vw, 10rem)',
+                fontFamily: 'Karantina',
+                lineHeight: '1.0',
+              }}
+            >
+              IEEE-CS
+            </h1>
+            <h2
+              className="text-[#EF9E00] mt-2"
+              style={{
+                fontSize: 'clamp(12rem, 7vw, 7rem)',
+                fontFamily: 'Karantina',
+                lineHeight: '1.0',
+              }}
+            >
+              WE LIVE IN A COMPUTER SOCIETY.
+            </h2>
+          </div>
+        </div>
       </div>
     </div>
   );
