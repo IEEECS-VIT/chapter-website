@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        SpecialElite: ['"Special Elite"', 'cursive'],
+        Cinzel: ['Cinzel','cursive'],
+      }
+    },
   },
   plugins: [],
 }
