@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Logo from './images/ieee_logo.png';
-import Left from './images/1.png';
-import Right from './images/2.png';
+import Logo from './ieee_logo.png';
+import Left from './1.png';
+import Right from './2.png';
 import OurStory from '../homepage/OurStory';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -77,8 +77,9 @@ const HeroSection = () => {
         >
           <div
             ref={leftRef}
-            className="absolute top-0 left-0 w-[634px] h-screen z-30"
+            className="absolute top-0 left-0  h-screen z-30"
             style={{
+              width: 'min(51vw, 1200px)',
               backgroundImage: `url(${Left})`,
               backgroundSize: '100% 100%',
               backgroundRepeat: 'no-repeat',
@@ -91,8 +92,9 @@ const HeroSection = () => {
 
           <div
             ref={rightRef}
-            className="absolute top-0 right-0 w-[630px] h-screen z-30"
+            className="absolute top-0 right-0 h-screen z-30"
             style={{
+              width: 'min(51.25vw, 1000px)',
               backgroundImage: `url(${Right})`,
               backgroundSize: '100% 100%',
               backgroundRepeat: 'no-repeat',

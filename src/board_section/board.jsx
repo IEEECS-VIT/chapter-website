@@ -1,135 +1,115 @@
 import { useState, useEffect, useRef, useCallback } from "react"
-import bgImage from './bg.png';
+import bgImage from './bg.png'
 
 const BoardGrid = () => {
-  const [scrollYState, setScrollYState] = useState(0)
-  const [r1c2Settled, setR1c2Settled] = useState(false)
-  const [r1c4Settled, setR1c4Settled] = useState(false)
-  const [r2c3Settled, setR2c3Settled] = useState(false)
-  const [r3c2Settled, setR3c2Settled] = useState(false) 
-
+  const containerRef = useRef(null)
   const r1c2Ref = useRef(null)
   const r1c4Ref = useRef(null)
   const r2c3Ref = useRef(null)
-  const r3c2Ref = useRef(null) 
+  const r3c2Ref = useRef(null)
+  const animationFrameRef = useRef(null)
 
   const animateCards = useCallback(() => {
-    const currentScrollY = window.scrollY
+    if (!containerRef.current) return
 
-   
+    const containerRect = containerRef.current.getBoundingClientRect()
+    const containerTop = containerRect.top + window.scrollY
+    const currentScrollY = window.scrollY
+    
+    // Calculate scroll relative to when component enters viewport
+    const componentStartScroll = containerTop - window.innerHeight * 0.5 // Start earlier for better sync
+    const relativeScroll = Math.max(0, currentScrollY - componentStartScroll)
+
+    // R1C2 Animation - tighter sync with scroll
     if (r1c2Ref.current) {
       const startOffset = -200
-      const settlePoint = 200
+      const settlePoint = 150 // Reduced for quicker response
       let translateY = startOffset
 
-      if (currentScrollY >= settlePoint) {
+      if (relativeScroll >= settlePoint) {
         translateY = 0
-      } else if (currentScrollY > 0) {
-        const progress = currentScrollY / settlePoint
+      } else if (relativeScroll > 0) {
+        const progress = relativeScroll / settlePoint
         translateY = startOffset * (1 - progress)
       }
       r1c2Ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`
     }
 
-    // R1C4 Animation
+    // R1C4 Animation - more responsive timing
     if (r1c4Ref.current) {
-      const startScrollPoint = 250
-      const endScrollPoint = 650
+      const startScrollPoint = 200 // Start sooner
+      const endScrollPoint = 500   // Reduced distance for better sync
       const maxTranslate = 445
 
       let translateY = 0
-      if (currentScrollY >= endScrollPoint) {
+      if (relativeScroll >= endScrollPoint) {
         translateY = maxTranslate
-      } else if (currentScrollY > startScrollPoint) {
-        const progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
+      } else if (relativeScroll > startScrollPoint) {
+        const progress = (relativeScroll - startScrollPoint) / (endScrollPoint - startScrollPoint)
         translateY = maxTranslate * progress
       }
       r1c4Ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`
     }
 
-    // R2C3 Animation
+    // R2C3 Animation - better sync
     if (r2c3Ref.current) {
-      const startScrollPoint = 700
-      const endScrollPoint = 950
+      const startScrollPoint = 550  // Start right after R1C4
+      const endScrollPoint = 800    // Tighter range
       const maxTranslate = 445
 
       let translateY = 0
-      if (currentScrollY >= endScrollPoint) {
+      if (relativeScroll >= endScrollPoint) {
         translateY = maxTranslate
-      } else if (currentScrollY > startScrollPoint) {
-        const progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
+      } else if (relativeScroll > startScrollPoint) {
+        const progress = (relativeScroll - startScrollPoint) / (endScrollPoint - startScrollPoint)
         translateY = maxTranslate * progress
       }
       r2c3Ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`
     }
 
-    // R3C2 Animation (New)
+    // R3C2 Animation - final sync
     if (r3c2Ref.current) {
-      
-      const startScrollPoint = 1000
-      const endScrollPoint = 1300
-      const maxTranslate = 320 
+      const startScrollPoint = 850 // Start right after R2C3
+      const endScrollPoint = 1100  // Tighter range for immediate response
+      const maxTranslate = 320
 
       let translateY = 0
-      if (currentScrollY >= endScrollPoint) {
+      if (relativeScroll >= endScrollPoint) {
         translateY = maxTranslate
-      } else if (currentScrollY > startScrollPoint) {
-        const progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
+      } else if (relativeScroll > startScrollPoint) {
+        const progress = (relativeScroll - startScrollPoint) / (endScrollPoint - startScrollPoint)
         translateY = maxTranslate * progress
       }
       r3c2Ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`
     }
-
-    requestAnimationFrame(animateCards)
   }, [])
 
   useEffect(() => {
-    requestAnimationFrame(animateCards)
-
     const handleScroll = () => {
-      setScrollYState(window.scrollY)
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current)
+      }
+      animationFrameRef.current = requestAnimationFrame(animateCards)
     }
-    window.addEventListener("scroll", handleScroll, { passive: true })
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll() // Initial call
 
     return () => {
-      window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener('scroll', handleScroll)
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current)
+      }
     }
   }, [animateCards])
-
-  useEffect(() => {
-    // R1C2 settled state
-    if (scrollYState >= 200 && !r1c2Settled) {
-      setR1c2Settled(true)
-    } else if (scrollYState < 200 && r1c2Settled) {
-      setR1c2Settled(false)
-    }
-
-    // R1C4 settled state
-    if (scrollYState >= 650 && !r1c4Settled) {
-      setR1c4Settled(true)
-    } else if (scrollYState < 650 && r1c4Settled) {
-      setR1c4Settled(false)
-    }
-
-    // R2C3 settled state
-    if (scrollYState >= 950 && !r2c3Settled) {
-      setR2c3Settled(true)
-    } else if (scrollYState < 950 && r2c3Settled) {
-      setR2c3Settled(false)
-    }
-
-    
-    if (scrollYState >= 1300 && !r3c2Settled) {
-      setR3c2Settled(true)
-    } else if (scrollYState < 1300 && r3c2Settled) {
-      setR3c2Settled(false)
-    }
-  }, [scrollYState, r1c2Settled, r1c4Settled, r2c3Settled, r3c2Settled])
 
   const cardClass = "relative w-[289px] h-[289px] bg-white flex items-center justify-center font-bold text-3xl md:text-5xl"
 
   return (
-    <div className="min-h-[200vh] bg-black flex flex-col items-center justify-center py-10 overflow-x-hidden">
+    <div 
+      ref={containerRef}
+      className="min-h-[200vh] bg-black flex flex-col items-center justify-center py-10 overflow-x-hidden"
+    >
       <div className="h-[20vh]" />
       <div className="w-full max-w-6xl mx-auto" style={{ minHeight: "140vh" }}>
         <div className="grid grid-cols-4 gap-y-8 gap-x-10 w-full relative">
@@ -141,11 +121,10 @@ const BoardGrid = () => {
             <div className="relative z-10 text-white text-center">Demo Name</div>
           </div>
 
-          
           <div
             ref={r1c2Ref}
             className={cardClass}
-            style={{ willChange: "transform" }} 
+            style={{ willChange: "transform" }}
           >
             <div className="absolute w-full h-full">
               <img src={bgImage} alt="card" className="w-full h-full object-cover" />
@@ -160,18 +139,16 @@ const BoardGrid = () => {
             <div className="relative z-10 text-white text-center">Demo Name</div>
           </div>
 
-          
           <div
             ref={r1c4Ref}
             className={cardClass}
-            style={{ zIndex: 30, willChange: "transform" }} 
+            style={{ zIndex: 30, willChange: "transform" }}
           >
             <div className="absolute w-full h-full">
               <img src={bgImage} alt="card" className="w-full h-full object-cover" />
             </div>
             <div className="relative z-10 text-white text-center">Demo Name</div>
           </div>
-
 
           <div className="col-span-4 flex justify-start items-center text-yellow-400 text-6xl font-extrabold py-4 uppercase">
             THE BOARD
@@ -192,11 +169,10 @@ const BoardGrid = () => {
             <div className="relative z-10 text-white text-center">Demo Name</div>
           </div>
 
-          {/* R2C3 - Will move to R3C3 */}
           <div
             ref={r2c3Ref}
             className={cardClass}
-            style={{ zIndex: 20, willChange: "transform" }} // Hint to browser for optimization
+            style={{ zIndex: 20, willChange: "transform" }}
           >
             <div className="absolute w-full h-full">
               <img src={bgImage} alt="card" className="w-full h-full object-cover" />
@@ -204,8 +180,6 @@ const BoardGrid = () => {
             <div className="relative z-10 text-white text-center">Demo Name</div>
           </div>
 
-
-          {/* Date */}
           <div className="col-span-4 board-date text-yellow-400 text-6xl font-extrabold py-4 uppercase">
             25–26
           </div>
@@ -218,11 +192,10 @@ const BoardGrid = () => {
             <div className="relative z-10 text-white text-center">Demo Name</div>
           </div>
 
-          {/* R3C2 - Will move to R4C2 (New Animated Card) */}
           <div
             ref={r3c2Ref}
             className={cardClass}
-            style={{ zIndex: 20, willChange: "transform" }} 
+            style={{ zIndex: 20, willChange: "transform" }}
           >
             <div className="absolute w-full h-full">
               <img src={bgImage} alt="card" className="w-full h-full object-cover" />
@@ -238,7 +211,7 @@ const BoardGrid = () => {
             <div className="relative z-10 text-white text-center">Demo Name</div>
           </div>
 
-          {/* Row 4 (New Row) */}
+          {/* Row 4 */}
           <div className={cardClass}>
             <div className="absolute w-full h-full">
               <img src={bgImage} alt="card" className="w-full h-full object-cover" />

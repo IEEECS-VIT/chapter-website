@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Logo from './images/IEEECS.png';
-import Background from './images/paper_effect.png';
-import Team from './images/team.png';
+import Logo from './IEEECS.png';
+import Background from './paper_effect.png';
+import Team from './team.png';
 
 const OurStory = () => {
   return (
