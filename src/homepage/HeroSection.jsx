@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Logo from './images/ieee_logo.png';
-import Left from './images/1.png';
-import Right from './images/2.png';
+import Logo from './ieee_logo.png';
+import Left from './1.png';
+import Right from './2.png';
 import OurStory from '../homepage/OurStory';
+import Project from "../Project/Project";
+import Board from "../board_section/board";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,7 +23,7 @@ const HeroSection = () => {
         trigger: ourStoryWrapperRef.current,
         start: 'top top',
         end: '+=850',
-        scrub: 2.0,
+        scrub: 2,
         pin: true,
         anticipatePin: 1,
       },
@@ -63,7 +65,8 @@ const HeroSection = () => {
 
   return (
     <div className="relative w-screen overflow-x-hidden text-white bg-black">
-      <div ref={ourStoryWrapperRef} className="relative h-screen">
+
+      <div ref={ourStoryWrapperRef} className="relative h-screen z-10">
         <div
           ref={ourStoryRef}
           className="absolute top-0 left-0 w-full h-full z-0"
@@ -77,8 +80,9 @@ const HeroSection = () => {
         >
           <div
             ref={leftRef}
-            className="absolute top-0 left-0 w-[634px] h-screen z-30"
+            className="absolute top-0 left-0 h-screen z-30"
             style={{
+              width: 'min(51vw, 1200px)',
               backgroundImage: `url(${Left})`,
               backgroundSize: '100% 100%',
               backgroundRepeat: 'no-repeat',
@@ -91,8 +95,9 @@ const HeroSection = () => {
 
           <div
             ref={rightRef}
-            className="absolute top-0 right-0 w-[630px] h-screen z-30"
+            className="absolute top-0 right-0 h-screen z-30"
             style={{
+              width: 'min(51.25vw, 1000px)',
               backgroundImage: `url(${Right})`,
               backgroundSize: '100% 100%',
               backgroundRepeat: 'no-repeat',
@@ -135,6 +140,19 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+
+      
+      <section id="projects" className="relative z-0">
+        <div className="w-full min-h-screen bg-[#0f0f0f]">
+          <div className="max-w-7xl mx-auto px-4 py-24">
+            <React.Suspense fallback={<div>Loading Projects...</div>}>
+              <Project />
+            </React.Suspense>
+          </div>
+        </div>
+      </section>
+
+      
     </div>
   );
 };

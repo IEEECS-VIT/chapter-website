@@ -34,6 +34,8 @@ const Project = () => {
   const pages = projectData.length;
   const flips = Math.max(pages - 1, 1);
 
+  const scrollContainerRef = useRef(null);
+
   useLayoutEffect(() => {
     if (!assemblyRef.current || !topPaperRef.current || !bottomPaperRef.current) return;
 
@@ -41,74 +43,73 @@ const Project = () => {
       const h = topPaperRef.current?.offsetHeight || 600;
       return Math.max(8, Math.min(48, Math.round(h * 0.04)));
     };
-    liftMaxRef.current = computeLiftMax();
 
-    const totalDistance = flips * window.innerHeight;
+    liftMaxRef.current = computeLiftMax();
 
     topPageRefs.current.forEach((el, i) => gsap.set(el, { autoAlpha: i === 0 ? 1 : 0 }));
     bottomPageRefs.current.forEach((el, i) => gsap.set(el, { autoAlpha: i === 1 ? 1 : 0 }));
     currentTopIdxRef.current = 0;
     currentBottomIdxRef.current = Math.min(1, pages - 1);
 
-    triggerRef.current = ScrollTrigger.create({
-      trigger: assemblyRef.current,
-      start: "top top",
-      end: `+=${totalDistance}`,
-      pin: true,
-      scrub: 3,
-      markers: true,
-      onUpdate: (self) => {
-        
-        const pos = self.progress * flips;
-        const seg = Math.min(Math.floor(pos), flips - 1);
-        const local = pos - seg;
+    const timeout = setTimeout(() => {
+      triggerRef.current = ScrollTrigger.create({
+        trigger: assemblyRef.current,
+        start: "top top",
+        end: () => `+=${flips * window.innerHeight}`,
+        pin: true,
+        scrub: 3,
+        onUpdate: (self) => {
+          const pos = self.progress * flips;
+          const seg = Math.min(Math.floor(pos), flips - 1);
+          const local = pos - seg;
 
-        const liftY = -liftMaxRef.current * Math.sin(local * Math.PI);
+          const liftY = -liftMaxRef.current * Math.sin(local * Math.PI);
 
-        gsap.set(topPaperRef.current, {
-          rotateX: local * 105,
-          y: liftY,
-          transformOrigin: "top top",
-          transformPerspective: 90000,
-          willChange: "transform",
-        });
+          gsap.set(topPaperRef.current, {
+            rotateX: local * 105,
+            y: liftY,
+            transformOrigin: "top top",
+            transformPerspective: 90000,
+            willChange: "transform",
+          });
 
-        const desiredTopIdx = seg;
-        const desiredBottomIdx = Math.min(seg + 1, pages - 1);
+          const desiredTopIdx = seg;
+          const desiredBottomIdx = Math.min(seg + 1, pages - 1);
 
-        if (desiredTopIdx !== currentTopIdxRef.current) {
-          gsap.set(topPageRefs.current[currentTopIdxRef.current], { autoAlpha: 0 });
-          gsap.set(topPageRefs.current[desiredTopIdx], { autoAlpha: 1 });
-          currentTopIdxRef.current = desiredTopIdx;
-        }
+          if (desiredTopIdx !== currentTopIdxRef.current) {
+            gsap.set(topPageRefs.current[currentTopIdxRef.current], { autoAlpha: 0 });
+            gsap.set(topPageRefs.current[desiredTopIdx], { autoAlpha: 1 });
+            currentTopIdxRef.current = desiredTopIdx;
+          }
 
-        if (desiredBottomIdx !== currentBottomIdxRef.current) {
-          gsap.set(bottomPageRefs.current[currentBottomIdxRef.current], { autoAlpha: 0 });
-          gsap.set(bottomPageRefs.current[desiredBottomIdx], { autoAlpha: 1 });
-          currentBottomIdxRef.current = desiredBottomIdx;
-        }
+          if (desiredBottomIdx !== currentBottomIdxRef.current) {
+            gsap.set(bottomPageRefs.current[currentBottomIdxRef.current], { autoAlpha: 0 });
+            gsap.set(bottomPageRefs.current[desiredBottomIdx], { autoAlpha: 1 });
+            currentBottomIdxRef.current = desiredBottomIdx;
+          }
+        },
+      });
 
-      },
-    });
+      ScrollTrigger.refresh();
+    }, 100); // Slight delay ensures layout is stable
 
     const onResize = () => {
       liftMaxRef.current = computeLiftMax();
-      const newTotal = flips * window.innerHeight;
       if (triggerRef.current) {
-        triggerRef.current.vars.end = `+=${newTotal}`;
+        triggerRef.current.vars.end = `+=${flips * window.innerHeight}`;
         triggerRef.current.refresh();
       }
     };
+
     window.addEventListener("resize", onResize);
 
     return () => {
+      clearTimeout(timeout);
       window.removeEventListener("resize", onResize);
-      triggerRef.current?.kill();
-      triggerRef.current = null;
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, [flips, pages, activeIndex]);
+  }, [flips, pages]);
 
-  const scrollContainerRef = useRef(null);
   const handleTabClick = (idx) => {
     const st = triggerRef.current;
     if (!st) return;
@@ -119,6 +120,7 @@ const Project = () => {
     const segmentSize = window.innerHeight;
     const targetY = sectionStartY + idx * segmentSize;
     const currentY = window.scrollY;
+
     if (Math.abs(currentY - targetY) > 10) {
       const distanceSegments = Math.abs(targetY - currentY) / segmentSize;
       const duration = Math.min(1.2, Math.max(0.45, distanceSegments * 0.6));
@@ -136,11 +138,11 @@ const Project = () => {
         <div ref={scrollContainerRef} />
         <div className="mx-auto bg-[#fdfaf3] w-[95vw] max-w-7xl h-[7vh] rounded-b-3xl relative" style={GRID_BG} />
 
-        <div className="relative ">
+        <div className="relative">
           <Binding />
         </div>
 
-        <div className="mt-8 flex flex-col items-center  justify-center relative">
+        <div className="mt-8 flex flex-col items-center justify-center relative">
           <div
             className="relative w-[90vw] max-w-7xl rounded-3xl"
             style={{ perspective: "8000px", transformStyle: "preserve-3d" }}

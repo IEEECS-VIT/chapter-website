@@ -1,6 +1,6 @@
 import React from "react";
-import ieeeLogo from "/Users/anweshalaha/Desktop/IEEE-CS FOOTER/IEEE-CS-WEBSITE/src/assets/ieeelogo.png";
-import centerImage from "/Users/anweshalaha/Desktop/IEEE-CS FOOTER/IEEE-CS-WEBSITE/src/assets/image.png";
+import ieeeLogo from "./ieeelogo.png";
+import centerImage from "./image.png";
 
 const Contact = () => {
   return (

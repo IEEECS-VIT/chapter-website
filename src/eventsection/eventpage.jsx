@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import event from "./assets/event.png";
 import bg from "./assets/bg2.png";
 
@@ -54,8 +54,7 @@ export default function EventsPage() {
       id: 1,
       title: "HackBattle",
       image: event,
-      overlayText:
-        "A high-stakes coding face-off for the brave and bold minds.",
+      overlayText: "A high-stakes coding face-off for the brave and bold minds.",
     },
     {
       id: 2,
@@ -78,30 +77,52 @@ export default function EventsPage() {
       overlayText:
         "Strategy meets code. Automate bots to battle in real-time arenas.",
     },
-  
   ];
 
   const [scrollProgress, setScrollProgress] = useState(0);
+  const containerRef = useRef(null);
 
   const handleScroll = useCallback(() => {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight;
-    const clientHeight = window.innerHeight;
-    const maxScroll = scrollHeight - clientHeight;
+    if (!containerRef.current) return;
 
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    
+    // Calculate progress based on how much the component has scrolled through viewport
     let progress = 0;
-    if (maxScroll > 0) {
-      progress = scrollTop / maxScroll;
+    
+    if (containerRect.top <= 0 && containerRect.bottom >= viewportHeight) {
+      // Component fills viewport - calculate based on how far it has scrolled
+      progress = Math.abs(containerRect.top) / (containerRect.height - viewportHeight);
+    } else if (containerRect.top > 0) {
+      // Component hasn't reached top yet
+      progress = 0;
+    } else {
+      // Component has passed through
+      progress = 1;
     }
-
-    const clamped = Math.min(1, Math.max(0, progress));
-    setScrollProgress(clamped);
+    
+    // Clamp between 0 and 1
+    progress = Math.max(0, Math.min(1, progress));
+    setScrollProgress(progress);
   }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    let ticking = false;
+    
+    const scrollHandler = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", scrollHandler, { passive: true });
+    handleScroll(); // Initial call
+    return () => window.removeEventListener("scroll", scrollHandler);
   }, [handleScroll]);
 
   const cardWidthVh = 13;
@@ -112,32 +133,50 @@ export default function EventsPage() {
     const totalWidth = numItems * cardWidthVh + (numItems - 1) * cardGapVh;
     const startOffset = -totalWidth / 2 + cardWidthVh / 2;
     const initialOffset = startOffset + index * (cardWidthVh + cardGapVh);
+    
+    // Smooth convergence to center (0)
     const currentX = initialOffset * (1 - scrollProgress);
     const zIndex = numItems - index;
+
+    // Smooth scale effect - cards scale down slightly as they converge
+    const scale = 1 - (scrollProgress * 0.05 * Math.abs(index - 1.5));
+    
+    // Smooth opacity - outer cards fade as they converge
+    let opacity = 1;
+    if (scrollProgress > 0.8) {
+      if (index === 0) {
+        opacity = 1; // Keep first card always visible
+      } else {
+        opacity = 1 - ((scrollProgress - 0.8) / 0.2); // Fade out other cards in last 20%
+      }
+    }
 
     return {
       position: "absolute",
       left: "50%",
       top: "50%",
-      transform: `translate(-50%, -50%) translateX(${currentX}vh)`,
+      transform: `translate(-50%, -50%) translateX(${currentX}vh) scale(${scale})`,
       zIndex,
+      opacity,
+      transition: "none", // Remove transitions for smoother scroll-based animation
     };
   };
 
   return (
     <div
-      className="w-full bg-center relative"
+      ref={containerRef}
+      className="w-full bg-center relative h-[135vh]"
       style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
     >
       <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center p-4 overflow-hidden">
-      <h1 className="text-white text-4xl font-light tracking-wider mb-8 mt-0">(202X–202X)</h1>
-      <div className="w-full h-0.5 bg-white mb-2"></div>
-      <div className="w-full h-0.5 bg-white mb-3"></div>
+        <h1 className="text-white text-4xl font-light tracking-wider mb-8 mt-0">(202X–202X)</h1>
+        <div className="w-full h-0.5 bg-white mb-2"></div>
+        <div className="w-full h-0.5 bg-white mb-3"></div>
         <h1 className="text-white text-6xl font-bold mb-4 z-10 tracking-widest">
           EVENTS
         </h1>
         <div className="w-full h-0.5 bg-white mb-2"></div>
-          <div className="w-full h-0.5 bg-white mb-3"></div>
+        <div className="w-full h-0.5 bg-white mb-3"></div>
         <div
           className="relative w-full h-full flex items-center justify-center"
           style={{ perspective: "1000px" }}
@@ -155,7 +194,6 @@ export default function EventsPage() {
           ))}
         </div>
       </div>
-      <div className="h-[300vh] w-full bg-transparent" />
     </div>
   );
 }
