@@ -91,7 +91,7 @@ const Project = () => {
       });
 
       ScrollTrigger.refresh();
-    }, 100); // Slight delay ensures layout is stable
+    }, 100);
 
     const onResize = () => {
       liftMaxRef.current = computeLiftMax();
@@ -194,7 +194,7 @@ const Project = () => {
             </div>
           </div>
 
-          <div className="w-[90vw] px-20 max-w-7xl z-20">
+          <div className="mx-auto max-w-7xl z-20">
             <ProjectTabs
               activeIndex={activeIndex}
               setActiveIndex={handleTabClick}

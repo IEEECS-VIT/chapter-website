@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import CoverPage from "./CoverPage";
 import clip1 from "./clip1.png";
 import clip2 from "./clip2.png";
 import texturedbg from "./texturedbg.png";
@@ -6,6 +7,10 @@ import view from "./view.png";
 
 const ProjectDisplay = ({ data }) => {
   const containerRef = useRef();
+
+  if (data.isCover) {
+    return <CoverPage data={data} />;
+  }
 
   return (
     <div
@@ -57,7 +62,7 @@ const ProjectDisplay = ({ data }) => {
           <img
             src={clip2}
             alt="clip2"
-            className="absolute -top-24 -left-10 w-[vw]"
+            className="absolute -top-24 -left-10 w-[6vw]"
           />
 
           <div className="absolute mt-8 inset-0 p-4 text-sm whitespace-pre-line text-black">
