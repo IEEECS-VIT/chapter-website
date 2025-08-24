@@ -146,20 +146,20 @@ const HeroSection = () => {
             }}
           />
 
-          <div className="absolute inset-0 flex justify-center items-center z-40 bg-black/25">
+          <div className="absolute inset-0 flex justify-center items-top z-40 bg-black/25">
             
             <div
               ref={contentRef}
-              className="flex flex-col justify-start items-center text-center pt-20"
+              className="flex flex-col justify-start items-center text-center"
             >
         <img
           src={Logo}
           alt="IEEE Logo"
-          className="absolute -top-20 left-4 w-[160px] md:w-[220px] object-contain"
+          className="absolute -top-32 left-4 w-[160px] md:w-[220px] object-contain"
         />
         
               <h1
-                className="tracking-tight text-white"
+                className=" text-white"
                 style={{
                   fontSize: "clamp(11rem, 10vw, 12rem)",
                   fontFamily: "New Times Roman",
