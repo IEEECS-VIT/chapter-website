@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Logo from './IEEECS.png';
 import Background from './paper_effect.png';
 import Team from './team.png';
+import MobileBoard from './mobile-board.jpg';
 
 const OurStory = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -16,9 +17,8 @@ const OurStory = () => {
   return (
     <div className="relative w-screen min-h-screen overflow-hidden bg-white text-black z-0">
       <div
-        className="absolute inset-0 bg-cover bg-center brightness-100 z-10"
+        className="absolute inset-0 bg-cover bg-center brightness-100 z-0"
         style={{ backgroundImage: `url(${Background})` }}
-
       />
 
       <div className="absolute top-4 left-4 p-2 z-10">
@@ -55,13 +55,20 @@ const OurStory = () => {
         </p>
       </div>
 
-      <div className="absolute inset-0 w-full h-auto z-0 top-40">
-        <img
-          src={Team}
-          alt="IEEE Computer Society Team"
-          className="w-full h-auto object-cover"
-        />
-      </div>
+      <div
+      className={`absolute inset-0 z-0 ${
+        isMobile ? 'top-80' : 'top-40'
+      }`}
+    >
+      <img
+        src={isMobile ? MobileBoard : Team}
+        alt="IEEE Computer Society Team"
+        className={`object-cover transition-all duration-500 ${
+          isMobile ? 'w-screen h-[50vh]' : 'w-full h-full'
+        }`}
+      />
+    </div>
+
     </div>
   );
 };
