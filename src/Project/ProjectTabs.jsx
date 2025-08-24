@@ -2,7 +2,6 @@ const ProjectTabs = ({ activeIndex, onSelect, titles }) => {
   return (
     <div className="flex items-end mx-15 pb-2">
       {titles.map((title, idx) => {
-        // Skip rendering tab for index 0
         if (idx === 0) return null;
 
         const isActive = idx === activeIndex;
