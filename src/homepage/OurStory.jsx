@@ -1,15 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from './IEEECS.png';
 import Background from './paper_effect.png';
 import Team from './team.png';
 
 const OurStory = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div className="relative w-screen min-h-screen overflow-hidden bg-white text-black z-0">
-
       <div
         className="absolute inset-0 bg-cover bg-center brightness-100 z-10"
-        style={{ backgroundImage: `url(${Background})`}}
+        style={{ backgroundImage: `url(${Background})` }}
+
       />
 
       <div className="absolute top-4 left-4 p-2 z-10">
@@ -21,40 +30,37 @@ const OurStory = () => {
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-start pt-28 px-6 md:px-16 text-center">
+        <h1
+          className="text-[#0b0b0a] tracking-wide"
+          style={{
+            fontFamily: 'Special Elite, serif',
+            fontSize: isMobile ? 'clamp(2rem, 8vw, 50px)' : 'clamp(3rem, 10vw, 100px)',
+            lineHeight: '1.0',
+          }}
+        >
+          OUR STORY
+        </h1>
 
-<div className="flex flex-col items-center text-center px-4 sm:px-8">
-  <h1
-    className="text-[#0b0b0a] tracking-wide"
-    style={{
-      fontFamily: 'Special Elite, serif',
-      fontSize: 'clamp(3rem, 10vw, 100px)',
-      lineHeight: '1.0',
-    }}
-  >
-    OUR STORY
-  </h1>
+        <p
+          className="mt-4 text-[#0b0b0a] max-w-4xl leading-relaxed"
+          style={{
+            fontFamily: 'Inter, sans-serif',
+            fontSize: isMobile ? '1rem' : '1.25rem',
+            whiteSpace: 'pre-line',
+          }}
+        >
+          {isMobile
+            ? 'IEEE Computer Society, VIT, founded in 2012 under IEEE Region 10, promotes innovation and technical excellence through impactful events, projects, and collaborations to solve real-world problems.'
+            : 'IEEE Computer Society, VIT—established in February 2012 under IEEE Region 10, Madras Section—drives innovation by leveraging cutting-edge technology to solve real-world problems. We foster ideas, empower talent, and deliver impactful projects through elite events, workshops, and collaborations. As a globally recognized hub of technical excellence, we inspire and shape inquisitive minds for the challenges of tomorrow.'}
+        </p>
+      </div>
 
-  <p
-    className="mt-1 text-[#0b0b0a] text-lg md:text-2xl max-w-4xl leading-loose"
-    style={{
-      fontFamily: 'Inter, sans-serif',
-      whiteSpace: 'pre-line',
-    }}
-  >
-    {`IEEE Computer Society, VIT—established in February 2012 under IEEE Region 10, Madras Section—drives innovation by leveraging cutting-edge technology to solve real-world problems. We foster ideas, empower talent, and deliver impactful projects through elite events,workshops, and collaborations. As a globally recognized hub of technical excellence, we inspire and shape inquisitive minds for the challenges of tomorrow.`}
-  </p>
-</div>
-
-
-
-    <div className="absolute inset-0 w-screen h-auto z-0 top-40">
-      <img
-        src={Team}
-        alt="IEEE Computer Society Team"
-        className="w-full h-auto object-cover"
-      />
-    </div>
-
+      <div className="absolute inset-0 w-full h-auto z-0 top-40">
+        <img
+          src={Team}
+          alt="IEEE Computer Society Team"
+          className="w-full h-auto object-cover"
+        />
       </div>
     </div>
   );
