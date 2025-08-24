@@ -10,10 +10,9 @@ import Project from "../Project/Project";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const HeroSection = () => {
+const HeroSection = ({ contentRef }) => {
   const leftRef = useRef(null);
   const rightRef = useRef(null);
-  const contentRef = useRef(null);
   const mobileContentRef = useRef(null);
   const ourStoryWrapperRef = useRef(null);
   const mobileHeroRef = useRef(null);
@@ -22,14 +21,14 @@ const HeroSection = () => {
     gsap.from(contentRef.current, {
       y: 150,
       opacity: 1,
-      duration: 2.5,
+      duration: 4.5,
       ease: "power4.out"
     });
 
     gsap.from(mobileContentRef.current, {
       y: 40,
       opacity: 1,
-      duration: 2.,
+      duration: 4.5,
       ease: "power4.out"
     });
 
@@ -48,8 +47,8 @@ const HeroSection = () => {
             scrollTrigger: {
               trigger: ourStoryWrapperRef.current,
               start: "top top",
-              end: "+=850",
-              scrub: 2,
+              end: "+=1250",
+              scrub: 3,
               pin: true,
               anticipatePin: 1
             }
@@ -146,20 +145,18 @@ const HeroSection = () => {
             }}
           />
 
-          <div className="absolute inset-0 flex justify-center items-top z-40 bg-black/25">
-            
+          <div className="absolute inset-0 flex justify-center items-top z-40 bg-black/35">
             <div
               ref={contentRef}
               className="flex flex-col justify-start items-center text-center"
             >
-        <img
-          src={Logo}
-          alt="IEEE Logo"
-          className="absolute -top-32 left-4 w-[160px] md:w-[220px] object-contain"
-        />
-        
+              <img
+                src={Logo}
+                alt="IEEE Logo"
+                className="absolute -top-32 left-4 w-[160px] md:w-[220px] object-contain"
+              />
               <h1
-                className=" text-white"
+                className="text-white"
                 style={{
                   fontSize: "clamp(11rem, 10vw, 12rem)",
                   fontFamily: "New Times Roman",
@@ -178,7 +175,6 @@ const HeroSection = () => {
               >
                 WE LIVE IN A COMPUTER SOCIETY.
               </h2>
-              
             </div>
           </div>
         </div>
