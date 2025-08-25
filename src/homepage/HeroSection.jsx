@@ -86,7 +86,7 @@ const HeroSection = ({ contentRef }) => {
 
         if (isMobile) {
           gsap.to([mobileHeroRef.current, mobileContentRef.current], {
-            y: -window.innerHeight * 1.1,
+            y: -window.innerHeight * 1.3,
             ease: "power1.inOut",
             scrollTrigger: {
               trigger: ourStoryWrapperRef.current,
@@ -145,7 +145,7 @@ const HeroSection = ({ contentRef }) => {
             }}
           />
 
-          <div className="absolute inset-0 flex justify-center items-top z-40 bg-black/35">
+          <div className="absolute inset-0 flex justify-center items-top z-40">
             <div
               ref={contentRef}
               className="flex flex-col justify-start items-center text-center"
