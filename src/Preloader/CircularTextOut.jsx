@@ -20,25 +20,31 @@ const CircularText = ({
   };
 
   useEffect(() => {
-    startRotation(spinDuration);
+  startRotation(spinDuration);
 
-    gsap.set(containerRef.current, { scale: 10 });
+  // Check the screen width to determine the appropriate scale values
+  const isSmallScreen = window.innerWidth < 768;
+  const initialScale = isSmallScreen ? 5 : 10;
+  const targetScale = isSmallScreen ? 3 : 5;
+  const finalScale = isSmallScreen ? 1 : 1;
 
-    gsap.to(containerRef.current, {
-      scale: 5,
-      duration: 1.2,
-      delay: 0,
-      ease: "power3.inOut",
-      onComplete: () => {
-        gsap.to(containerRef.current, {
-          scale: 1,
-          duration: 1,
-          delay: 1.9, 
-          ease: "power3.inOut",
-        });
-      },
-    });
-  }, [spinDuration, text]);
+  gsap.set(containerRef.current, { scale: initialScale });
+
+  gsap.to(containerRef.current, {
+    scale: targetScale,
+    duration: 1.2,
+    delay: 0,
+    ease: "power3.inOut",
+    onComplete: () => {
+      gsap.to(containerRef.current, {
+        scale: finalScale,
+        duration: 1,
+        delay: 1.9,
+        ease: "power3.inOut",
+      });
+    },
+  });
+}, [spinDuration, text]);
 
   const letters = Array.from(text);
 
