@@ -1,4 +1,3 @@
-
 const Binding = () => {
   const loops = Array.from({ length: 24 });
 

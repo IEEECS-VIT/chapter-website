@@ -6,6 +6,7 @@ import MobileBoard from './mobile-board.jpg';
 
 const OurStory = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
@@ -16,9 +17,11 @@ const OurStory = () => {
 
   return (
     <div className="relative w-screen min-h-screen overflow-hidden bg-white text-black z-0">
+ 
       <div
-        className="absolute inset-0 bg-cover bg-center brightness-100 z-0"
+        className="absolute inset-0 bg-cover bg-center brightness-100 z-0 opacity-0 transition-opacity duration-500"
         style={{ backgroundImage: `url(${Background})` }}
+        onLoad={() => setImageLoaded(true)}
       />
 
       <div className="absolute top-4 left-4 p-2 z-10">
@@ -55,20 +58,21 @@ const OurStory = () => {
         </p>
       </div>
 
-      <div
-      className={`absolute inset-0 z-0 ${
-        isMobile ? 'top-80' : 'top-40'
-      }`}
-    >
-      <img
-        src={isMobile ? MobileBoard : Team}
-        alt="IEEE Computer Society Team"
-        className={`object-cover transition-all duration-500 ${
-          isMobile ? 'w-screen h-[50vh]' : 'w-full h-full'
-        }`}
-      />
-    </div>
 
+      <div
+        className={`flex items-center justify-center transition-all duration-500 ${
+          isMobile ? 'w-[45vh] h-[37vh]' : 'w-full h-full'
+        }`}
+      >
+        <img
+          src={isMobile ? MobileBoard : Team}
+          alt="IEEE Computer Society Team"
+          className={`object-cover rounded-xl opacity-0 transition-opacity duration-700 ${
+            imageLoaded ? 'opacity-100' : ''
+          } ${isMobile ? 'max-w-full max-h-full' : 'w-full h-full'}`}
+          onLoad={() => setImageLoaded(true)}
+        />
+      </div>
     </div>
   );
 };

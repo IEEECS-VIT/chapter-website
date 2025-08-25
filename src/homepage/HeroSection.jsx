@@ -36,8 +36,8 @@ const HeroSection = ({ contentRef }) => {
 
     mm.add(
       {
-        isDesktop: "(min-width: 1024px)",
-        isMobile: "(max-width: 1023px)"
+        isDesktop: "(min-width: 1280px)",
+        isMobile: "(max-width: 1279px)"
       },
       (context) => {
         const { isDesktop, isMobile } = context.conditions;
@@ -114,7 +114,7 @@ const HeroSection = ({ contentRef }) => {
           <OurStory />
         </div>
 
-        <div className="hidden lg:block sticky top-0 z-20 h-screen pointer-events-auto overflow-hidden">
+        <div className="hidden xl:block sticky top-0 z-20 h-screen pointer-events-auto overflow-hidden">
           <div
             ref={leftRef}
             className="absolute top-0 left-0 h-screen z-30"
@@ -181,7 +181,7 @@ const HeroSection = ({ contentRef }) => {
 
         <div
           ref={mobileHeroRef}
-          className="block lg:hidden sticky top-0 z-20 h-screen overflow-hidden"
+          className="block xl:hidden sticky top-0 z-20 h-screen overflow-hidden"
         >
           <img
             src={MobileHero}
@@ -189,19 +189,21 @@ const HeroSection = ({ contentRef }) => {
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/35"></div>
-          <div className="absolute inset-0 flex justify-center items-center">
+          <div className="absolute top-4 left-4 z-30">
+            <img
+              src={Logo}
+              alt="IEEE Logo"
+              className="object-contain"
+              style={{ width: "clamp(100px, 20vw, 140px)" }}
+            />
+          </div>
+          <div className="absolute inset-0 flex justify-center items-center z-30">
             <div
               ref={mobileContentRef}
-              className="flex flex-col justify-center items-center text-center"
+              className="flex flex-col items-center text-center"
             >
-              <img
-                src={Logo}
-                alt="IEEE Logo"
-                className="absolute -top-64 left-4 object-contain"
-                style={{ width: "clamp(120px, 25vw, 120px)" }}
-              />
               <h1
-                className="tracking-tight text-white -mt-20"
+                className="tracking-tight text-white"
                 style={{
                   fontSize: "clamp(4rem, 8vw, 6rem)",
                   fontFamily: "Times New Roman",
