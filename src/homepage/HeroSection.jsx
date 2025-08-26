@@ -26,7 +26,7 @@ const HeroSection = ({ contentRef }) => {
     });
 
     gsap.from(mobileContentRef.current, {
-      y: 40,
+      y: 80,
       opacity: 1,
       duration: 4.5,
       ease: "power4.out"
@@ -41,7 +41,7 @@ const HeroSection = ({ contentRef }) => {
       },
       (context) => {
         const { isDesktop, isMobile } = context.conditions;
-
+        const deviceWidth = window.screen.width; 
         if (isDesktop) {
           const tl = gsap.timeline({
             scrollTrigger: {
@@ -86,7 +86,7 @@ const HeroSection = ({ contentRef }) => {
 
         if (isMobile) {
           gsap.to([mobileHeroRef.current, mobileContentRef.current], {
-            y: -window.innerHeight * 1.3,
+            y: -window.innerHeight * 1.5,
             ease: "power1.inOut",
             scrollTrigger: {
               trigger: ourStoryWrapperRef.current,
@@ -203,9 +203,9 @@ const HeroSection = ({ contentRef }) => {
               className="flex flex-col items-center text-center"
             >
               <h1
-                className="tracking-tight text-white"
+                className="tracking-tight text-white -translate-y-24"
                 style={{
-                  fontSize: "clamp(4rem, 8vw, 6rem)",
+                  fontSize: "clamp(5rem, 8vw, 6rem)",
                   fontFamily: "Times New Roman",
                   lineHeight: "1.0"
                 }}
@@ -213,9 +213,9 @@ const HeroSection = ({ contentRef }) => {
                 IEEE-CS
               </h1>
               <h2
-                className="text-[#EF9E00] mt-2 font-bold"
+                className="text-[#EF9E00] mt-2 font-bold -translate-y-24"
                 style={{
-                  fontSize: "clamp(1.5rem, 5vw, 3rem)",
+                  fontSize: "clamp(2rem, 5vw, 3rem)",
                   fontFamily: "Times New Roman",
                   lineHeight: "1.0"
                 }}

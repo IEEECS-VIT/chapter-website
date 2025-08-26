@@ -63,7 +63,7 @@ const Project = () => {
           triggerRef.current = ScrollTrigger.create({
             trigger: assemblyRef.current,
             start: "top top",
-            end: () => `+=${flips * window.innerHeight}`,
+            end: `+=${flips * window.innerHeight}`,
             pin: true,
             scrub: 3,
             onUpdate: (self) => {
@@ -77,7 +77,7 @@ const Project = () => {
                 rotateX: local * 105,
                 y: liftY,
                 transformOrigin: "top top",
-                transformPerspective: 90000,
+                transformPerspective: 100000,
                 willChange: "transform",
               });
 
@@ -108,7 +108,7 @@ const Project = () => {
           triggerRef.current = ScrollTrigger.create({
             trigger: assemblyRef.current,
             start: "top top",
-            end: () => `+=${flips * window.innerWidth}`,
+            end: `+=${flips * window.innerWidth}`,
             pin: true,
             scrub: 3,
             onUpdate: (self) => {
@@ -200,35 +200,35 @@ const Project = () => {
   return (
     <div
       ref={assemblyRef}
-      className="bg-black relative w-full min-h-screen overflow-x-hidden"
+      className="bg-black relative w-full min-h-screen overflow-x-hidden lg:overflow-x-visible"
     >
-      <section className="relative w-full md:min-h-[100vh]">
+      <section className="relative w-full xl:min-h-[100vh]">
         <div ref={scrollContainerRef} />
         <div
-          className="mx-auto bg-[#fdfaf3] w-[95vw] md:w-[90vw] max-w-7xl md:h-[7vh] rounded-b-3xl relative"
+          className="mx-auto bg-[#fdfaf3] w-[95vw] xl:w-[90vw] max-w-7xl xl:h-[7vh] rounded-b-3xl relative"
           style={GRID_BG}
         />
 
-        <div className="relative hidden md:block">
+        <div className="relative hidden xl:block">
           <Binding />
         </div>
-        <div className=" h-20 md:h-0 block md:hidden"></div>
+        <div className=" h-20 xl:h-0 block xl:hidden"></div>
 
-        <div className="mt-8 flex flex-col md:items-center md:justify-center relative">
-          <div className=" block md:hidden">
+        <div className="mt-8 flex flex-col xl:items-center xl:justify-center relative">
+          <div className=" block xl:hidden">
             <Binding2 />
           </div>
           <div
-            className="relative w-full md:w-[90vw] max-w-7xl rounded-3xl"
+            className="relative w-full xl:w-[90vw] max-w-7xl rounded-3xl"
             style={{ perspective: "8000px", transformStyle: "preserve-3d" }}
           >
-            <div className="absolute w-full h-[74vh] md:h-[79vh] bg-[#1B231A] rounded-3xl z-0 border border-amber-100" />
-            <div className="absolute w-full h-[72vh] md:h-[77vh] bg-[#fdfaf4be] rounded-3xl z-0" />
-            <div className="absolute w-full h-[71vh] md:h-[76vh] bg-[#fdfaf4eb] rounded-3xl z-0" />
+            <div className="absolute w-full h-[74vh] xl:h-[79vh] bg-[#1B231A] rounded-3xl z-0 border border-amber-100" />
+            <div className="absolute w-full h-[72vh] xl:h-[77vh] bg-[#fdfaf4be] rounded-3xl z-0" />
+            <div className="absolute w-full h-[71vh] xl:h-[76vh] bg-[#fdfaf4eb] rounded-3xl z-0" />
 
             <div
               ref={bottomPaperRef}
-              className="absolute inset-0 h-[70vh] md:h-[75vh] bg-[#fdfaf3] rounded-3xl shadow-2xl overflow-hidden z-10"
+              className="absolute inset-0 h-[70vh] xl:h-[75vh] bg-[#fdfaf3] rounded-3xl shadow-2xl overflow-hidden z-10"
               style={{
                 transformOrigin: "top center",
                 transformStyle: "preserve-3d",
@@ -250,7 +250,7 @@ const Project = () => {
 
             <div
               ref={topPaperRef}
-              className="relative z-30 h-[70vh] md:h-[75vh] bg-[#fdfaf3] rounded-3xl shadow-2xl overflow-hidden"
+              className="relative z-30 h-[70vh] xl:h-[75vh] bg-[#fdfaf3] rounded-3xl shadow-2xl overflow-hidden"
               style={{
                 transformStyle: "preserve-3d",
                 backfaceVisibility: "hidden",
@@ -270,7 +270,7 @@ const Project = () => {
           </div>
 
           <div className="mx-auto max-w-7xl z-20">
-            <div className="hidden lg:block">
+            <div className="hidden xl:block">
               <ProjectTabs
                 activeIndex={activeIndex}
                 setActiveIndex={handleTabClick}
