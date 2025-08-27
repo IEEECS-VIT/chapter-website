@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} **/
 export default {
   content: [
     "./index.html",
@@ -8,8 +8,10 @@ export default {
     extend: {
       fontFamily: {
         SpecialElite: ['"Special Elite"', 'cursive'],
-        Cinzel: ['Cinzel','cursive'],
-      }
+        Cinzel: ['Cinzel', 'cursive'],
+        McLaren: ['McLaren', 'cursive'], 
+        Gloock: ['Gloock','cursive']
+      },
     },
   },
   plugins: [],

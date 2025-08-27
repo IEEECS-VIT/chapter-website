@@ -13,56 +13,157 @@ const BoardGrid = () => {
   const [isTablet, setIsTablet] = useState(false)
   const [mobileScrollProgress, setMobileScrollProgress] = useState(0)
   const [allCardsCycled, setAllCardsCycled] = useState(false)
+  const [componentOffsetTop, setComponentOffsetTop] = useState(0)
+  const [mobileAnimationProgress, setMobileAnimationProgress] = useState(0)
+  const [isInMobileBoardSection, setIsInMobileBoardSection] = useState(false)
+  const [isHoveringCards, setIsHoveringCards] = useState(false)
+  const [isSticky, setIsSticky] = useState(false)
+  const [horizontalProgress, setHorizontalProgress] = useState(0)
 
   const r1c2Ref = useRef(null)
   const r1c4Ref = useRef(null)
   const r2c3Ref = useRef(null)
   const r3c2Ref = useRef(null)
   const mobileContainerRef = useRef(null)
+  const componentRef = useRef(null)
   const lastScrollY = useRef(0)
+  const scrollBlocked = useRef(false)
+  const scrollDirection = useRef(0)
   const accumulatedScroll = useRef(0)
-  const handleTouchStart = useRef(null)
+  const mobileScrollStart = useRef(0)
+  const accumulatedScrollDelta = useRef(0)
+  const stickyStartPosition = useRef(0)
 
-  // --- responsive sizing ---
   useEffect(() => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth < 768)
       setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
     }
+
     checkScreenSize()
     window.addEventListener("resize", checkScreenSize)
     return () => window.removeEventListener("resize", checkScreenSize)
   }, [])
 
-  // --- scroll animation ---
+  useEffect(() => {
+    const updateComponentOffset = () => {
+      if (componentRef.current) {
+        const rect = componentRef.current.getBoundingClientRect()
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+        setComponentOffsetTop(rect.top + scrollTop)
+
+        if (isMobile) {
+          mobileScrollStart.current = rect.top + scrollTop
+        }
+      }
+    }
+
+    updateComponentOffset()
+    window.addEventListener("resize", updateComponentOffset)
+
+    const timeout = setTimeout(updateComponentOffset, 100)
+
+    return () => {
+      window.removeEventListener("resize", updateComponentOffset)
+      clearTimeout(timeout)
+    }
+  }, [isMobile])
+
+  useEffect(() => {
+    if (!isMobile) return
+
+    const handleMobileScroll = (e) => {
+      const currentScrollY = window.scrollY
+      const componentHeight = componentRef.current?.offsetHeight || 0
+      const viewportHeight = window.innerHeight
+      const sectionStart = mobileScrollStart.current
+
+      if (currentScrollY < sectionStart) {
+        setIsSticky(false)
+        setHorizontalProgress(0)
+        accumulatedScrollDelta.current = 0
+        return
+      }
+
+      if (currentScrollY >= sectionStart && horizontalProgress < 100) {
+        if (!isSticky) {
+          setIsSticky(true)
+          stickyStartPosition.current = currentScrollY
+          accumulatedScrollDelta.current = 0
+        }
+
+        e.preventDefault()
+
+        const scrollDelta = currentScrollY - stickyStartPosition.current
+        accumulatedScrollDelta.current = Math.max(0, scrollDelta)
+        
+       
+        const maxScrollForAnimation = viewportHeight * 1.5 
+        const progress = Math.min(100, (accumulatedScrollDelta.current / maxScrollForAnimation) * 100)
+        setHorizontalProgress(progress)
+        setMobileAnimationProgress(progress)
+
+        window.scrollTo(0, sectionStart)
+        return
+      }
+
+      if (horizontalProgress >= 100) {
+        setIsSticky(false)
+      }
+    }
+
+    const handleWheel = (e) => {
+      if (isSticky && horizontalProgress < 100) {
+        e.preventDefault()
+
+        accumulatedScrollDelta.current += Math.abs(e.deltaY) * 0.5
+
+        const maxScrollForAnimation = window.innerHeight * 1.5
+        const progress = Math.min(100, (accumulatedScrollDelta.current / maxScrollForAnimation) * 100)
+        setHorizontalProgress(progress)
+        setMobileAnimationProgress(progress)
+      }
+    }
+
+    window.addEventListener("scroll", handleMobileScroll, { passive: false })
+    window.addEventListener("wheel", handleWheel, { passive: false })
+
+    return () => {
+      window.removeEventListener("scroll", handleMobileScroll)
+      window.removeEventListener("wheel", handleWheel)
+    }
+  }, [isMobile, isSticky, horizontalProgress])
+
   const getResponsiveValues = useCallback(() => {
     const baseMultiplier = isMobile ? 0.6 : isTablet ? 0.8 : 1
     const translateMultiplier = isMobile ? 0.7 : isTablet ? 0.85 : 1
+
     return {
       r1c2: {
         startOffset: -200 * translateMultiplier,
-        settlePoint: 200 * baseMultiplier,
+        settlePoint: componentOffsetTop + 200 * baseMultiplier,
       },
       r1c4: {
-        startScrollPoint: 250 * baseMultiplier,
-        endScrollPoint: 650 * baseMultiplier,
-        maxTranslate: 445 * translateMultiplier,
+        startScrollPoint: componentOffsetTop + 250 * baseMultiplier,
+        endScrollPoint: componentOffsetTop + 600 * baseMultiplier,
+        maxTranslate: 425 * translateMultiplier,
       },
       r2c3: {
-        startScrollPoint: 700 * baseMultiplier,
-        endScrollPoint: 950 * baseMultiplier,
-        maxTranslate: 445 * translateMultiplier,
+        startScrollPoint: componentOffsetTop + 700 * baseMultiplier,
+        endScrollPoint: componentOffsetTop + 950 * baseMultiplier,
+        maxTranslate: 425 * translateMultiplier,
       },
       r3c2: {
-        startScrollPoint: 1000 * baseMultiplier,
-        endScrollPoint: 1300 * baseMultiplier,
-        maxTranslate: 320 * translateMultiplier,
+        startScrollPoint: componentOffsetTop + 1000 * baseMultiplier,
+        endScrollPoint: componentOffsetTop + 1300 * baseMultiplier,
+        maxTranslate: 309 * translateMultiplier,
       },
     }
-  }, [isMobile, isTablet])
+  }, [isMobile, isTablet, componentOffsetTop])
 
   const animateCards = useCallback(() => {
     const currentScrollY = window.scrollY
+
     if (isMobile) {
       requestAnimationFrame(animateCards)
       return
@@ -70,13 +171,22 @@ const BoardGrid = () => {
 
     const values = getResponsiveValues()
 
+    const componentStart = componentOffsetTop - 500
+    const componentEnd = componentOffsetTop + 2000
+
+    if (currentScrollY < componentStart || currentScrollY > componentEnd) {
+      requestAnimationFrame(animateCards)
+      return
+    }
+
     if (r1c2Ref.current) {
       const { startOffset, settlePoint } = values.r1c2
       let translateY = startOffset
+
       if (currentScrollY >= settlePoint) {
         translateY = 0
-      } else if (currentScrollY > 0) {
-        const progress = currentScrollY / settlePoint
+      } else if (currentScrollY > componentOffsetTop) {
+        const progress = (currentScrollY - componentOffsetTop) / (settlePoint - componentOffsetTop)
         translateY = startOffset * (1 - progress)
       }
       r1c2Ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`
@@ -84,6 +194,7 @@ const BoardGrid = () => {
 
     if (r1c4Ref.current) {
       const { startScrollPoint, endScrollPoint, maxTranslate } = values.r1c4
+
       let translateY = 0
       if (currentScrollY >= endScrollPoint) {
         translateY = maxTranslate
@@ -96,6 +207,7 @@ const BoardGrid = () => {
 
     if (r2c3Ref.current) {
       const { startScrollPoint, endScrollPoint, maxTranslate } = values.r2c3
+
       let translateY = 0
       if (currentScrollY >= endScrollPoint) {
         translateY = maxTranslate
@@ -108,6 +220,7 @@ const BoardGrid = () => {
 
     if (r3c2Ref.current) {
       const { startScrollPoint, endScrollPoint, maxTranslate } = values.r3c2
+
       let translateY = 0
       if (currentScrollY >= endScrollPoint) {
         translateY = maxTranslate
@@ -119,64 +232,132 @@ const BoardGrid = () => {
     }
 
     requestAnimationFrame(animateCards)
-  }, [getResponsiveValues, isMobile])
+  }, [getResponsiveValues, isMobile, componentOffsetTop])
 
   useEffect(() => {
     requestAnimationFrame(animateCards)
+
     const handleScroll = () => {
       setScrollYState(window.scrollY)
       lastScrollY.current = window.scrollY
     }
+
     window.addEventListener("scroll", handleScroll, { passive: true })
+
     return () => {
       window.removeEventListener("scroll", handleScroll)
     }
   }, [animateCards])
 
-  // --- Card CSS class ---
+  useEffect(() => {
+    const values = getResponsiveValues()
+
+    if (scrollYState >= values.r1c2.settlePoint && !r1c2Settled) {
+      setR1c2Settled(true)
+    } else if (scrollYState < values.r1c2.settlePoint && r1c2Settled) {
+      setR1c2Settled(false)
+    }
+
+    if (scrollYState >= values.r1c4.endScrollPoint && !r1c4Settled) {
+      setR1c4Settled(true)
+    } else if (scrollYState < values.r1c4.endScrollPoint && r1c4Settled) {
+      setR1c4Settled(false)
+    }
+
+    if (scrollYState >= values.r2c3.endScrollPoint && !r2c3Settled) {
+      setR2c3Settled(true)
+    } else if (scrollYState < values.r2c3.endScrollPoint && r2c3Settled) {
+      setR2c3Settled(false)
+    }
+
+    if (scrollYState >= values.r3c2.endScrollPoint && !r3c2Settled) {
+      setR3c2Settled(true)
+    } else if (scrollYState < values.r3c2.endScrollPoint && r3c2Settled) {
+      setR3c2Settled(false)
+    }
+  }, [scrollYState, r1c2Settled, r1c4Settled, r2c3Settled, r3c2Settled, getResponsiveValues])
+
   const cardClass =
-    "relative w-[320px] h-[320px] bg-gray-900 overflow-hidden shadow-2xl flex items-center justify-center font-bold text-2xl"
+    "relative w-full aspect-square bg-gray-900 overflow-hidden shadow-2xl flex items-center justify-center font-bold text-lg sm:text-xl md:text-2xl max-w-[320px]"
 
-  // --- Card data ---
-  const allCards = Array.from({ length: 15 }, (_, i) => `Demo Name ${i + 1}`)
+  const allCards = [
+    "Demo Name 1",
+    "Demo Name 2",
+    "Demo Name 3",
+    "Demo Name 4",
+    "Demo Name 5",
+    "Demo Name 6",
+    "Demo Name 7",
+    "Demo Name 8",
+    "Demo Name 9",
+    "Demo Name 10",
+    "Demo Name 11",
+    "Demo Name 12",
+    "Demo Name 13",
+    "Demo Name 14",
+    "Demo Name 15",
+  ]
 
-  // --- MOBILE ---
-  if (isMobile) {
-    const cardPairs = []
+  const createCardPairs = () => {
+    const pairs = []
     for (let i = 0; i < allCards.length; i += 2) {
-      cardPairs.push({
+      pairs.push({
         first: allCards[i],
         second: i + 1 < allCards.length ? allCards[i + 1] : null,
       })
     }
-    const totalWidth = cardPairs.length * 280
-    const loopedX = -((mobileScrollProgress / 100) * totalWidth) % totalWidth
+    return pairs
+  }
+
+  if (isMobile) {
+    const cardPairs = createCardPairs()
+    const cardWidth = 265
+    const gapWidth = 32
+    const pairWidth = cardWidth + gapWidth
+    const totalWidth = cardPairs.length * pairWidth
+    const textWidth = 80
+
+    const maxTranslate = totalWidth + textWidth - window.innerWidth + 100
+    const normalizedProgress = horizontalProgress / 100
+    const translateX = -normalizedProgress * maxTranslate
 
     return (
-      <div className="bg-black min-h-screen flex">
-        <div className="flex-1 flex items-center justify-start pl-4 overflow-hidden">
+      
+      <div ref={componentRef} className="bg-black h-[100vh] flex relative">
+        <div
+          className={`flex-1 flex items-center justify-start overflow-hidden ${isSticky ? "fixed top-0 left-0 right-0" : ""} h-screen`}
+        >
           <div
             ref={mobileContainerRef}
-            className="flex gap-16 transition-transform duration-200 ease-out"
-            style={{ transform: `translateX(${loopedX}px)` }}
+            
+            className="flex gap-8 ease-out will-change-transform"
+            style={{
+              transform: `translateX(${translateX}px)`,
+            }}
+            onMouseEnter={() => setIsHoveringCards(true)}
+            onMouseLeave={() => setIsHoveringCards(false)}
+            onTouchStart={() => setIsHoveringCards(true)}
+            onTouchEnd={() => setTimeout(() => setIsHoveringCards(false), 100)}
           >
-            <div className="flex items-center justify-center w-6 flex-shrink-0 pr-6 ml-4">
-              <div className="text-yellow-400 text-5xl font-extrabold uppercase tracking-wider transform -rotate-90 whitespace-nowrap">
+            <div className="flex items-center justify-center w-[80px] flex-shrink-0 ml-2">
+              <div className="text-yellow-400 text-3xl md:text-4xl font-extrabold uppercase tracking-wider transform -rotate-90 whitespace-nowrap">
                 THE BOARD 25–26
               </div>
             </div>
-            {[...cardPairs, ...cardPairs].map((pair, index) => (
-              <div key={index} className="flex flex-col gap-12 flex-shrink-0">
-                <div className="relative w-[265px] h-[300px] bg-white flex items-center justify-center font-bold text-2xl overflow-hidden shadow-2xl">
+
+            {cardPairs.map((pair, index) => (
+              <div key={index} className="flex flex-col gap-8 flex-shrink-0">
+                <div className="relative w-[265px] h-[300px] bg-white flex items-center justify-center font-bold text-2xl overflow-hidden shadow-2xl rounded-lg">
                   <div className="absolute w-full h-full">
-                    <img src={bgImage} alt="card" className="w-full h-full object-cover" />
+                    <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
                   </div>
                   <div className="relative z-10 text-white text-center px-4">{pair.first}</div>
                 </div>
+
                 {pair.second && (
-                  <div className="relative w-[265px] h-[300px] bg-white flex items-center justify-center font-bold text-2xl overflow-hidden shadow-2xl">
+                  <div className="relative w-[265px] h-[300px] bg-white flex items-center justify-center font-bold text-2xl overflow-hidden shadow-2xl rounded-lg">
                     <div className="absolute w-full h-full">
-                      <img src={bgImage} alt="card" className="w-full h-full object-cover" />
+                      <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
                     </div>
                     <div className="relative z-10 text-white text-center px-4">{pair.second}</div>
                   </div>
@@ -189,45 +370,124 @@ const BoardGrid = () => {
     )
   }
 
-  // --- DESKTOP GRID ---
   return (
-    <div className="min-h-[200vh] bg-black flex flex-col items-center justify-center py-6 sm:py-8 md:py-10 overflow-x-hidden">
+    <div
+      ref={componentRef}
+      className="min-h-[200vh] bg-black flex flex-col items-center justify-center py-6 sm:py-8 md:py-10 overflow-x-hidden"
+    >
       <div className="h-[10vh] sm:h-[15vh] md:h-[20vh]" />
-      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8" style={{ minHeight: "140vh" }}>
-        <div className="grid grid-cols-[repeat(4,320px)] gap-6 justify-center">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8" style={{ minHeight: "140vh" }}>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 justify-items-start">
           <div className={cardClass}>
-            <img src={bgImage} alt="card" className="absolute w-full h-full object-cover" />
-            <div className="relative z-10 text-white text-center">Demo Name</div>
+            <div className="absolute w-full h-full">
+              <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10 text-white text-center px-2">Demo Name</div>
           </div>
+
           <div ref={r1c2Ref} className={cardClass} style={{ willChange: "transform" }}>
-            <img src={bgImage} alt="card" className="absolute w-full h-full object-cover" />
-            <div className="relative z-10 text-white text-center">Demo Name</div>
+            <div className="absolute w-full h-full">
+              <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10 text-white text-center px-2">Demo Name</div>
           </div>
-          <div className={`${cardClass} md:flex`}>
-            <img src={bgImage} alt="card" className="absolute w-full h-full object-cover" />
-            <div className="relative z-10 text-white text-center">Demo Name</div>
+
+          <div className={`${cardClass} hidden sm:flex`}>
+            <div className="absolute w-full h-full">
+              <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10 text-white text-center px-2">Demo Name</div>
           </div>
-          <div ref={r1c4Ref} className={`${cardClass} lg:flex`} style={{ zIndex: 30, willChange: "transform" }}>
-            <img src={bgImage} alt="card" className="absolute w-full h-full object-cover" />
-            <div className="relative z-10 text-white text-center">Demo Name</div>
+
+          <div ref={r1c4Ref} className={`${cardClass} hidden lg:flex`} style={{ zIndex: 30, willChange: "transform" }}>
+            <div className="absolute w-full h-full">
+              <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10 text-white text-center px-2">Demo Name</div>
           </div>
-          <div className="col-span-4 text-yellow-400 text-6xl font-extrabold uppercase py-4">THE BOARD</div>
+
+          <div className="col-span-2 sm:col-span-3 lg:col-span-4 flex justify-start items-center text-yellow-400 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold py-2 sm:py-3 md:py-4 uppercase">
+            THE BOARD
+          </div>
+
           <div className={cardClass}>
-            <img src={bgImage} alt="card" className="absolute w-full h-full object-cover" />
-            <div className="relative z-10 text-white text-center">Demo Name</div>
+            <div className="absolute w-full h-full">
+              <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10 text-white text-center px-2">Demo Name</div>
           </div>
-          <div ref={r2c3Ref} className={`${cardClass} md:flex`} style={{ zIndex: 20, willChange: "transform" }}>
-            <img src={bgImage} alt="card" className="absolute w-full h-full object-cover" />
-            <div className="relative z-10 text-white text-center">Demo Name</div>
+
+          <div className={cardClass}>
+            <div className="absolute w-full h-full">
+              <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10 text-white text-center px-2">Demo Name</div>
           </div>
-          <div className="col-span-4 text-yellow-400 text-6xl font-extrabold uppercase py-4">25–26</div>
+
+          <div ref={r2c3Ref} className={`${cardClass} hidden sm:flex`} style={{ zIndex: 20, willChange: "transform" }}>
+            <div className="absolute w-full h-full">
+              <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10 text-white text-center px-2">Demo Name</div>
+          </div>
+
+          <div></div>
+
+          <div className="col-span-full board-date 
+    text-yellow-400 text-3xl sm:text-4xl md:text-5xl lg:text-6xl 
+    font-extrabold py-2 sm:py-3 md:py-4 uppercase text-left">
+  25–26
+</div>
+
+          <div className={cardClass}>
+            <div className="absolute w-full h-full">
+              <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10 text-white text-center px-2">Demo Name</div>
+          </div>
+
           <div ref={r3c2Ref} className={cardClass} style={{ zIndex: 20, willChange: "transform" }}>
-            <img src={bgImage} alt="card" className="absolute w-full h-full object-cover" />
-            <div className="relative z-10 text-white text-center">Demo Name</div>
+            <div className="absolute w-full h-full">
+              <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10 text-white text-center px-2">Demo Name</div>
+          </div>
+
+          <div className="hidden sm:block"></div>
+
+          <div className={`${cardClass} hidden lg:flex`}>
+            <div className="absolute w-full h-full">
+              <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10 text-white text-center px-2">Demo Name</div>
+          </div>
+
+          <div className={`${cardClass} hidden lg:flex`}>
+            <div className="absolute w-full h-full">
+              <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10 text-white text-center px-2">Demo Name</div>
+          </div>
+                  <div></div>
+
+          <div className={`${cardClass} hidden sm:flex`}>
+            <div className="absolute w-full h-full">
+              <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10 text-white text-center px-2">Demo Name</div>
+          </div>
+
+  
+
+          <div className={`${cardClass} hidden lg:flex`}>
+            <div className="absolute w-full h-full">
+              <img src={bgImage || "/placeholder.svg"} alt="card" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10 text-white text-center px-2">Demo Name</div>
           </div>
         </div>
       </div>
-      <div className="h-[30vh] sm:h-[40vh] md:h-[54vh]" />
+      <div className="h-[8vh] sm:h-[10vh] md:h-[15vh]" />
     </div>
   )
 }

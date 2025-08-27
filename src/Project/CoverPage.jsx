@@ -18,13 +18,13 @@ const CoverPage = ({ data }) => {
         <div className="relative w-full h-full flex items-center justify-center z-10">
           <div className="absolute flex flex-col items-center top-[20%] xl:top-[25%]">
             <h1
-              className="text-5xl xl:text-6xl md:text-7xl font-extrabold mt-14 xl:mt-0"
+              className="text-5xl xl:text-6xl md:text-7xl font-extrabold mt-14 xl:mt-0 text-[#4B3200]"
               style={{ fontFamily: "serif" }}
             >
               OUR
             </h1>
             <h1
-              className="text-5xl xl:text-6xl md:text-7xl font-extrabold"
+              className="text-5xl xl:text-6xl md:text-7xl font-extrabold text-[#4B3200]"
               style={{ fontFamily: "serif" }}
             >
               PROJECTS

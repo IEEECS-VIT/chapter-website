@@ -25,14 +25,14 @@ const ParticleBackground = () => {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 450; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         size: Math.random() * 2 + 1,
         speedX: (Math.random() - 0.5) * 0.5,
         speedY: Math.random() * 1 + 0.5,
-        opacity: Math.random() * 0.3 + 0.1,
+        opacity: Math.random() * 0.45 + 0.1,
       });
     }
 
@@ -89,13 +89,27 @@ const PreLoader = ({ onEnter }) => {
   const [text, setText] = useState("0");
   const hasFinished = useRef(false);
 
+  const textStyle = {
+    fontFamily: "'Times New Roman', Times, serif",
+    fontWeight: "800",
+    fontSize: "1.7rem",
+    letterSpacing: "-2px",
+    color: "black",
+    textTransform: "uppercase",
+    display: "inline-block",
+  };
+
   useEffect(() => {
     const obj = { val: 0 };
     const tl = gsap.timeline({
       delay: 1,
       onComplete: () => {
         hasFinished.current = true;
-        setText("Enter");
+        setText(
+          <span ref={textRef} style={textStyle}>
+            Enter
+          </span>
+        );
         gsap.fromTo(
           textRef.current,
           { y: "100%", opacity: 0 },
@@ -110,7 +124,11 @@ const PreLoader = ({ onEnter }) => {
       ease: "linear",
       onUpdate: () => {
         if (!hasFinished.current) {
-          setText(Math.floor(obj.val).toString());
+          setText(
+            <span ref={textRef} style={textStyle}>
+              {Math.floor(obj.val).toString()}
+            </span>
+          );
         }
       },
     });
@@ -146,18 +164,18 @@ const PreLoader = ({ onEnter }) => {
             className="h-12 w-auto"
           />
         </div>
-        <div className="absolute z-10">
+        <div className="absolute z-10 font-McLaren font-extralight">
           <CircularTextOut
             text="WE LIVE IN A COMPUTER SOCIETY "
             spinDuration={20}
           />
         </div>
-        <div className="absolute z-20">
+        <div className="absolute z-20 font-McLaren font-extralight">
           <CircularText text="IEEE~COMPUTER~SOCIETY~" spinDuration={20} />
         </div>
         <div
           onClick={handleEnter}
-          className="w-28 h-28 text-2xl text-black z-30 rounded-full  bg-[#F5AD12] flex items-center justify-center cursor-pointer transition duration-100 hover:scale-105 overflow-hidden shadow-[0_0_8vw_20px_rgba(255,234,138,0.5)]"
+          className="w-28 h-28 text-2xl text-black z-30 rounded-full bg-[#F5AD12] flex items-center justify-center cursor-pointer transition duration-100 hover:scale-105 overflow-hidden shadow-[0_0_8vw_20px_rgba(255,234,138,0.5)]"
         >
           <div className="overflow-hidden h-8 flex items-end">
             <div ref={textRef} className="translate-y-0">

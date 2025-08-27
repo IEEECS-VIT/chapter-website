@@ -109,7 +109,8 @@ const HeroSection = ({ contentRef }) => {
 
   return (
     <div className="relative w-screen overflow-x-hidden text-white bg-black">
-      <div ref={ourStoryWrapperRef} className="relative h-screen z-10">
+
+      <div ref={ourStoryWrapperRef} className="relative h-screen z-10 bg-black">
         <div className="absolute top-0 left-0 w-full h-full z-0">
           <OurStory />
         </div>
@@ -126,7 +127,8 @@ const HeroSection = ({ contentRef }) => {
               backgroundPosition: "center",
               clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
               transformOrigin: "left center",
-              boxShadow: "4px 0 20px rgba(0,0,0,0.25)"
+              boxShadow: "4px 0 20px rgba(0,0,0,0.25)",
+              filter: "brightness(0.75)"
             }}
           />
 
@@ -141,7 +143,8 @@ const HeroSection = ({ contentRef }) => {
               backgroundPosition: "center",
               clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
               transformOrigin: "right center",
-              boxShadow: "-4px 0 20px rgba(0,0,0,0.25)"
+              boxShadow: "-4px 0 20px rgba(0,0,0,0.25)",
+              filter: "brightness(0.75)"
             }}
           />
 
@@ -228,7 +231,7 @@ const HeroSection = ({ contentRef }) => {
       </div>
 
       <section id="projects" className="relative z-0">
-        <div className="w-full min-h-screen bg-[#0f0f0f]">
+        <div className="w-full  min-h-screen bg-[#000000]">
           <div className="mx-auto px-4 sm:px-6 lg:px-8 py-24 max-w-[95%] xl:max-w-[1400px]">
             <React.Suspense fallback={<div>Loading Projects...</div>}>
               <Project />

@@ -200,7 +200,7 @@ const Project = () => {
   return (
     <div
       ref={assemblyRef}
-      className="bg-black relative w-full min-h-screen overflow-x-hidden lg:overflow-x-visible"
+      className="bg-black relative w-full min-h-screen overflow-x-hidden lg:overflow-x-visible text-[#4B3200]"
     >
       <section className="relative w-full xl:min-h-[100vh]">
         <div ref={scrollContainerRef} />
@@ -228,7 +228,7 @@ const Project = () => {
 
             <div
               ref={bottomPaperRef}
-              className="absolute inset-0 h-[70vh] xl:h-[75vh] bg-[#fdfaf3] rounded-3xl shadow-2xl overflow-hidden z-10"
+              className="absolute inset-0 h-[70vh] xl:h-[75vh] bg-[#fdfaf3] rounded-3xl shadow-2xl overflow-hidden z-10 text-[#4B3200]"
               style={{
                 transformOrigin: "top center",
                 transformStyle: "preserve-3d",
@@ -240,7 +240,7 @@ const Project = () => {
                 <div
                   key={`bottom-${p.id}`}
                   ref={(el) => (bottomPageRefs.current[i] = el)}
-                  className="absolute inset-0"
+                  className="absolute inset-0 font-Gloock font-extralight"
                   style={{ pointerEvents: "none" }}
                 >
                   <ProjectDisplay data={p} />
@@ -250,7 +250,7 @@ const Project = () => {
 
             <div
               ref={topPaperRef}
-              className="relative z-30 h-[70vh] xl:h-[75vh] bg-[#fdfaf3] rounded-3xl shadow-2xl overflow-hidden"
+              className="relative z-30 h-[70vh] xl:h-[75vh] bg-[#fdfaf3] rounded-3xl shadow-2xl overflow-hidden text-[#4B3200]"
               style={{
                 transformStyle: "preserve-3d",
                 backfaceVisibility: "hidden",
@@ -261,7 +261,7 @@ const Project = () => {
                 <div
                   key={`top-${p.id}`}
                   ref={(el) => (topPageRefs.current[i] = el)}
-                  className="absolute inset-0"
+                  className="absolute inset-0 font-Gloock font-extralight"
                 >
                   <ProjectDisplay data={p} />
                 </div>
@@ -276,6 +276,7 @@ const Project = () => {
                 setActiveIndex={handleTabClick}
                 onSelect={handleTabClick}
                 titles={projectData.map((p) => p.title)}
+                className="text-[#4B3200]"
               />
             </div>
           </div>

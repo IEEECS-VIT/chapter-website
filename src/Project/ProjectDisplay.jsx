@@ -15,11 +15,12 @@ const ProjectDisplay = ({ data }) => {
   return (
     <div
       ref={containerRef}
-      className="flex flex-wrap pl-4 xl:pl-0 mt-6 md:mt-8 xl:mt-10 relative items-start text-black"
+      className="flex flex-wrap pl-4 xl:pl-0 mt-6 md:mt-8 xl:mt-10 relative items-start text-[#4B3200]"
     >
+      {/* LEFT SECTION */}
       <div className="w-full xl:w-1/2 px-4 xl:pl-20">
         <div className="relative w-full">
-          <h2 className="text-3xl md:text-6xl xl:text-6xl text-center xl:text-left font-bold">
+          <h2 className="text-3xl md:text-6xl xl:text-6xl text-center xl:text-left font-bold text-[#4B3200]">
             {data.title}
           </h2>
         </div>
@@ -37,11 +38,12 @@ const ProjectDisplay = ({ data }) => {
           />
         </div>
 
-        <div className="mt-2 md:mt-4 xl:mt-4 text-xs md:text-lg xl:text-sm">
+        <div className="mt-2 md:mt-4 xl:mt-4 text-xs md:text-lg xl:text-sm text-[#4B3200]">
           <p className="whitespace-pre-line">{data.text1}</p>
         </div>
       </div>
 
+      {/* RIGHT SECTION */}
       <div className="w-full xl:w-1/2 px-4 xl:px-15">
         <div className="relative w-28 h-20 xl:w-40 xl:h-40 mx-auto mt-2 xl:mt-10">
           <div className="absolute -right-20 md:-right-60 xl:-right-20 md:mt-4 xl:top-1/2 xl:left-1/2 xl:-translate-x-1/2 xl:-translate-y-1/2">
@@ -65,7 +67,8 @@ const ProjectDisplay = ({ data }) => {
             alt="clip2"
             className="absolute -top-8 md:-top-24 xl:-top-14 -left-4 md:-left-8 xl:-left-8 w-[16vw] md:w-[14vw] xl:w-[8vw]"
           />
-          <div className="absolute inset-0 p-2 xl:p-4 mt-4 xl:mt-8 text-xs md:text-lg xl:text-sm whitespace-pre-line text-black">
+          {/* Changed text-black → text-[#4B3200] */}
+          <div className="absolute inset-0 p-2 xl:p-4 mt-4 xl:mt-8 text-xs md:text-lg xl:text-sm whitespace-pre-line text-[#4B3200]">
             <p>{data.text2}</p>
           </div>
         </div>

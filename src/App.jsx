@@ -30,31 +30,42 @@ const App = () => {
     }, "<");
   };
 
-  useEffect(() => {
+    useEffect(() => {
+    const body = document.body;
+    const html = document.documentElement;
+
     if (isAnimating) {
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.touchAction = "none";
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      const scrollY = window.scrollY;
+      body.style.position = "fixed";
+      body.style.top = `-${scrollY}px`;
+      body.style.left = "0";
+      body.style.right = "0";
+      body.style.overflow = "hidden";
+      body.style.touchAction = "none";
     } else {
-      document.body.style.overflow = "auto";
-      document.documentElement.style.overflow = "auto";
-      document.body.style.touchAction = "auto";
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      const scrollY = -parseInt(body.style.top || "0", 10);
+      body.style.position = "";
+      body.style.top = "";
+      body.style.left = "";
+      body.style.right = "";
+      body.style.overflow = "";
+      body.style.touchAction = "";
+      window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
     }
+
     return () => {
-      document.body.style.overflow = "auto";
-      document.documentElement.style.overflow = "auto";
-      document.body.style.touchAction = "auto";
+      body.style.position = "";
+      body.style.top = "";
+      body.style.left = "";
+      body.style.right = "";
+      body.style.overflow = "";
+      body.style.touchAction = "";
     };
   }, [isAnimating]);
 
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
-    <div className="min-w-screen min-h-screen overflow-x-hidden relative">
+    <div className="min-w-screen min-h-screen overflow-x-hidden relative bg-black">
       {isAnimating && (
         <div
           ref={preloaderRef}
@@ -65,16 +76,11 @@ const App = () => {
       )}
 
       <HeroSection contentRef={heroContentRef} />
-
       <Board />
+      <div className="hidden md:flex min-h-screen bg-neutral-800 items-center justify-center">
+      <Gallery />
+    </div>
 
-    
-          <EventsPage />
-        
-
-      <div className="min-h-screen bg-neutral-800 flex items-center justify-center">
-        <Gallery />
-      </div>
 
       <Footer />
     </div>
