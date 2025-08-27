@@ -1,139 +1,56 @@
 "use client"
 
-import { useState, useEffect, useRef, useCallback } from "react"
+import React, { useEffect, useLayoutEffect, useRef, useState, useCallback } from "react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import bgImage from "./bg.png"
 
+gsap.registerPlugin(ScrollTrigger)
+
 const BoardGrid = () => {
-  const [scrollYState, setScrollYState] = useState(0)
-  const [r1c2Settled, setR1c2Settled] = useState(false)
-  const [r1c4Settled, setR1c4Settled] = useState(false)
-  const [r2c3Settled, setR2c3Settled] = useState(false)
-  const [r3c2Settled, setR3c2Settled] = useState(false)
+  // ---------------- preserved state & refs ----------------
   const [isMobile, setIsMobile] = useState(false)
   const [isTablet, setIsTablet] = useState(false)
-  const [mobileScrollProgress, setMobileScrollProgress] = useState(0)
-  const [allCardsCycled, setAllCardsCycled] = useState(false)
-  const [componentOffsetTop, setComponentOffsetTop] = useState(0)
-  const [mobileAnimationProgress, setMobileAnimationProgress] = useState(0)
-  const [isInMobileBoardSection, setIsInMobileBoardSection] = useState(false)
-  const [isHoveringCards, setIsHoveringCards] = useState(false)
-  const [isSticky, setIsSticky] = useState(false)
-  const [horizontalProgress, setHorizontalProgress] = useState(0)
 
+  const componentRef = useRef(null)
+  const mobileContainerRef = useRef(null)
+
+  // desktop refs preserved
   const r1c2Ref = useRef(null)
   const r1c4Ref = useRef(null)
   const r2c3Ref = useRef(null)
   const r3c2Ref = useRef(null)
-  const mobileContainerRef = useRef(null)
-  const componentRef = useRef(null)
-  const lastScrollY = useRef(0)
-  const scrollBlocked = useRef(false)
-  const scrollDirection = useRef(0)
-  const accumulatedScroll = useRef(0)
-  const mobileScrollStart = useRef(0)
-  const accumulatedScrollDelta = useRef(0)
-  const stickyStartPosition = useRef(0)
 
+  const [componentOffsetTop, setComponentOffsetTop] = useState(0)
+
+  // ---------------- responsive checks ----------------
   useEffect(() => {
-    const checkScreenSize = () => {
+    const check = () => {
       setIsMobile(window.innerWidth < 768)
       setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
     }
-
-    checkScreenSize()
-    window.addEventListener("resize", checkScreenSize)
-    return () => window.removeEventListener("resize", checkScreenSize)
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
   }, [])
 
   useEffect(() => {
-    const updateComponentOffset = () => {
-      if (componentRef.current) {
-        const rect = componentRef.current.getBoundingClientRect()
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-        setComponentOffsetTop(rect.top + scrollTop)
-
-        if (isMobile) {
-          mobileScrollStart.current = rect.top + scrollTop
-        }
-      }
+    const upd = () => {
+      if (!componentRef.current) return
+      const rect = componentRef.current.getBoundingClientRect()
+      const top = (window.pageYOffset || document.documentElement.scrollTop) + rect.top
+      setComponentOffsetTop(top)
     }
-
-    updateComponentOffset()
-    window.addEventListener("resize", updateComponentOffset)
-
-    const timeout = setTimeout(updateComponentOffset, 100)
-
+    upd()
+    window.addEventListener("resize", upd)
+    const t = setTimeout(upd, 120)
     return () => {
-      window.removeEventListener("resize", updateComponentOffset)
-      clearTimeout(timeout)
+      window.removeEventListener("resize", upd)
+      clearTimeout(t)
     }
   }, [isMobile])
 
-  useEffect(() => {
-    if (!isMobile) return
-
-    const handleMobileScroll = (e) => {
-      const currentScrollY = window.scrollY
-      const componentHeight = componentRef.current?.offsetHeight || 0
-      const viewportHeight = window.innerHeight
-      const sectionStart = mobileScrollStart.current
-
-      if (currentScrollY < sectionStart) {
-        setIsSticky(false)
-        setHorizontalProgress(0)
-        accumulatedScrollDelta.current = 0
-        return
-      }
-
-      if (currentScrollY >= sectionStart && horizontalProgress < 100) {
-        if (!isSticky) {
-          setIsSticky(true)
-          stickyStartPosition.current = currentScrollY
-          accumulatedScrollDelta.current = 0
-        }
-
-        e.preventDefault()
-
-        const scrollDelta = currentScrollY - stickyStartPosition.current
-        accumulatedScrollDelta.current = Math.max(0, scrollDelta)
-        
-       
-        const maxScrollForAnimation = viewportHeight * 1.5 
-        const progress = Math.min(100, (accumulatedScrollDelta.current / maxScrollForAnimation) * 100)
-        setHorizontalProgress(progress)
-        setMobileAnimationProgress(progress)
-
-        window.scrollTo(0, sectionStart)
-        return
-      }
-
-      if (horizontalProgress >= 100) {
-        setIsSticky(false)
-      }
-    }
-
-    const handleWheel = (e) => {
-      if (isSticky && horizontalProgress < 100) {
-        e.preventDefault()
-
-        accumulatedScrollDelta.current += Math.abs(e.deltaY) * 0.5
-
-        const maxScrollForAnimation = window.innerHeight * 1.5
-        const progress = Math.min(100, (accumulatedScrollDelta.current / maxScrollForAnimation) * 100)
-        setHorizontalProgress(progress)
-        setMobileAnimationProgress(progress)
-      }
-    }
-
-    window.addEventListener("scroll", handleMobileScroll, { passive: false })
-    window.addEventListener("wheel", handleWheel, { passive: false })
-
-    return () => {
-      window.removeEventListener("scroll", handleMobileScroll)
-      window.removeEventListener("wheel", handleWheel)
-    }
-  }, [isMobile, isSticky, horizontalProgress])
-
+  // ---------------- desktop animation loop (unchanged) ----------------
   const getResponsiveValues = useCallback(() => {
     const baseMultiplier = isMobile ? 0.6 : isTablet ? 0.8 : 1
     const translateMultiplier = isMobile ? 0.7 : isTablet ? 0.85 : 1
@@ -162,15 +79,12 @@ const BoardGrid = () => {
   }, [isMobile, isTablet, componentOffsetTop])
 
   const animateCards = useCallback(() => {
-    const currentScrollY = window.scrollY
-
     if (isMobile) {
       requestAnimationFrame(animateCards)
       return
     }
-
     const values = getResponsiveValues()
-
+    const currentScrollY = window.scrollY
     const componentStart = componentOffsetTop - 500
     const componentEnd = componentOffsetTop + 2000
 
@@ -182,10 +96,8 @@ const BoardGrid = () => {
     if (r1c2Ref.current) {
       const { startOffset, settlePoint } = values.r1c2
       let translateY = startOffset
-
-      if (currentScrollY >= settlePoint) {
-        translateY = 0
-      } else if (currentScrollY > componentOffsetTop) {
+      if (currentScrollY >= settlePoint) translateY = 0
+      else if (currentScrollY > componentOffsetTop) {
         const progress = (currentScrollY - componentOffsetTop) / (settlePoint - componentOffsetTop)
         translateY = startOffset * (1 - progress)
       }
@@ -194,11 +106,9 @@ const BoardGrid = () => {
 
     if (r1c4Ref.current) {
       const { startScrollPoint, endScrollPoint, maxTranslate } = values.r1c4
-
       let translateY = 0
-      if (currentScrollY >= endScrollPoint) {
-        translateY = maxTranslate
-      } else if (currentScrollY > startScrollPoint) {
+      if (currentScrollY >= endScrollPoint) translateY = maxTranslate
+      else if (currentScrollY > startScrollPoint) {
         const progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
         translateY = maxTranslate * progress
       }
@@ -207,11 +117,9 @@ const BoardGrid = () => {
 
     if (r2c3Ref.current) {
       const { startScrollPoint, endScrollPoint, maxTranslate } = values.r2c3
-
       let translateY = 0
-      if (currentScrollY >= endScrollPoint) {
-        translateY = maxTranslate
-      } else if (currentScrollY > startScrollPoint) {
+      if (currentScrollY >= endScrollPoint) translateY = maxTranslate
+      else if (currentScrollY > startScrollPoint) {
         const progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
         translateY = maxTranslate * progress
       }
@@ -220,11 +128,9 @@ const BoardGrid = () => {
 
     if (r3c2Ref.current) {
       const { startScrollPoint, endScrollPoint, maxTranslate } = values.r3c2
-
       let translateY = 0
-      if (currentScrollY >= endScrollPoint) {
-        translateY = maxTranslate
-      } else if (currentScrollY > startScrollPoint) {
+      if (currentScrollY >= endScrollPoint) translateY = maxTranslate
+      else if (currentScrollY > startScrollPoint) {
         const progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
         translateY = maxTranslate * progress
       }
@@ -236,47 +142,152 @@ const BoardGrid = () => {
 
   useEffect(() => {
     requestAnimationFrame(animateCards)
-
-    const handleScroll = () => {
-      setScrollYState(window.scrollY)
-      lastScrollY.current = window.scrollY
-    }
-
-    window.addEventListener("scroll", handleScroll, { passive: true })
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
+    const onScroll = () => {}
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
   }, [animateCards])
 
-  useEffect(() => {
-    const values = getResponsiveValues()
+  // ---------------- robust GSAP mobile horizontal scroll ----------------
+  useLayoutEffect(() => {
+    // We'll create and manage tween & trigger ourselves so we can rebuild on resize/RO
+    let tween = null
+    let trigger = null
+    let resizeObserver = null
 
-    if (scrollYState >= values.r1c2.settlePoint && !r1c2Settled) {
-      setR1c2Settled(true)
-    } else if (scrollYState < values.r1c2.settlePoint && r1c2Settled) {
-      setR1c2Settled(false)
+    const setup = async () => {
+      const section = componentRef.current
+      const container = mobileContainerRef.current
+      if (!section || !container) return
+
+      // ensure container layout won't wrap
+      container.style.display = "flex"
+      container.style.flexWrap = "nowrap"
+
+      // Wait for images inside container to load (so scrollWidth is correct)
+      const imgs = Array.from(container.querySelectorAll("img"))
+      const loadPromises = imgs.map((img) => {
+        if (img.complete && img.naturalWidth !== 0) return Promise.resolve()
+        return new Promise((resolve) => {
+          const onLoad = () => {
+            img.removeEventListener("load", onLoad)
+            img.removeEventListener("error", onLoad)
+            resolve()
+          }
+          img.addEventListener("load", onLoad)
+          img.addEventListener("error", onLoad)
+          // fallback: if image already has naturalWidth later, resolve after short delay
+          setTimeout(resolve, 300)
+        })
+      })
+      // Wait for all (with a safe timeout)
+      await Promise.all(loadPromises)
+
+      // small nextTick to ensure layout settled
+      await new Promise((r) => requestAnimationFrame(r))
+
+      // measure
+      const containerWidth = Math.ceil(container.scrollWidth)
+      const vw = window.innerWidth
+      const buffer = 24
+      const distance = Math.max(0, containerWidth - vw + buffer)
+
+      // cleanup old instances before creating new
+      if (tween) {
+        tween.kill()
+        tween = null
+      }
+      if (trigger) {
+        trigger.kill()
+        trigger = null
+      }
+
+      if (distance <= 0) {
+        // nothing to animate
+        return
+      }
+
+      // create fromTo tween driven by ScrollTrigger (scrub:true for exact mapping)
+      tween = gsap.fromTo(
+        container,
+        { x: 0 },
+        {
+          x: -distance,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: () => `+=${distance + window.innerHeight}`,
+            scrub: true, // exact mapping; change to 0.6 for smoothing
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              // optional: you can watch self.progress here if you need UI
+            },
+            onRefresh: () => {
+              // no-op; invalidateOnRefresh will re-evaluate
+            },
+          },
+        }
+      )
+
+      // store the trigger reference
+      const st = tween.scrollTrigger
+      if (st) trigger = st
     }
 
-    if (scrollYState >= values.r1c4.endScrollPoint && !r1c4Settled) {
-      setR1c4Settled(true)
-    } else if (scrollYState < values.r1c4.endScrollPoint && r1c4Settled) {
-      setR1c4Settled(false)
-    }
+    // initial setup only on mobile viewport
+    const mm = gsap.matchMedia()
+    mm.add("(max-width: 767px)", () => {
+      setup()
 
-    if (scrollYState >= values.r2c3.endScrollPoint && !r2c3Settled) {
-      setR2c3Settled(true)
-    } else if (scrollYState < values.r2c3.endScrollPoint && r2c3Settled) {
-      setR2c3Settled(false)
-    }
+      // rebuild when container resize (cards changed or fonts loaded etc.)
+      if (mobileContainerRef.current) {
+        resizeObserver = new ResizeObserver(() => {
+          // re-setup to recalc distance and recreate tween
+          try {
+            // destroy old
+            if (tween) tween.kill()
+            if (trigger) trigger.kill()
+          } catch (e) {}
+          setup()
+          ScrollTrigger.refresh()
+        })
+        resizeObserver.observe(mobileContainerRef.current)
+      }
 
-    if (scrollYState >= values.r3c2.endScrollPoint && !r3c2Settled) {
-      setR3c2Settled(true)
-    } else if (scrollYState < values.r3c2.endScrollPoint && r3c2Settled) {
-      setR3c2Settled(false)
-    }
-  }, [scrollYState, r1c2Settled, r1c4Settled, r2c3Settled, r3c2Settled, getResponsiveValues])
+      // also rebuild on window resize
+      const onResize = () => {
+        try {
+          if (tween) tween.kill()
+          if (trigger) trigger.kill()
+        } catch (e) {}
+        setup()
+        ScrollTrigger.refresh()
+      }
+      window.addEventListener("resize", onResize)
 
+      return () => {
+        // cleanup media-query specific
+        window.removeEventListener("resize", onResize)
+        if (resizeObserver && mobileContainerRef.current) resizeObserver.unobserve(mobileContainerRef.current)
+        if (tween) tween.kill()
+        if (trigger) trigger.kill()
+      }
+    })
+
+    // cleanup matchMedia when effect unmounts
+    return () => {
+      try {
+        mm.revert()
+      } catch (e) {}
+      if (resizeObserver && mobileContainerRef.current) resizeObserver.unobserve(mobileContainerRef.current)
+      if (tween) tween.kill()
+      if (trigger) trigger.kill()
+    }
+  }, [isMobile])
+
+  // ---------------- UI data + render ----------------
   const cardClass =
     "relative w-full aspect-square bg-gray-900 overflow-hidden shadow-2xl flex items-center justify-center font-bold text-lg sm:text-xl md:text-2xl max-w-[320px]"
 
@@ -301,43 +312,20 @@ const BoardGrid = () => {
   const createCardPairs = () => {
     const pairs = []
     for (let i = 0; i < allCards.length; i += 2) {
-      pairs.push({
-        first: allCards[i],
-        second: i + 1 < allCards.length ? allCards[i + 1] : null,
-      })
+      pairs.push({ first: allCards[i], second: i + 1 < allCards.length ? allCards[i + 1] : null })
     }
     return pairs
   }
 
   if (isMobile) {
     const cardPairs = createCardPairs()
-    const cardWidth = 265
-    const gapWidth = 32
-    const pairWidth = cardWidth + gapWidth
-    const totalWidth = cardPairs.length * pairWidth
-    const textWidth = 80
-
-    const maxTranslate = totalWidth + textWidth - window.innerWidth + 100
-    const normalizedProgress = horizontalProgress / 100
-    const translateX = -normalizedProgress * maxTranslate
-
     return (
-      
       <div ref={componentRef} className="bg-black h-[100vh] flex relative">
-        <div
-          className={`flex-1 flex items-center justify-start overflow-hidden ${isSticky ? "fixed top-0 left-0 right-0" : ""} h-screen`}
-        >
+        <div className="flex-1 flex items-center justify-start overflow-hidden h-screen">
           <div
             ref={mobileContainerRef}
-            
-            className="flex gap-8 ease-out will-change-transform"
-            style={{
-              transform: `translateX(${translateX}px)`,
-            }}
-            onMouseEnter={() => setIsHoveringCards(true)}
-            onMouseLeave={() => setIsHoveringCards(false)}
-            onTouchStart={() => setIsHoveringCards(true)}
-            onTouchEnd={() => setTimeout(() => setIsHoveringCards(false), 100)}
+            className="flex gap-8 ease-out will-change-transform flex-nowrap"
+            // styles managed by GSAP; touch handlers not required
           >
             <div className="flex items-center justify-center w-[80px] flex-shrink-0 ml-2">
               <div className="text-yellow-400 text-3xl md:text-4xl font-extrabold uppercase tracking-wider transform -rotate-90 whitespace-nowrap">
@@ -370,11 +358,9 @@ const BoardGrid = () => {
     )
   }
 
+  // desktop/tablet layout unchanged (kept long for parity)
   return (
-    <div
-      ref={componentRef}
-      className="min-h-[200vh] bg-black flex flex-col items-center justify-center py-6 sm:py-8 md:py-10 overflow-x-hidden"
-    >
+    <div ref={componentRef} className="min-h-[200vh] bg-black flex flex-col items-center justify-center py-6 sm:py-8 md:py-10 overflow-x-hidden">
       <div className="h-[10vh] sm:h-[15vh] md:h-[20vh]" />
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8" style={{ minHeight: "140vh" }}>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 justify-items-start">
@@ -433,11 +419,9 @@ const BoardGrid = () => {
 
           <div></div>
 
-          <div className="col-span-full board-date 
-    text-yellow-400 text-3xl sm:text-4xl md:text-5xl lg:text-6xl 
-    font-extrabold py-2 sm:py-3 md:py-4 uppercase text-left">
-  25–26
-</div>
+          <div className="col-span-full board-date text-yellow-400 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold py-2 sm:py-3 md:py-4 uppercase text-left">
+            25–26
+          </div>
 
           <div className={cardClass}>
             <div className="absolute w-full h-full">
@@ -468,7 +452,8 @@ const BoardGrid = () => {
             </div>
             <div className="relative z-10 text-white text-center px-2">Demo Name</div>
           </div>
-                  <div></div>
+
+          <div></div>
 
           <div className={`${cardClass} hidden sm:flex`}>
             <div className="absolute w-full h-full">
@@ -476,8 +461,6 @@ const BoardGrid = () => {
             </div>
             <div className="relative z-10 text-white text-center px-2">Demo Name</div>
           </div>
-
-  
 
           <div className={`${cardClass} hidden lg:flex`}>
             <div className="absolute w-full h-full">
