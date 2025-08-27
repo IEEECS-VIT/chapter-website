@@ -1,18 +1,18 @@
-/** @type {import('tailwindcss').Config} **/
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+// tailwind.config.js
+module.exports = {
+  content: ["./src/**/*.{js,jsx,ts,tsx}"], // make sure paths are correct
   theme: {
     extend: {
-      fontFamily: {
-        SpecialElite: ['"Special Elite"', 'cursive'],
-        Cinzel: ['Cinzel', 'cursive'],
-        McLaren: ['McLaren', 'cursive'], 
-        Gloock: ['Gloock','cursive']
+      keyframes: {
+        scroll: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+      },
+      animation: {
+        scroll: "scroll 30s linear infinite",
       },
     },
   },
   plugins: [],
-}
+};

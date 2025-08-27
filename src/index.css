@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Karantina:wght@300;400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=McLaren&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,18 +9,15 @@
 html, body {
   overflow-x: hidden;
 }
-
-@keyframes scrollRight {
+@keyframes scroll {
   0% {
-    transform: translateX(-50%);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(0%);
+    transform: translateX(-50%);
   }
 }
 
-.animate-faster-scroll-right {
-  animation: scrollRight 60s linear infinite;
-  display: flex;
-  width: max-content;
+.animate-scroll {
+  animation: scroll 30s linear infinite;
 }
