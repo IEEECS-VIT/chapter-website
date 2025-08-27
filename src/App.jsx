@@ -5,7 +5,7 @@ import Board from "./board_section/board";
 import EventsPage from "./eventsection/eventpage";
 import Gallery from "./gallery/FilmstripGallery";
 import Footer from "./footer/Contact";
-import PreLoader from "./Preloader/Preloader";
+
 
 const App = () => {
   const [isAnimating, setIsAnimating] = useState(true);
