@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ieeeLogo from "./ieeelogo.png";
-import fb from "./fb.png";
-import lin from "./lin.png";
-import ins from "./ins.png";
-import x from "./x.png";
+
 
 const Contact = () => {
   const [isMobile, setIsMobile] = useState(false);
