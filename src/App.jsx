@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import HeroSection from './homepage/HeroSection';
 import Board from "./board_section/board";
+import Mobile from "./board_section/mobile";
 import EventsPage from "./eventsection/eventpage";
 import Gallery from "./gallery/FilmstripGallery";
 import Footer from "./footer/Contact";
@@ -9,8 +10,16 @@ import PreLoader from "./Preloader/PreLoader";
 
 const App = () => {
   const [isAnimating, setIsAnimating] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const preloaderRef = useRef(null);
   const heroContentRef = useRef(null);
+
+  useEffect(() => {
+    const checkScreenSize = () => setIsMobile(window.innerWidth <= 768);
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   const handleEnter = () => {
     const tl = gsap.timeline({
@@ -18,22 +27,12 @@ const App = () => {
       onComplete: () => setIsAnimating(false),
     });
 
-    tl.to(preloaderRef.current, {
-      y: "-100%",
-      duration: 1,
-    });
-
-    tl.from(heroContentRef.current, {
-      y: 150,
-      opacity: 0,
-      duration: 1.5,
-    }, "<");
+    tl.to(preloaderRef.current, { y: "-100%", duration: 1 });
+    tl.from(heroContentRef.current, { y: 150, opacity: 0, duration: 1.5 }, "<");
   };
 
-    useEffect(() => {
+  useEffect(() => {
     const body = document.body;
-    const html = document.documentElement;
-
     if (isAnimating) {
       const scrollY = window.scrollY;
       body.style.position = "fixed";
@@ -52,7 +51,6 @@ const App = () => {
       body.style.touchAction = "";
       window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
     }
-
     return () => {
       body.style.position = "";
       body.style.top = "";
@@ -63,26 +61,23 @@ const App = () => {
     };
   }, [isAnimating]);
 
-
   return (
     <div className="min-w-screen min-h-screen overflow-x-hidden relative bg-black">
       {isAnimating && (
-        <div
-          ref={preloaderRef}
-          className="fixed inset-0 z-50 bg-black flex items-center justify-center pointer-events-auto"
-        >
+        <div ref={preloaderRef} className="fixed inset-0 z-50 bg-black flex items-center justify-center pointer-events-auto">
           <PreLoader onEnter={handleEnter} />
         </div>
       )}
-
-      <HeroSection contentRef={heroContentRef} />
-      <Board />
-      <div className="hidden md:flex min-h-screen bg-neutral-800 items-center justify-center">
-      <Gallery />
-    </div>
-
-
-      <Footer />
+      <section className="relative w-full">
+        <HeroSection contentRef={heroContentRef} />
+      </section>
+      <section className="w-full h-[10px] pointer-events-none" />
+      <section className="relative w-full">
+        {isMobile ? <Mobile /> : <Board />}
+      </section>
+      <section className="hidden md:flex min-h-screen bg-neutral-800 items-center justify-center">
+        <Gallery />
+      </section>
     </div>
   );
 };
