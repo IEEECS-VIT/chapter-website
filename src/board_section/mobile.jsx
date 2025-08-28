@@ -5,6 +5,7 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import bgImage from "./bg.png"
 import Footer from "../footer/Contact"
+import Buffer from "../board_section/buffer";
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -19,7 +20,6 @@ const MobileBoard = () => {
     "Demo Name 13", "Demo Name 14", "Demo Name 15",
   ]
 
-  // Pair cards vertically
   const createCardPairs = () => {
     const pairs = []
     for (let i = 0; i < allCards.length; i += 2) {
@@ -43,11 +43,9 @@ const MobileBoard = () => {
           const viewportWidth = window.innerWidth
           const scrollDistance = totalWidth - viewportWidth
 
-          // Set wrapper height dynamically
           wrapper.style.height = `${container.scrollWidth/2.4}px`;
 
 
-          // Horizontal scroll animation with bidirectional pinning
           gsap.to(container, {
             x: -scrollDistance,
             ease: "none",
@@ -55,7 +53,7 @@ const MobileBoard = () => {
               trigger: wrapper,
               start: "top top",
               end: () => `+=${scrollDistance}`,
-              scrub: 0.3,
+              scrub: 1.3,
               pin: true,
               anticipatePin: 1,
               invalidateOnRefresh: true,
@@ -72,23 +70,22 @@ const MobileBoard = () => {
 
   return (
     <div>
-      {/* Horizontal Scroll Section */}
+
       <div ref={wrapperRef} className="relative w-full overflow-hidden bg-black">
         <div
           ref={containerRef}
           className="flex items-center gap-12 h-screen pl-8 pr-8"
         >
-          {/* Side Label */}
+
           <div className="flex-shrink-0 flex items-center justify-center w-6">
             <div className="text-yellow-400 text-4xl font-extrabold uppercase tracking-wider transform -rotate-90 whitespace-nowrap">
               THE BOARD 25–26
             </div>
           </div>
 
-          {/* Cards */}
           {cardPairs.map((pair, index) => (
             <div key={index} className="flex flex-col gap-8 flex-shrink-0">
-              {/* First Card */}
+
               <div className="relative w-[265px] h-[300px] bg-white rounded-lg shadow-2xl overflow-hidden flex items-center justify-center font-bold text-xl">
                 <img
                   src={bgImage || "/placeholder.svg"}
@@ -100,7 +97,6 @@ const MobileBoard = () => {
                 </div>
               </div>
 
-              {/* Second Card */}
               {pair.second && (
                 <div className="relative w-[265px] h-[300px] bg-white rounded-lg shadow-2xl overflow-hidden flex items-center justify-center font-bold text-xl">
                   <img
