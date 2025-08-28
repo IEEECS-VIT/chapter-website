@@ -5,7 +5,6 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import bgImage from "./bg.png"
 import Footer from "../footer/Contact"
-import Buffer from "../board_section/buffer";
 
 gsap.registerPlugin(ScrollTrigger)
 

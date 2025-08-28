@@ -75,7 +75,7 @@ const App = () => {
         <HeroSection contentRef={heroContentRef} isMobile={isMobile} />
       </section>
 
-    <Events />
+        <Events />
 
       <section className="relative w-full mt-2">
         {isMobile ? (
