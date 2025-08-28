@@ -3,6 +3,7 @@ import gsap from "gsap";
 import HeroSection from './homepage/HeroSection';
 import Board from "./board_section/board";
 import Mobile from "./board_section/mobile";
+import Buffer from "./board_section/buffer";
 import EventsPage from "./eventsection/eventpage";
 import Gallery from "./gallery/FilmstripGallery";
 import Footer from "./footer/Contact";
@@ -68,15 +69,23 @@ const App = () => {
           <PreLoader onEnter={handleEnter} />
         </div>
       )}
+
       <section className="relative w-full">
         <HeroSection contentRef={heroContentRef} />
       </section>
-      <section className="w-full h-[10px] pointer-events-none" />
+
+      <Buffer />
+
       <section className="relative w-full">
         {isMobile ? <Mobile /> : <Board />}
       </section>
+
       <section className="hidden md:flex min-h-screen bg-neutral-800 items-center justify-center">
         <Gallery />
+      </section>
+
+      <section className="hidden xl:block">
+        <Footer />
       </section>
     </div>
   );
