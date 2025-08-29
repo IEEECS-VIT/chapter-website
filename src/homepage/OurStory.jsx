@@ -31,12 +31,12 @@ const OurStory = () => {
       </div>
 
       {isMobile ? (
-        <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-16 pt-28">
+        <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-16 pt-10">
           <h1
             className="text-[#0b0b0a] tracking-wide mt-6 font-semibold translate-y-5"
             style={{
               fontFamily: "New Times Roman,serif",
-              fontSize: "clamp(4.2rem, 8vw, 50px)",
+              fontSize: "clamp(4.1rem, 8vw, 50px)",
               lineHeight: "1.0",
             }}
           >

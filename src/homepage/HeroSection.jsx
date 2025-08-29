@@ -48,7 +48,7 @@ const HeroSection = ({ contentRef }) => {
               trigger: ourStoryWrapperRef.current,
               start: "top top",
               end: "+=1250",
-              scrub: 3,
+              scrub: 2.5,
               pin: true,
               anticipatePin: 1
             }
@@ -67,7 +67,7 @@ const HeroSection = ({ contentRef }) => {
               x: "-120%",
               transformOrigin: "left center",
               ease: "power4.inOut",
-              duration: 2
+              duration: 2.5
             },
             "<"
           );
@@ -78,7 +78,7 @@ const HeroSection = ({ contentRef }) => {
               x: "120%",
               transformOrigin: "right center",
               ease: "power4.inOut",
-              duration: 2
+              duration: 2.5
             },
             "<"
           );
@@ -86,13 +86,13 @@ const HeroSection = ({ contentRef }) => {
 
         if (isMobile) {
           gsap.to([mobileHeroRef.current, mobileContentRef.current], {
-            y: -window.innerHeight * 1.5,
+            y: -window.innerHeight * 1.3,
             ease: "power1.inOut",
             scrollTrigger: {
               trigger: ourStoryWrapperRef.current,
               start: "top top",
               end: "+=1200",
-              scrub: 1.5,
+              scrub: 1.2,
               pin: true,
               anticipatePin: 1
             }
@@ -155,7 +155,7 @@ const HeroSection = ({ contentRef }) => {
             >
               
               <h1
-                className="text-white mt-14"
+                className="text-white mt-12"
                 style={{
                   fontSize: "clamp(11rem, 10vw, 12rem)",
                   fontFamily: "New Times Roman",

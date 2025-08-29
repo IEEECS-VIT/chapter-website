@@ -6,7 +6,11 @@ const SketchfabModel = ({
   width = "100%",
   maxWidth,
   showCredits = false,
-  autoLoad = true,
+  autostart = 1,
+  preload = 1,
+  autospin = 1,
+  transparent = 1,
+  maskColor = "#F19F01",
   iframeProps = {},
 }) => {
   const wrapperRef = useRef(null);
@@ -14,35 +18,12 @@ const SketchfabModel = ({
   const [apiScriptLoaded, setApiScriptLoaded] = useState(false);
   const [initialized, setInitialized] = useState(false);
 
-  const embedParams = [
-    "autostart=1",
-    "preload=1",
-    "autospin=0",
-    "ui_controls=0",
-    "ui_infos=0",
-    "ui_annotations=0",
-    "ui_help=0",
-    "ui_stop=0",
-    "ui_vr=0",
-    "ui_share=0",
-    "ui_hint=0",
-    "ui_settings=0",
-    "ui_inspector=0",
-    "ui_watermark=0",
-    "ui_watermark_link=0",
-    "transparent=1",
-  ].join("&");
-
-  const embedSrc = `https://sketchfab.com/models/${modelId}/embed?${embedParams}`;
-
   useEffect(() => {
     if (typeof window === "undefined") return;
-
     if (window.Sketchfab) {
       setApiScriptLoaded(true);
       return;
     }
-
     const ID = "sketchfab-viewer-api-script";
     if (document.getElementById(ID)) {
       const intv = setInterval(() => {
@@ -53,39 +34,26 @@ const SketchfabModel = ({
       }, 100);
       return () => clearInterval(intv);
     }
-
     const script = document.createElement("script");
     script.id = ID;
     script.src = "https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js";
     script.async = true;
     script.onload = () => setApiScriptLoaded(true);
-    script.onerror = () => {
-      console.warn("Sketchfab Viewer API script failed to load — iframe fallback will still render.");
-      setApiScriptLoaded(false);
-    };
+    script.onerror = () => setApiScriptLoaded(false);
     document.body.appendChild(script);
-
   }, []);
 
   useEffect(() => {
-    if (!apiScriptLoaded) return;
-    if (!iframeRef.current) return;
-    if (initialized) return;
-
+    if (!apiScriptLoaded || initialized || !iframeRef.current) return;
     try {
       const Sketchfab = window.Sketchfab;
-      if (!Sketchfab) {
-        console.warn("Sketchfab API not available even though script loaded.");
-        return;
-      }
-
+      if (!Sketchfab) return;
       const client = new Sketchfab(iframeRef.current);
-
       client.init(modelId, {
-        autostart: 1,
-        autospin: 0,
-        preload: 1,
-        transparent: 1,
+        autostart,
+        autospin,
+        preload,
+        transparent,
         ui_controls: 0,
         ui_infos: 0,
         ui_annotations: 0,
@@ -98,38 +66,27 @@ const SketchfabModel = ({
         ui_inspector: 0,
         ui_watermark: 0,
         ui_watermark_link: 0,
-        success: function (api) {
-          try {
-            api.addEventListener("viewerready", function () {
-              try {
-                api.start(() => {
-                });
-              } catch (err) {
-                console.warn("api.start() error (may be account-limited):", err);
-              }
-            });
-
+        ui_general_controls: 0,
+        ui_fullscreen: 0,
+        success: (api) => {
+          api.addEventListener("viewerready", () => {
+            try {
+              api.start();
+            } catch {}
             try {
               if (typeof api.setBackground === "function") {
-                api.setBackground({ transparent: true }, function () {});
+                api.setBackground({ transparent: true }, () => {});
               }
-            } catch (err) {
-            }
-          } catch (e) {
-            console.warn("Sketchfab init viewerready/start error:", e);
-          }
+            } catch {}
+          });
         },
-        error: function () {
-          console.warn("Sketchfab client init error — iframe will still render.");
-        },
+        error: () => {},
       });
-
       setInitialized(true);
-    } catch (e) {
-      console.warn("Sketchfab Viewer API initialization error:", e);
+    } catch {
       setInitialized(true);
     }
-  }, [apiScriptLoaded, iframeRef, modelId, initialized]);
+  }, [apiScriptLoaded, initialized, modelId, autostart, autospin, preload, transparent]);
 
   const containerStyle = {
     width,
@@ -154,6 +111,26 @@ const SketchfabModel = ({
     background: "transparent",
   };
 
+  const maskRightStyle = {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    width: 44,
+    height: "100%",
+    background: maskColor,
+    pointerEvents: "auto",
+  };
+
+  const maskBottomLeftStyle = {
+    position: "absolute",
+    left: 0,
+    bottom: 0,
+    width: 34,
+    height: 33,
+    background: maskColor,
+    pointerEvents: "auto",
+  };
+
   return (
     <div ref={wrapperRef} style={containerStyle} aria-hidden={false}>
       <div style={spacerStyle} />
@@ -161,15 +138,13 @@ const SketchfabModel = ({
         <iframe
           ref={iframeRef}
           title={`Sketchfab model ${modelId}`}
-          src={embedSrc}
-          frameBorder="0"
-          allow="autoplay; fullscreen; vr; xr-spatial-tracking"
-          allowFullScreen
           style={iframeStyle}
+          allow="autoplay; vr; xr-spatial-tracking"
           {...iframeProps}
         />
+        <div style={maskRightStyle} />
+        <div style={maskBottomLeftStyle} />
       </div>
-
       {showCredits && (
         <p style={{ fontSize: 12, marginTop: 6, color: "#4A4A4A" }}>
           <a
