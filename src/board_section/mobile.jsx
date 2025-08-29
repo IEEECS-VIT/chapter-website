@@ -47,12 +47,12 @@ const MobileBoard = () => {
 
           gsap.to(container, {
             x: -scrollDistance,
-            ease: "none",
+            ease: "power3.inOut",
             scrollTrigger: {
               trigger: wrapper,
               start: "top top",
-              end: () => `+=${scrollDistance}`,
-              scrub: 1.3,
+              end: () => `+=${scrollDistance*1.4}`,
+              scrub: 2.4,
               pin: true,
               anticipatePin: 1,
               invalidateOnRefresh: true,

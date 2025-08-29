@@ -7,6 +7,7 @@ import Events from "./eventsection/eventpage";
 import Gallery from "./gallery/FilmstripGallery";
 import Footer from "./footer/Contact";
 import PreLoader from "./Preloader/PreLoader";
+import Project from "./Project/Project";
 
 const App = () => {
   const [isAnimating, setIsAnimating] = useState(true);
@@ -71,27 +72,25 @@ const App = () => {
         </div>
       )}
 
-      <section className="relative w-full">
+
+      <section className="relative min-h-screen w-full">
         <HeroSection contentRef={heroContentRef} isMobile={isMobile} />
       </section>
 
-        <Events />
-
-      <section className="relative w-full mt-2">
-        {isMobile ? (
-          <>
-            <Mobile />
-          </>
-        ) : (
-          <Board />
-        )}
+      <section className=" min-h-screen w-full">
+      <Events />
+      </section>
+      <section className="relative min-h-screen w-full">
+        {isMobile ? <Mobile /> : <Board />}
       </section>
 
-      <section className="hidden md:flex min-h-screen bg-neutral-800 items-center justify-center">
+      
+
+      <section className="hidden lg:relative lg:min-h-screen lg:w-full lg:flex bg-neutral-800">
         <Gallery />
       </section>
 
-      <section className="hidden xl:block">
+      <section className="hidden lg:relative lg:min-h-screen lg:w-full lg:flex">
         <Footer />
       </section>
     </div>

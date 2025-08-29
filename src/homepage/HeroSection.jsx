@@ -230,15 +230,7 @@ const HeroSection = ({ contentRef }) => {
         </div>
       </div>
 
-      <section id="projects" className="relative z-0">
-        <div className="w-full  min-h-screen bg-[#000000]">
-          <div className="mx-auto px-4 sm:px-6 lg:px-8 py-24 max-w-[95%] xl:max-w-[1400px]">
-            <React.Suspense fallback={<div>Loading Projects...</div>}>
-              <Project />
-            </React.Suspense>
-          </div>
-        </div>
-      </section>
+   
     </div>
   );
 };
