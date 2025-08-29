@@ -69,7 +69,7 @@ export default function EventsPage() {
       scrollTrigger: {
         trigger: pin,
         start: "top top",
-        end: `+=${totalScroll}`,
+        end: `+=${totalScroll*1.5}`,
         scrub: 2.2,
         pin: true,
         anticipatePin: 1,

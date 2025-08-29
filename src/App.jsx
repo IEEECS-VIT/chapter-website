@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
 import HeroSection from "./homepage/HeroSection";
 import Board from "./board_section/board";
 import Mobile from "./board_section/mobile";
@@ -9,11 +10,14 @@ import Footer from "./footer/Contact";
 import PreLoader from "./Preloader/PreLoader";
 import Project from "./Project/Project";
 
+gsap.registerPlugin(ScrollSmoother);
+
 const App = () => {
   const [isAnimating, setIsAnimating] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const preloaderRef = useRef(null);
   const heroContentRef = useRef(null);
+  const smootherRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -61,6 +65,24 @@ const App = () => {
     };
   }, [isAnimating]);
 
+  useEffect(() => {
+    if (!isAnimating) {
+      smootherRef.current = ScrollSmoother.create({
+        smooth: 0.5,
+        normalizeScroll: true, 
+        speed: 0.5,  
+         smoothTouch: 0.1,  
+        effects: true,
+      });
+    }
+    return () => {
+      if (smootherRef.current) {
+        smootherRef.current.kill();
+        smootherRef.current = null;
+      }
+    };
+  }, [isAnimating]);
+
   return (
     <div className="min-w-screen min-h-screen overflow-x-hidden relative bg-black">
       {isAnimating && (
@@ -72,25 +94,25 @@ const App = () => {
         </div>
       )}
 
-
-      <section className="relative min-h-screen w-full">
+      <section className="relative w-full">
         <HeroSection contentRef={heroContentRef} isMobile={isMobile} />
       </section>
 
-      <section className=" min-h-screen w-full">
-      <Events />
+      <section className="relative w-full">
+        <Project />
       </section>
-      <section className="relative min-h-screen w-full">
+
+      <Events />
+
+      <section className="relative w-full mt-2">
         {isMobile ? <Mobile /> : <Board />}
       </section>
 
-      
-
-      <section className="hidden lg:relative lg:min-h-screen lg:w-full lg:flex bg-neutral-800">
+      <section className="hidden md:flex min-h-screen bg-neutral-800 items-center justify-center">
         <Gallery />
       </section>
 
-      <section className="hidden lg:relative lg:min-h-screen lg:w-full lg:flex">
+      <section className="hidden xl:block">
         <Footer />
       </section>
     </div>

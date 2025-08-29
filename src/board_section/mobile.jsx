@@ -51,8 +51,8 @@ const MobileBoard = () => {
             scrollTrigger: {
               trigger: wrapper,
               start: "top top",
-              end: () => `+=${scrollDistance*1.4}`,
-              scrub: 2.4,
+              end: () => `+=${scrollDistance*2.1}`,
+              scrub: 1.4,
               pin: true,
               anticipatePin: 1,
               invalidateOnRefresh: true,

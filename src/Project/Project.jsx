@@ -33,9 +33,7 @@ const Project = () => {
   const liftMaxRef = useRef(24);
 
   const pages = projectData.length;
-  const flips = Math.max(pages - 1, 1);
-
-  const scrollContainerRef = useRef(null);
+  const flips = pages - 1;
 
   useLayoutEffect(() => {
     if (!assemblyRef.current || !topPaperRef.current || !bottomPaperRef.current)
@@ -57,133 +55,98 @@ const Project = () => {
     currentTopIdxRef.current = 0;
     currentBottomIdxRef.current = Math.min(1, pages - 1);
 
-    const timeout = setTimeout(() => {
-      ScrollTrigger.matchMedia({
-        "(min-width: 1025px)": function () {
-          triggerRef.current = ScrollTrigger.create({
-            trigger: assemblyRef.current,
-            start: "top top",
-            end: `+=${flips * window.innerHeight}`,
-            pin: true,
-            scrub: 3,
-            onUpdate: (self) => {
-              const pos = self.progress * flips;
-              const seg = Math.min(Math.floor(pos), flips - 1);
-              const local = pos - seg;
+    const createTrigger = () => {
+      if (triggerRef.current) triggerRef.current.kill();
 
-              const liftY = -liftMaxRef.current * Math.sin(local * Math.PI);
-
-              gsap.set(topPaperRef.current, {
-                rotateX: local * 105,
-                y: liftY,
-                transformOrigin: "top top",
-                transformPerspective: 100000,
-                willChange: "transform",
-              });
-
-              const desiredTopIdx = seg;
-              const desiredBottomIdx = Math.min(seg + 1, pages - 1);
-
-              if (desiredTopIdx !== currentTopIdxRef.current) {
-                gsap.set(topPageRefs.current[currentTopIdxRef.current], {
-                  autoAlpha: 0,
-                });
-                gsap.set(topPageRefs.current[desiredTopIdx], { autoAlpha: 1 });
-                currentTopIdxRef.current = desiredTopIdx;
-              }
-
-              if (desiredBottomIdx !== currentBottomIdxRef.current) {
-                gsap.set(bottomPageRefs.current[currentBottomIdxRef.current], {
-                  autoAlpha: 0,
-                });
-                gsap.set(bottomPageRefs.current[desiredBottomIdx], {
-                  autoAlpha: 1,
-                });
-                currentBottomIdxRef.current = desiredBottomIdx;
-              }
-            },
-          });
+      triggerRef.current = ScrollTrigger.create({
+        trigger: assemblyRef.current,
+        start: "top top+=1",
+        end: () => {
+          const segmentSize =
+            window.innerWidth > 1024 ? window.innerHeight : window.innerWidth;
+          return `+=${(flips - 0.01) * segmentSize}`;
         },
-        "(max-width: 1024px)": function () {
-          triggerRef.current = ScrollTrigger.create({
-            trigger: assemblyRef.current,
-            start: "top top",
-            end: `+=${flips * window.innerWidth}`,
-            pin: true,
-            scrub: 3,
-            onUpdate: (self) => {
-              const pos = self.progress * flips;
-              const seg = Math.min(Math.floor(pos), flips - 1);
-              const local = pos - seg;
+        pin: true,
+        scrub: 2,
+        onUpdate: (self) => {
+          let pos = self.progress * flips;
+          pos = Math.min(pos, flips);
 
-              const liftX = -liftMaxRef.current * Math.sin(local * Math.PI);
+          const seg = Math.min(Math.floor(pos), pages - 2);
+          const local = pos - seg;
 
-              gsap.set(topPaperRef.current, {
-                rotateY: local * -105,
-                x: liftX,
-                transformOrigin: "left center",
-                transformPerspective: 100000,
-                willChange: "transform",
-              });
+          if (window.innerWidth > 1024) {
+            const liftY = -liftMaxRef.current * Math.sin(local * Math.PI);
+            gsap.set(topPaperRef.current, {
+              rotateX: local * 105,
+              y: liftY,
+              transformOrigin: "top top",
+              transformPerspective: 100000,
+              willChange: "transform",
+            });
+          } else {
+            const liftX = -liftMaxRef.current * Math.sin(local * Math.PI);
+            gsap.set(topPaperRef.current, {
+              rotateY: local * -105,
+              x: liftX,
+              transformOrigin: "left center",
+              transformPerspective: 100000,
+              willChange: "transform",
+            });
+          }
 
-              const desiredTopIdx = seg;
-              const desiredBottomIdx = Math.min(seg + 1, pages - 1);
+          const desiredTopIdx = seg;
+          const desiredBottomIdx = Math.min(seg + 1, pages - 1);
 
-              if (desiredTopIdx !== currentTopIdxRef.current) {
-                gsap.set(topPageRefs.current[currentTopIdxRef.current], {
-                  autoAlpha: 0,
-                });
-                gsap.set(topPageRefs.current[desiredTopIdx], { autoAlpha: 1 });
-                currentTopIdxRef.current = desiredTopIdx;
-              }
+          if (desiredTopIdx !== currentTopIdxRef.current) {
+            gsap.set(topPageRefs.current[currentTopIdxRef.current], {
+              autoAlpha: 0,
+            });
+            gsap.set(topPageRefs.current[desiredTopIdx], { autoAlpha: 1 });
+            currentTopIdxRef.current = desiredTopIdx;
+          }
 
-              if (desiredBottomIdx !== currentBottomIdxRef.current) {
-                gsap.set(bottomPageRefs.current[currentBottomIdxRef.current], {
-                  autoAlpha: 0,
-                });
-                gsap.set(bottomPageRefs.current[desiredBottomIdx], {
-                  autoAlpha: 1,
-                });
-                currentBottomIdxRef.current = desiredBottomIdx;
-              }
-            },
-          });
+          if (desiredBottomIdx !== currentBottomIdxRef.current) {
+            gsap.set(bottomPageRefs.current[currentBottomIdxRef.current], {
+              autoAlpha: 0,
+            });
+            gsap.set(bottomPageRefs.current[desiredBottomIdx], {
+              autoAlpha: 1,
+            });
+            currentBottomIdxRef.current = desiredBottomIdx;
+          }
         },
       });
+    };
 
-      ScrollTrigger.refresh();
-    }, 100);
+    createTrigger();
+    ScrollTrigger.refresh();
 
     const onResize = () => {
       liftMaxRef.current = computeLiftMax();
-      if (triggerRef.current) {
-        if (window.innerWidth > 1024) {
-          triggerRef.current.vars.end = `+=${flips * window.innerHeight}`;
-        } else {
-          triggerRef.current.vars.end = `+=${flips * window.innerWidth}`;
-        }
-        triggerRef.current.refresh();
-      }
+      createTrigger();
+      ScrollTrigger.refresh();
     };
 
     window.addEventListener("resize", onResize);
 
     return () => {
-      clearTimeout(timeout);
       window.removeEventListener("resize", onResize);
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      if (triggerRef.current) triggerRef.current.kill();
     };
   }, [flips, pages]);
 
   const handleTabClick = (idx) => {
     const st = triggerRef.current;
-    if (!st) return;
+    if (!st || !assemblyRef.current) return;
 
     setActiveIndex(idx);
 
-    const sectionStartY = st.start;
-    const segmentSize = window.innerHeight;
-    const targetY = sectionStartY + idx * segmentSize;
+    const rect = assemblyRef.current.getBoundingClientRect();
+    const sectionY = window.scrollY + rect.top;
+    const segmentSize =
+      window.innerWidth > 1024 ? window.innerHeight : window.innerWidth;
+    const targetY = sectionY + idx * segmentSize;
     const currentY = window.scrollY;
 
     if (Math.abs(currentY - targetY) > 10) {
@@ -203,7 +166,6 @@ const Project = () => {
       className="bg-black relative w-full min-h-screen overflow-x-hidden lg:overflow-x-visible text-[#4B3200]"
     >
       <section className="relative w-full xl:min-h-[100vh]">
-        <div ref={scrollContainerRef} />
         <div
           className="mx-auto bg-[#fdfaf3] w-[95vw] xl:w-[90vw] max-w-7xl xl:h-[7vh] rounded-b-3xl relative"
           style={GRID_BG}
@@ -212,10 +174,10 @@ const Project = () => {
         <div className="relative hidden xl:block">
           <Binding />
         </div>
-        <div className=" h-20 xl:h-0 block xl:hidden"></div>
+        <div className="h-20 xl:h-0 block xl:hidden"></div>
 
         <div className="mt-8 flex flex-col xl:items-center xl:justify-center relative">
-          <div className=" block xl:hidden">
+          <div className="block xl:hidden">
             <Binding2 />
           </div>
           <div
