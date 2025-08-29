@@ -10,13 +10,33 @@ const SketchfabModel = ({
   preload = 1,
   autospin = 1,
   transparent = 1,
-  maskColor = "#F19F01",
   iframeProps = {},
 }) => {
   const wrapperRef = useRef(null);
   const iframeRef = useRef(null);
   const [apiScriptLoaded, setApiScriptLoaded] = useState(false);
   const [initialized, setInitialized] = useState(false);
+
+  const embedParams = [
+    `autostart=${autostart}`,
+    `preload=${preload}`,
+    `autospin=${autospin}`,
+    `transparent=${transparent}`,
+    `ui_controls=0`,
+    `ui_infos=0`,
+    `ui_annotations=0`,
+    `ui_help=0`,
+    `ui_stop=0`,
+    `ui_vr=0`,
+    `ui_share=0`,
+    `ui_hint=0`,
+    `ui_settings=0`,
+    `ui_inspector=0`,
+    `ui_watermark=0`,
+    `ui_watermark_link=0`,
+  ].join("&");
+
+  const embedSrc = `https://sketchfab.com/models/${modelId}/embed?${embedParams}&cb=${Date.now()}`;
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -44,7 +64,7 @@ const SketchfabModel = ({
   }, []);
 
   useEffect(() => {
-    if (!apiScriptLoaded || initialized || !iframeRef.current) return;
+    if (!apiScriptLoaded || !iframeRef.current || initialized) return;
     try {
       const Sketchfab = window.Sketchfab;
       if (!Sketchfab) return;
@@ -55,38 +75,24 @@ const SketchfabModel = ({
         preload,
         transparent,
         ui_controls: 0,
-        ui_infos: 0,
-        ui_annotations: 0,
-        ui_help: 0,
-        ui_stop: 0,
-        ui_vr: 0,
-        ui_share: 0,
-        ui_hint: 0,
         ui_settings: 0,
-        ui_inspector: 0,
-        ui_watermark: 0,
-        ui_watermark_link: 0,
-        ui_general_controls: 0,
-        ui_fullscreen: 0,
-        success: (api) => {
-          api.addEventListener("viewerready", () => {
+        success: function (api) {
+          api.addEventListener("viewerready", function () {
             try {
-              api.start();
-            } catch {}
-            try {
+              api.start(() => {});
               if (typeof api.setBackground === "function") {
-                api.setBackground({ transparent: true }, () => {});
+                api.setBackground({ transparent: true }, function () {});
               }
-            } catch {}
+            } catch (err) {}
           });
         },
-        error: () => {},
+        error: function () {},
       });
       setInitialized(true);
-    } catch {
+    } catch (e) {
       setInitialized(true);
     }
-  }, [apiScriptLoaded, initialized, modelId, autostart, autospin, preload, transparent]);
+  }, [apiScriptLoaded, iframeRef, modelId, initialized]);
 
   const containerStyle = {
     width,
@@ -111,26 +117,6 @@ const SketchfabModel = ({
     background: "transparent",
   };
 
-  const maskRightStyle = {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    width: 44,
-    height: "100%",
-    background: maskColor,
-    pointerEvents: "auto",
-  };
-
-  const maskBottomLeftStyle = {
-    position: "absolute",
-    left: 0,
-    bottom: 0,
-    width: 34,
-    height: 33,
-    background: maskColor,
-    pointerEvents: "auto",
-  };
-
   return (
     <div ref={wrapperRef} style={containerStyle} aria-hidden={false}>
       <div style={spacerStyle} />
@@ -138,12 +124,12 @@ const SketchfabModel = ({
         <iframe
           ref={iframeRef}
           title={`Sketchfab model ${modelId}`}
-          style={iframeStyle}
+          src={embedSrc}
+          frameBorder="0"
           allow="autoplay; vr; xr-spatial-tracking"
+          style={iframeStyle}
           {...iframeProps}
         />
-        <div style={maskRightStyle} />
-        <div style={maskBottomLeftStyle} />
       </div>
       {showCredits && (
         <p style={{ fontSize: 12, marginTop: 6, color: "#4A4A4A" }}>

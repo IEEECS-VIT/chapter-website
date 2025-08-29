@@ -115,7 +115,7 @@ const HeroSection = ({ contentRef }) => {
           <OurStory />
         </div>
 
-        <div className="hidden xl:block sticky top-0 z-20 h-screen pointer-events-auto overflow-hidden">
+        <div className="hidden xl:block sticky top-10 z-20 h-screen pointer-events-auto overflow-hidden">
           <div
             ref={leftRef}
             className="absolute top-0 left-0 h-screen z-30"
@@ -195,7 +195,7 @@ const HeroSection = ({ contentRef }) => {
               className="flex flex-col items-center text-center"
             >
               <h1
-                className="tracking-tight text-white mt-12 -translate-y-24"
+                className="tracking-tight text-white mt-2 -translate-y-24"
                 style={{
                   fontSize: "clamp(5rem, 8vw, 6rem)",
                   fontFamily: "Times New Roman",

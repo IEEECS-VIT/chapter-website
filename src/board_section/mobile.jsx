@@ -45,7 +45,7 @@ const MobileBoard = () => {
 
           wrapper.style.height = `${container.scrollWidth / 2.4}px`
 
-          // Scroll animation
+    
           gsap.to(container, {
             x: -scrollDistance,
             ease: "power1.inOut",
