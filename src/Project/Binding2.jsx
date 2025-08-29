@@ -16,7 +16,7 @@ const Binding2 = () => {
             <div className="absolute -right-[2px] top-1/2 -translate-y-1/2 w-[9px] h-4 bg-neutral-900 rounded-sm" />
 
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded" />
+              <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent rounded" />
             </div>
           </div>
         ))}

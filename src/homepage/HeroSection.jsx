@@ -128,7 +128,7 @@ const HeroSection = ({ contentRef }) => {
               clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
               transformOrigin: "left center",
               boxShadow: "4px 0 20px rgba(0,0,0,0.25)",
-              filter: "brightness(0.75)"
+              filter: "brightness(0.55)"
             }}
           />
 
@@ -144,7 +144,7 @@ const HeroSection = ({ contentRef }) => {
               clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
               transformOrigin: "right center",
               boxShadow: "-4px 0 20px rgba(0,0,0,0.25)",
-              filter: "brightness(0.75)"
+              filter: "brightness(0.55)"
             }}
           />
 
@@ -153,13 +153,9 @@ const HeroSection = ({ contentRef }) => {
               ref={contentRef}
               className="flex flex-col justify-start items-center text-center"
             >
-              <img
-                src={Logo}
-                alt="IEEE Logo"
-                className="absolute -top-32 left-4 w-[160px] md:w-[220px] object-contain"
-              />
+              
               <h1
-                className="text-white"
+                className="text-white mt-14"
                 style={{
                   fontSize: "clamp(11rem, 10vw, 12rem)",
                   fontFamily: "New Times Roman",
@@ -169,7 +165,7 @@ const HeroSection = ({ contentRef }) => {
                 IEEE-CS
               </h1>
               <h2
-                className="text-[#EF9E00] mt-2 font-bold"
+                className="text-[#EF9E00] mt-3 font-bold"
                 style={{
                   fontSize: "clamp(6.5rem, 6vw, 6rem)",
                   fontFamily: "New Times Roman",
@@ -192,21 +188,14 @@ const HeroSection = ({ contentRef }) => {
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/35"></div>
-          <div className="absolute top-4 left-4 z-30">
-            <img
-              src={Logo}
-              alt="IEEE Logo"
-              className="object-contain"
-              style={{ width: "clamp(100px, 20vw, 140px)" }}
-            />
-          </div>
+          
           <div className="absolute inset-0 flex justify-center items-center z-30">
             <div
               ref={mobileContentRef}
               className="flex flex-col items-center text-center"
             >
               <h1
-                className="tracking-tight text-white -translate-y-24"
+                className="tracking-tight text-white mt-12 -translate-y-24"
                 style={{
                   fontSize: "clamp(5rem, 8vw, 6rem)",
                   fontFamily: "Times New Roman",

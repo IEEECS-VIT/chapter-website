@@ -35,8 +35,8 @@ const OurStory = () => {
           <h1
             className="text-[#0b0b0a] tracking-wide mt-6 font-semibold translate-y-5"
             style={{
-              fontFamily: "Special Elite, serif",
-              fontSize: "clamp(4.3rem, 8vw, 50px)",
+              fontFamily: "New Times Roman,serif",
+              fontSize: "clamp(4.2rem, 8vw, 50px)",
               lineHeight: "1.0",
             }}
           >
@@ -50,7 +50,7 @@ const OurStory = () => {
             <img
               src={MobileBoard}
               alt="IEEE Computer Society Team"
-              className={`rounded-xl opacity-0 translate-y-16 transition-opacity duration-700 w-[90%] h-auto object-cover ${
+              className={`rounded-xl opacity-0 translate-y-16 transition-opacity duration-700 w-auto h-auto object-cover ${
                 imageLoaded ? "opacity-100" : ""
               }`}
               onLoad={() => setImageLoaded(true)}
@@ -58,9 +58,9 @@ const OurStory = () => {
           </div>
 
           <p
-            className="mt-4 text-[#0b0b0a] max-w-4xl leading-relaxed translate-y-28"
+            className=" text-[#0b0b0a] max-w-3xl leading-relaxed translate-y-28"
             style={{
-              fontFamily: "Inter, sans-serif",
+              fontFamily: "New Times Roman,",
               fontSize: "1rem",
               whiteSpace: "pre-line",
             }}
@@ -75,7 +75,7 @@ const OurStory = () => {
           <h1
             className="text-[#0b0b0a] tracking-wide"
             style={{
-              fontFamily: "Special Elite, serif",
+              fontFamily: "New Times Roman",
               fontSize: "clamp(3rem, 10vw, 100px)",
               lineHeight: "1.0",
             }}
@@ -86,8 +86,8 @@ const OurStory = () => {
           <p
             className="mt-1 text-[#0b0b0a] max-w-4xl leading-relaxed"
             style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "1.25rem",
+              fontFamily: "New Times Roman",
+              fontSize: "1.55rem",
               whiteSpace: "pre-line",
             }}
           >
@@ -104,7 +104,7 @@ const OurStory = () => {
             <img
               src={Team}
               alt="IEEE Computer Society Team"
-              className={`rounded-xl opacity-0 transition-opacity duration-700 w-screen h-[70vh] object-cover ${
+              className={`rounded-xl opacity-0 transition-opacity duration-700 w-screen h-[80vh] object-cover ${
                 imageLoaded ? "opacity-100" : ""
               }`}
               onLoad={() => setImageLoaded(true)}

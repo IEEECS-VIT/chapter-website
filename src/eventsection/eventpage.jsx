@@ -1,20 +1,21 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Draggable } from "gsap/Draggable";
 import event from "./assets/event.png";
 import bg from "./assets/bg2.png";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, Draggable);
 
 const EventCard = ({ title, image, hasOverlay = false, overlayText, first = false }) => {
   return (
     <div
-      className={`flex-shrink-0 w-[374px] sm:w-[403px] md:w-[320px] ${
+      className={`flex-shrink-0 w-[calc(374px*0.9)] sm:w-[403px] md:w-[320px] ${
         first ? "ml-8 mr-4" : "mx-4"
       } last:mr-8 mb-6 md:mb-12`}
     >
       <div className="relative bg-gradient-to-br from-[#F8F4ED] to-[#F1ECE5] p-6 sm:p-8 md:p-5 rounded-2xl shadow-lg border border-gray-200/30 flex flex-col items-center justify-center h-full">
-        <div className="relative w-[373px] sm:w-[389px] md:w-[320px] h-[404px] sm:h-[451px] md:h-[323px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center">
+        <div className="relative w-[calc(373px*0.9)] sm:w-[389px] md:w-[320px] h-[calc(404px*0.9)] sm:h-[451px] md:h-[323px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center">
           <img
             src={image || "/placeholder.svg"}
             alt={title}
@@ -69,15 +70,24 @@ export default function EventsPage() {
       scrollTrigger: {
         trigger: pin,
         start: "top top",
-        end: `+=${totalScroll*1.5}`,
-        scrub: 2.2,
+        end: `+=${totalScroll * 1.4}`,
+        scrub: 1.1,
         pin: true,
         anticipatePin: 1,
       },
     });
 
+    Draggable.create(scroller, {
+      type: "x",
+      inertia: true,
+      bounds: { minX: -totalScroll, maxX: 0 },
+      edgeResistance: 0.8,
+    });
+
     return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
+    ScrollTrigger.getAll().forEach((st) => st.kill());
+    gsap.killTweensOf(scroller);
+    Draggable.get(scroller)?.kill();
     };
   }, []);
 

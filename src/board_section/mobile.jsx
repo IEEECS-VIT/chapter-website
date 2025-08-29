@@ -3,10 +3,11 @@
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { Draggable } from "gsap/Draggable"
 import bgImage from "./bg.png"
 import Footer from "../footer/Contact"
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, Draggable)
 
 const MobileBoard = () => {
   const wrapperRef = useRef(null)
@@ -42,21 +43,28 @@ const MobileBoard = () => {
           const viewportWidth = window.innerWidth
           const scrollDistance = totalWidth - viewportWidth
 
-          wrapper.style.height = `${container.scrollWidth/2.4}px`;
+          wrapper.style.height = `${container.scrollWidth / 2.4}px`
 
-
+          // Scroll animation
           gsap.to(container, {
             x: -scrollDistance,
-            ease: "power3.inOut",
+            ease: "power1.inOut",
             scrollTrigger: {
               trigger: wrapper,
               start: "top top",
-              end: () => `+=${scrollDistance*2.1}`,
-              scrub: 1.4,
+              end: () => `+=${scrollDistance * 1.5}`,
+              scrub: 1.1,
               pin: true,
               anticipatePin: 1,
               invalidateOnRefresh: true,
             },
+          })
+
+          Draggable.create(container, {
+            type: "x",
+            inertia: true,
+            bounds: { minX: -scrollDistance, maxX: 0 },
+            edgeResistance: 0.9,
           })
         },
       })
@@ -69,13 +77,11 @@ const MobileBoard = () => {
 
   return (
     <div>
-
       <div ref={wrapperRef} className="relative w-full overflow-hidden bg-black">
         <div
           ref={containerRef}
           className="flex items-center gap-12 h-screen pl-8 pr-8"
         >
-
           <div className="flex-shrink-0 flex items-center justify-center w-6">
             <div className="text-yellow-400 text-4xl font-extrabold uppercase tracking-wider transform -rotate-90 whitespace-nowrap">
               THE BOARD 25–26
@@ -84,7 +90,6 @@ const MobileBoard = () => {
 
           {cardPairs.map((pair, index) => (
             <div key={index} className="flex flex-col gap-8 flex-shrink-0">
-
               <div className="relative w-[265px] h-[300px] bg-white rounded-lg shadow-2xl overflow-hidden flex items-center justify-center font-bold text-xl">
                 <img
                   src={bgImage || "/placeholder.svg"}
@@ -112,7 +117,6 @@ const MobileBoard = () => {
           ))}
         </div>
       </div>
-
 
       <section className="normal-section">
         <Footer />
