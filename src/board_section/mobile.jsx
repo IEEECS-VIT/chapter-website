@@ -34,45 +34,64 @@ const MobileBoard = () => {
   const cardPairs = createCardPairs()
 
   useEffect(() => {
-    let ctx = gsap.context(() => {
-      ScrollTrigger.matchMedia({
-        "(max-width: 768px)": () => {
-          const wrapper = wrapperRef.current
-          const container = containerRef.current
-          const totalWidth = container.scrollWidth
-          const viewportWidth = window.innerWidth
-          const scrollDistance = totalWidth - viewportWidth
+    const wrapper = wrapperRef.current
+    const container = containerRef.current
+    if (!wrapper || !container) return
 
-          wrapper.style.height = `${container.scrollWidth / 2.4}px`
+    const totalScroll = container.scrollWidth - window.innerWidth
 
-    
-          gsap.to(container, {
-            x: -scrollDistance,
-            ease: "power1.inOut",
-            scrollTrigger: {
-              trigger: wrapper,
-              start: "top top",
-              end: () => `+=${scrollDistance * 1.5}`,
-              scrub: 1.1,
-              pin: true,
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
-            },
-          })
+    wrapper.style.height = `${container.scrollWidth / 2.4}px`
 
-          Draggable.create(container, {
-            type: "x",
-            inertia: true,
-            bounds: { minX: -scrollDistance, maxX: 0 },
-            edgeResistance: 0.9,
-          })
-        },
-      })
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: wrapper,
+        start: "top top",
+        end: `+=${totalScroll * 1.2}`,
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    })
 
-      ScrollTrigger.refresh()
-    }, wrapperRef)
+    tl.fromTo(container, { x:0 }, { x: -totalScroll, ease: "none" })
+    const proxy = document.createElement("div")
+    const draggable = Draggable.create(proxy, {
+      type: "x",
+      trigger: container,
+      inertia: true,
+      bounds: { minX: 0, maxX: totalScroll },
+      onPress() {
+        gsap.set(proxy, { x: (1-tl.progress()) * totalScroll })
+      },
+      onDrag() {
+        const progress =1- this.x / totalScroll
+        tl.progress(progress)
+        const st = tl.scrollTrigger
+        if (st) st.scroll(st.start + progress * (st.end - st.start))
+      },
+      onThrowUpdate() {
+        const progress =1- this.x / totalScroll
+        tl.progress(progress)
+        const st = tl.scrollTrigger
+        if (st) st.scroll(st.start + progress * (st.end - st.start))
+      },
+      onRelease() {
+        const progress =1- this.x / totalScroll
+        const st = tl.scrollTrigger
+        if (st) st.scroll(st.start + progress * (st.end - st.start))
+      },
+    })[0]
 
-    return () => ctx.revert()
+    ScrollTrigger.addEventListener("scrollEnd", () => {
+      gsap.set(proxy, { x:(1- tl.progress()) * totalScroll })
+    })
+
+    return () => {
+      ScrollTrigger.getAll().forEach((st) => st.kill())
+      gsap.killTweensOf(container)
+      draggable.kill()
+    }
   }, [])
 
   return (
