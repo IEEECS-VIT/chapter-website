@@ -12,6 +12,7 @@ import Footer from "./footer/Contact";
 import PreLoader from "./Preloader/PreLoader";
 import Project from "./Project/Project";
 
+
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 const App = () => {

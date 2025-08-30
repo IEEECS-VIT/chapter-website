@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SketchfabModel from "./SketchfabModel";
-import sd from "./an.json";
+
 
 const Contact = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -264,7 +264,7 @@ const Contact = () => {
             className="flex items-center gap-2 text-[clamp(1rem,1.2vw,1.2rem)] font-normal hover:underline"
           >
            <lottie-player
-              src={sd}
+              src="/sd.json"
               background="transparent"
               speed="1"
               style={{ width: "60px", height: "60px",transform: "rotate(180deg)" }}
@@ -527,7 +527,7 @@ const Contact = () => {
             className="flex items-center gap-2 text-[clamp(1rem,1.2vw,1.2rem)] font-normal hover:underline"
           >
            <lottie-player
-              src={sd}
+              src="/sd.json"
               background="transparent"
               speed="1"
               style={{ width: "80px", height: "80px",transform: "rotate(180deg)" }}
