@@ -1,5 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+"use client";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import HeroSection from "./homepage/HeroSection";
 import Board from "./board_section/board";
@@ -10,81 +12,72 @@ import Footer from "./footer/Contact";
 import PreLoader from "./Preloader/PreLoader";
 import Project from "./Project/Project";
 
-gsap.registerPlugin(ScrollSmoother);
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 const App = () => {
   const [isAnimating, setIsAnimating] = useState(true);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(null);
+  const [contentReady, setContentReady] = useState(false);
+  
   const preloaderRef = useRef(null);
   const heroContentRef = useRef(null);
-  const smootherRef = useRef(null);
+  const mainAppRef = useRef(null);
+  const smoothContentRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleEnter = () => {
+    setContentReady(true);
+    
     const tl = gsap.timeline({
       defaults: { ease: "power3.inOut" },
-      onComplete: () => setIsAnimating(false),
+      onComplete: () => {
+        setIsAnimating(false);
+        document.body.style.overflow = "";
+      },
     });
-
+    
     tl.to(preloaderRef.current, { y: "-100%", duration: 1 });
     tl.from(heroContentRef.current, { y: 150, opacity: 0, duration: 1.5 }, "<");
   };
 
-  useEffect(() => {
-    const body = document.body;
-    if (isAnimating) {
-      const scrollY = window.scrollY;
-      body.style.position = "fixed";
-      body.style.top = `-${scrollY}px`;
-      body.style.left = "0";
-      body.style.right = "0";
-      body.style.overflow = "hidden";
-      body.style.touchAction = "none";
-    } else {
-      const scrollY = -parseInt(body.style.top || "0", 10);
-      body.style.position = "";
-      body.style.top = "";
-      body.style.left = "";
-      body.style.right = "";
-      body.style.overflow = "";
-      body.style.touchAction = "";
-      window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
-    }
-    return () => {
-      body.style.position = "";
-      body.style.top = "";
-      body.style.left = "";
-      body.style.right = "";
-      body.style.overflow = "";
-      body.style.touchAction = "";
-    };
-  }, [isAnimating]);
+  
+  useLayoutEffect(() => {
+    if (!contentReady || isMobile === null) return;
 
-  useEffect(() => {
-    if (!isAnimating) {
-      smootherRef.current = ScrollSmoother.create({
-        smooth: 0.5,
-        normalizeScroll: true, 
-        speed: 0.5,  
-         smoothTouch: 0.1,  
-        effects: true,
+    const ctx = gsap.context(() => {
+ 
+      const smoother = ScrollSmoother.create({
+        wrapper: "#smooth-wrapper",
+        content: "#smooth-content",
+        smooth: isMobile ? 0 : 0.4, 
+        effects: !isMobile,
+        smoothTouch: isMobile ? 0.7 : false, 
       });
-    }
-    return () => {
-      if (smootherRef.current) {
-        smootherRef.current.kill();
-        smootherRef.current = null;
+
+      
+      if (smoothContentRef.current) {
+        gsap.set(smoothContentRef.current, { 
+          opacity: 1,
+          visibility: "visible"
+        });
       }
-    };
-  }, [isAnimating]);
+
+      
+      ScrollTrigger.refresh();
+
+    }, mainAppRef);
+
+    return () => ctx.revert();
+  }, [contentReady, isMobile]);
 
   return (
-    <div className="min-w-screen min-h-screen overflow-x-hidden relative bg-black">
+    <div ref={mainAppRef} className="min-w-screen min-h-screen relative bg-black">
       {isAnimating && (
         <div
           ref={preloaderRef}
@@ -93,28 +86,53 @@ const App = () => {
           <PreLoader onEnter={handleEnter} />
         </div>
       )}
-
-      <section className="relative w-full">
-        <HeroSection contentRef={heroContentRef} isMobile={isMobile} />
-      </section>
-
-      <section className="relative w-full">
-        <Project />
-      </section>
-
-      <Events />
-
-      <section className="relative w-full mt-2">
-        {isMobile ? <Mobile /> : <Board />}
-      </section>
-
-      <section className="hidden md:flex min-h-screen bg-neutral-800 items-center justify-center">
-        <Gallery />
-      </section>
-
-      <section className="hidden xl:block">
-        <Footer />
-      </section>
+      
+      {isMobile !== null && (
+        <div 
+          id="smooth-wrapper"
+          style={{
+            
+            overflow: isAnimating ? 'hidden' : (isMobile ? 'visible' : 'hidden'),
+            height: isAnimating ? '100vh' : 'auto'
+          }}
+        >
+          <div 
+            id="smooth-content"
+            ref={smoothContentRef}
+            style={{
+ 
+              opacity: contentReady ? 1 : 0,
+              visibility: contentReady ? "visible" : "hidden",
+           
+              transform: "translate3d(0, 0, 0)",
+              willChange: isMobile ? "auto" : "transform",
+              transition: "opacity 0.3s ease-out"
+            }}
+          >
+            <section className="relative w-full">
+              <HeroSection contentRef={heroContentRef} isMobile={isMobile} />
+            </section>
+            
+            <section className="relative w-full">
+              <Project />
+            </section>
+            
+            <Events />
+            
+            <section className="relative w-full">
+              {isMobile ? <Mobile /> : <Board />}
+            </section>
+            
+            <section className="hidden md:flex min-h-screen bg-neutral-800 items-center justify-center">
+              <Gallery />
+            </section>
+            
+            <section className="hidden xl:block">
+              <Footer />
+            </section>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

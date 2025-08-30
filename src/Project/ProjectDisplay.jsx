@@ -17,59 +17,57 @@ const ProjectDisplay = ({ data }) => {
       ref={containerRef}
       className="flex flex-wrap pl-4 xl:pl-0 mt-6 md:mt-8 xl:mt-10 relative items-start text-[#4B3200]"
     >
-      {/* LEFT SECTION */}
-      <div className="w-full xl:w-1/2 px-4 xl:pl-20">
-        <div className="relative w-full">
-          <h2 className="text-3xl md:text-6xl xl:text-6xl text-center xl:text-left font-bold text-[#4B3200]">
-            {data.title}
-          </h2>
-        </div>
+      <div className="w-full xl:w-[60%] px-4 xl:pl-20 flex flex-col items-center h-screen">
+  <div className="relative w-full">
+    <h2 className="text-3xl md:text-6xl xl:text-6xl text-center xl:text-left font-bold text-[#4B3200]">
+      {data.title}
+    </h2>
+  </div>
 
-        <div className="relative mt-4 md:mt-6 xl:mt-6 w-[60vw] md:w-[55vw] xl:w-[30vw]">
+  <div className="relative mt-4 md:mt-6 xl:mt-4 w-full flex-1">
+    <img
+      src={data.image}
+      alt={data.title}
+      className="rounded shadow-md w-full h-[60%] object-cover"
+    />
+    <img
+      src={clip1}
+      alt="clip1"
+      className="absolute -top-6 md:-top-14 xl:-top-12 -left-4 md:-left-8 xl:-left-10 w-[12vw] md:w-[10vw] xl:w-[6vw]"
+    />
+  </div>
+</div>
+
+      <div className="w-full xl:w-[40%] px-4 md:px-8 xl:px-16 flex flex-col items-center relative">
+        <div className="relative w-28 h-20 xl:w-40 xl:h-60 mt-2 xl:mt-10 flex justify-center items-center">
           <img
-            src={data.image}
-            alt={data.title}
-            className="rounded shadow-md w-full"
+            src={view}
+            alt="view background"
+            className="absolute rotate-[0deg] w-[20vw] md:w-[16vw] xl:w-[12vw] scale-110 md:scale-115 xl:scale-150"
           />
+
           <img
-            src={clip1}
-            alt="clip1"
-            className="absolute -top-6 md:-top-14 xl:-top-12 -left-4 md:-left-8 xl:-left-10 w-[12vw] md:w-[10vw] xl:w-[6vw]"
+            src={view}
+            alt="view top"
+            className="rotate-[10deg] w-[20vw] md:w-[16vw] xl:w-[12vw] scale-110 md:scale-115 xl:scale-150"
           />
         </div>
 
-        <div className="mt-2 md:mt-4 xl:mt-4 text-xs md:text-lg xl:text-sm text-[#4B3200]">
-          <p className="whitespace-pre-line">{data.text1}</p>
-        </div>
-      </div>
-
-      {/* RIGHT SECTION */}
-      <div className="w-full xl:w-1/2 px-4 xl:px-15">
-        <div className="relative w-28 h-20 xl:w-40 xl:h-40 mx-auto mt-2 xl:mt-10">
-          <div className="absolute -right-20 md:-right-60 xl:-right-20 md:mt-4 xl:top-1/2 xl:left-1/2 xl:-translate-x-1/2 xl:-translate-y-1/2">
-            <div className="bg-yellow-300 w-[20vw] md:w-[16vw] xl:w-[12vw] h-[20vw] md:h-[16vw] xl:h-[12vw] rotate-[10deg]" />
-            <img
-              src={view}
-              alt="view"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-110 md:scale-115 xl:scale-125 z-10"
-            />
-          </div>
-        </div>
-
-        <div className="relative mt-6 md:-mt-3 md:ml-2 xl:mt-10 ml-0 xl:ml-20 w-full md:w-[50vw] xl:w-[30vw]">
+        <div className="relative mt-6 md:mt-8 xl:mt-14 w-full md:w-[100%] xl:w-[100%]">
           <img
             src={texturedbg}
             alt="texture background"
-            className="w-full h-[22vh] xl:h-[35vh] rounded shadow"
+            className="w-full h-40 xl:h-50 rounded shadow object-cover"
           />
+
           <img
             src={clip2}
             alt="clip2"
-            className="absolute -top-8 md:-top-24 xl:-top-14 -left-4 md:-left-8 xl:-left-8 w-[16vw] md:w-[14vw] xl:w-[8vw]"
+            className="absolute -top-14 -left-7 w-[16vw] md:w-[14vw] xl:w-[6vw]"
           />
-          {/* Changed text-black → text-[#4B3200] */}
-          <div className="absolute inset-0 p-2 xl:p-4 mt-4 xl:mt-8 text-xs md:text-lg xl:text-sm whitespace-pre-line text-[#4B3200]">
-            <p>{data.text2}</p>
+
+          <div className="absolute inset-0 p-4 text-sm md:text-lg xl:text-base text-left text-[#4B3200] flex items-start justify-start">
+            <p>{data.text1}</p>
           </div>
         </div>
       </div>

@@ -37,7 +37,6 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
   );
 };
 
-
 export default function EventsPage() {
   const items = [
     { id: 1, title: "HackBattle", image: event, overlayText: "A high-stakes coding face-off for the brave and bold minds." },
@@ -56,74 +55,104 @@ export default function EventsPage() {
   const pinRef = useRef(null);
 
   useEffect(() => {
-    const scroller = scrollerRef.current;
-    const pin = pinRef.current;
-    if (!scroller || !pin) return;
+  const scroller = scrollerRef.current;
+  const pin = pinRef.current;
+  if (!scroller || !pin) return;
 
-    const totalScroll = scroller.scrollWidth - window.innerWidth;
+  const totalScroll = scroller.scrollWidth - window.innerWidth;
 
-    gsap.set(scroller, { x: -totalScroll });
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: pin,
+      start: "top top",
+      end: `+=${totalScroll * 1.2}`,
+      scrub: 1,
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+    },
+  });
 
-    gsap.to(scroller, {
-      x: 0,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: pin,
-        start: "top top",
-        end: `+=${totalScroll * 1.5}`,
-        scrub: 1.3,
-        pin: true,
-        anticipatePin: 1,
-      },
-    });
 
-    Draggable.create(scroller, {
-      type: "x",
-      inertia: true,
-      bounds: { minX: -totalScroll, maxX: 0 },
-      edgeResistance: 0.8,
-    });
+  tl.fromTo(scroller, { x: -totalScroll }, { x: 0, ease: "none" });
 
-    return () => {
+
+  const proxy = document.createElement("div");
+  const draggable = Draggable.create(proxy, {
+    type: "x",
+    trigger: scroller,
+    inertia: true,
+    bounds: { minX: 0, maxX: totalScroll },
+    onPress() {
+      gsap.set(proxy, { x: tl.progress() * totalScroll });
+    },
+    onDrag() {
+      const progress = this.x / totalScroll;
+      tl.progress(progress);
+
+      const st = tl.scrollTrigger;
+      if (st) st.scroll(st.start + progress * (st.end - st.start));
+    },
+    onThrowUpdate() {
+      const progress = this.x / totalScroll;
+      tl.progress(progress);
+      const st = tl.scrollTrigger;
+      if (st) st.scroll(st.start + progress * (st.end - st.start));
+    },
+    onRelease() {
+
+      const progress = this.x / totalScroll;
+      const st = tl.scrollTrigger;
+      if (st) st.scroll(st.start + progress * (st.end - st.start));
+    },
+  })[0];
+
+  ScrollTrigger.addEventListener("scrollEnd", () => {
+    gsap.set(proxy, { x: tl.progress() * totalScroll });
+  });
+
+  return () => {
     ScrollTrigger.getAll().forEach((st) => st.kill());
     gsap.killTweensOf(scroller);
-    Draggable.get(scroller)?.kill();
-    };
-  }, []);
+    draggable.kill();
+  };
+}, []);
 
   return (
     <div
       ref={pinRef}
-      className="relative h-screen flex flex-col items-center justify-start overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{
         backgroundImage: `url(${bg})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <h1 className="text-white text-2xl sm:text-4xl font-light tracking-wider mb-5 mt-8">
-        (2025–2026)
-      </h1>
-      <div className="w-full h-0.5 bg-white mb-2" />
-      <div className="w-full h-0.5 bg-white mb-5" />
-      <h1 className="text-white text-4xl sm:text-6xl font-bold mb-7 tracking-widest">
-        EVENTS
-      </h1>
-      <div className="w-full h-0.5 bg-white mb-2" />
-      <div className="w-full h-0.5 bg-white mb-[50px] sm:mb-[75px]" />
-      <div className="w-full overflow-hidden">
-        <div ref={scrollerRef} className="flex will-change-transform">
-          {items.map((item, idx) => (
-            <EventCard
-              key={item.id}
-              title={item.title}
-              image={item.image}
-              hasOverlay
-              overlayText={item.overlayText}
-              first={idx === 0}
-            />
-          ))}
+      <div className="flex flex-col items-center justify-center w-full">
+        <h1 className="text-white text-5xl sm:text-6xl font-bold mb-6 tracking-widest text-center">
+          EVENTS
+        </h1>
+
+        <div className="w-screen sm:w-screen h-0.5 bg-white mb-2" />
+        <div className="w-screen sm:w-screen h-0.5 bg-white mb-10 sm:mb-16" />
+
+        <div className="w-full overflow-hidden">
+          <div ref={scrollerRef} className="flex cursor-grab active:cursor-grabbing will-change-transform">
+            {items.map((item, idx) => (
+              <EventCard
+                key={item.id}
+                title={item.title}
+                image={item.image}
+                hasOverlay
+                overlayText={item.overlayText}
+                first={idx === 0}
+              />
+            ))}
+          </div>
         </div>
+
+        <div className="w-screen sm:w-screen h-0.5 bg-white mt-10 mb-2" />
+        <div className="w-screen sm:w-screen h-0.5 bg-white mb-5" />
       </div>
     </div>
   );

@@ -47,7 +47,7 @@ const HeroSection = ({ contentRef }) => {
             scrollTrigger: {
               trigger: ourStoryWrapperRef.current,
               start: "top top",
-              end: "+=1250",
+              end: "+=1350",
               scrub: 2.5,
               pin: true,
               anticipatePin: 1
@@ -58,7 +58,7 @@ const HeroSection = ({ contentRef }) => {
             opacity: 0,
             filter: "blur(5px)",
             scale: 0.97,
-            ease: "power3.inOut"
+            ease: "power4.inOut"
           });
 
           tl.to(
@@ -67,7 +67,7 @@ const HeroSection = ({ contentRef }) => {
               x: "-120%",
               transformOrigin: "left center",
               ease: "power4.inOut",
-              duration: 2.5
+              duration: 3.5
             },
             "<"
           );
@@ -78,7 +78,7 @@ const HeroSection = ({ contentRef }) => {
               x: "120%",
               transformOrigin: "right center",
               ease: "power4.inOut",
-              duration: 2.5
+              duration: 3.5
             },
             "<"
           );
@@ -158,7 +158,7 @@ const HeroSection = ({ contentRef }) => {
                 className="text-white mt-12"
                 style={{
                   fontSize: "clamp(11rem, 10vw, 12rem)",
-                  fontFamily: "New Times Roman",
+                  fontFamily: "Henju",
                   lineHeight: "1.0"
                 }}
               >
@@ -168,7 +168,7 @@ const HeroSection = ({ contentRef }) => {
                 className="text-[#EF9E00] mt-3 font-bold"
                 style={{
                   fontSize: "clamp(6.5rem, 6vw, 6rem)",
-                  fontFamily: "New Times Roman",
+                  fontFamily: "Henju",
                   lineHeight: "1.0"
                 }}
               >
@@ -198,17 +198,17 @@ const HeroSection = ({ contentRef }) => {
                 className="tracking-tight text-white mt-2 -translate-y-24"
                 style={{
                   fontSize: "clamp(5rem, 8vw, 6rem)",
-                  fontFamily: "Times New Roman",
+                  fontFamily: "Henju",
                   lineHeight: "1.0"
                 }}
               >
                 IEEE-CS
               </h1>
               <h2
-                className="text-[#EF9E00] mt-2 font-bold -translate-y-24"
+                className="text-[#EF9E00] font-bold -translate-y-24"
                 style={{
                   fontSize: "clamp(2rem, 5vw, 3rem)",
-                  fontFamily: "Times New Roman",
+                  fontFamily: "Henju",
                   lineHeight: "1.0"
                 }}
               >

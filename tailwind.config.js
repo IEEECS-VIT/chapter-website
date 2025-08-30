@@ -12,6 +12,9 @@ module.exports = {
       animation: {
         scroll: "scroll 30s linear infinite",
       },
+      fontFamily: {
+        henju: ["Henju", "sans-serif"],
+      },
     },
   },
   plugins: [],
