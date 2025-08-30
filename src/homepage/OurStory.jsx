@@ -5,11 +5,18 @@ import Team from "./team.png";
 import MobileBoard from "./mobile-board.jpg";
 
 const OurStory = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [screenType, setScreenType] = useState("lg");
   const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    const handleResize = () => {
+      const deviceWidth = window.screen.width;
+      if (deviceWidth < 1024) {
+        setScreenType("mobile");
+      } else {
+        setScreenType("desktop");
+      }
+    };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -30,12 +37,12 @@ const OurStory = () => {
         />
       </div>
 
-      {isMobile ? (
-        <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-16 pt-10">
+      {screenType === "mobile" ? (
+        <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-16 pt-14">
           <h1
-            className="text-[#0b0b0a] tracking-wide mt-6 font-semibold translate-y-5"
+            className="text-[#0b0b0a] tracking-wide mt-7 font-semibold translate-y-5"
             style={{
-              fontFamily: "New Times Roman,serif",
+              fontFamily: "Special Elite,serif",
               fontSize: "clamp(4.1rem, 8vw, 50px)",
               lineHeight: "1.0",
             }}
@@ -58,9 +65,9 @@ const OurStory = () => {
           </div>
 
           <p
-            className=" text-[#0b0b0a] max-w-3xl leading-relaxed translate-y-28"
+            className="text-[#0b0b0a] max-w-3xl leading-relaxed translate-y-28"
             style={{
-              fontFamily: "New Times Roman,",
+              fontFamily: "Special Elite",
               fontSize: "1rem",
               whiteSpace: "pre-line",
             }}
@@ -71,11 +78,11 @@ const OurStory = () => {
           </p>
         </div>
       ) : (
-        <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-16 pt-28">
+        <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-16 pt-20">
           <h1
             className="text-[#0b0b0a] tracking-wide"
             style={{
-              fontFamily: "New Times Roman",
+              fontFamily: "Special Elite",
               fontSize: "clamp(3rem, 10vw, 100px)",
               lineHeight: "1.0",
             }}
@@ -86,18 +93,16 @@ const OurStory = () => {
           <p
             className="mt-1 text-[#0b0b0a] max-w-4xl leading-relaxed"
             style={{
-              fontFamily: "New Times Roman",
+              fontFamily: "Special Elite",
               fontSize: "1.55rem",
               whiteSpace: "pre-line",
             }}
           >
             IEEE Computer Society, VIT—established in February 2012 under IEEE
             Region 10, Madras Section—drives innovation by leveraging
-            cutting-edge technology to solve real-world problems. We foster
-            ideas, empower talent, and deliver impactful projects through elite
-            events, workshops, and collaborations. As a globally recognized hub
-            of technical excellence, we inspire and shape inquisitive minds for
-            the challenges of tomorrow.
+            cutting-edge technology to solve real-world problems. As a globally
+            recognized hub of technical excellence, we inspire and shape
+            inquisitive minds for the challenges of tomorrow.
           </p>
 
           <div className="fixed bottom-0 left-0 w-full flex items-center justify-center px-4">

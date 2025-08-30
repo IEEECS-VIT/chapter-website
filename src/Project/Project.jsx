@@ -214,8 +214,8 @@ const Project = () => {
                 <div
                   key={`bottom-${p.id}`}
                   ref={(el) => (bottomPageRefs.current[i] = el)}
-                  className="absolute inset-0 font-Gloock font-extralight"
-                  style={{ pointerEvents: "none" }}
+                  className="absolute inset-0  font-extralight"
+                  style={{ pointerEvents: "none",fontFamily: "Henju, serif"  }}
                 >
                   <ProjectDisplay data={p} />
                 </div>
@@ -235,7 +235,7 @@ const Project = () => {
                 <div
                   key={`top-${p.id}`}
                   ref={(el) => (topPageRefs.current[i] = el)}
-                  className="absolute inset-0 font-Gloock font-extralight"
+                  className="absolute inset-0 font-henju font-extralight"
                 >
                   <ProjectDisplay data={p} />
                 </div>

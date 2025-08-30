@@ -18,14 +18,28 @@ const App = () => {
   const [isAnimating, setIsAnimating] = useState(true);
   const [isMobile, setIsMobile] = useState(null);
   const [contentReady, setContentReady] = useState(false);
-  
+
   const preloaderRef = useRef(null);
   const heroContentRef = useRef(null);
   const mainAppRef = useRef(null);
   const smoothContentRef = useRef(null);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    const mqSm = window.matchMedia("(min-device-width: 640px)");
+    const mqMd = window.matchMedia("(min-device-width: 768px)");
+    const mqLg = window.matchMedia("(min-device-width: 1024px)");
+    const mqXl = window.matchMedia("(min-device-width: 1280px)");
+
+    const handleResize = () => {
+      if (mqLg.matches || mqXl.matches) {
+        setIsMobile(false); // desktop view
+      } else if (mqSm.matches || mqMd.matches) {
+        setIsMobile(true); // mobile/tablet view
+      } else {
+        setIsMobile(true); // default fallback to mobile
+      }
+    };
+
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -33,7 +47,7 @@ const App = () => {
 
   const handleEnter = () => {
     setContentReady(true);
-    
+
     const tl = gsap.timeline({
       defaults: { ease: "power3.inOut" },
       onComplete: () => {
@@ -41,36 +55,37 @@ const App = () => {
         document.body.style.overflow = "";
       },
     });
-    
+
     tl.to(preloaderRef.current, { y: "-100%", duration: 1 });
     tl.from(heroContentRef.current, { y: 150, opacity: 0, duration: 1.5 }, "<");
   };
 
-  
   useLayoutEffect(() => {
     if (!contentReady || isMobile === null) return;
 
     const ctx = gsap.context(() => {
- 
       const smoother = ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
         content: "#smooth-content",
-        smooth: isMobile ? 0 : 0.3, 
+        smooth: isMobile ? 0 : 0.3,
+        transform: isMobile
+          ? "translate3d(0,0,0)"
+          : "scale(0.8) translate3d(0,0,0)",
+        transformOrigin: "top center",
+        willChange: isMobile ? "auto" : "transform",
         effects: !isMobile,
-        smoothTouch: isMobile ? 0.55 : false, 
+        smoothTouch: isMobile ? 0.55 : false,
       });
-      smoother.effects(".your-class", { speed: 0.5, lag: 0.3 });
-      
+      smoother.effects(".your-class", { speed: 0.5, lag: 0.4 });
+
       if (smoothContentRef.current) {
-        gsap.set(smoothContentRef.current, { 
+        gsap.set(smoothContentRef.current, {
           opacity: 1,
-          visibility: "visible"
+          visibility: "visible",
         });
       }
 
-      
       ScrollTrigger.refresh();
-
     }, mainAppRef);
 
     return () => ctx.revert();
@@ -86,48 +101,49 @@ const App = () => {
           <PreLoader onEnter={handleEnter} />
         </div>
       )}
-      
+
       {isMobile !== null && (
-        <div 
+        <div
           id="smooth-wrapper"
           style={{
-            
-            overflow: isAnimating ? 'hidden' : (isMobile ? 'visible' : 'hidden'),
-            height: isAnimating ? '100vh' : 'auto'
+            overflow: isAnimating
+              ? "hidden"
+              : isMobile
+              ? "visible"
+              : "hidden",
+            height: isAnimating ? "100vh" : "auto",
           }}
         >
-          <div 
+          <div
             id="smooth-content"
             ref={smoothContentRef}
             style={{
- 
               opacity: contentReady ? 1 : 0,
               visibility: contentReady ? "visible" : "hidden",
-           
               transform: "translate3d(0, 0, 0)",
               willChange: isMobile ? "auto" : "transform",
-              transition: "opacity 0.3s ease-out"
+              transition: "opacity 0.3s ease-out",
             }}
           >
             <section className="relative w-full">
               <HeroSection contentRef={heroContentRef} isMobile={isMobile} />
             </section>
-            
+
             <section className="relative w-full">
               <Project />
             </section>
-            
+
             <Events />
-            
+
             <section className="relative w-full">
               {isMobile ? <Mobile /> : <Board />}
             </section>
-            
+
             <section className="hidden md:flex min-h-screen bg-neutral-800 items-center justify-center">
               <Gallery />
             </section>
-            
-            <section className="hidden xl:block">
+
+            <section className="relative w-full">
               <Footer />
             </section>
           </div>

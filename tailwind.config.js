@@ -14,7 +14,16 @@ module.exports = {
       },
       fontFamily: {
         henju: ["Henju", "sans-serif"],
+        caveat: ['"Caveat Brush"', 'cursive'], 
+        karla: ['Karla', 'sans-serif'],
+
       },
+      screens: {
+      sm: { raw: "(min-device-width: 640px)" },
+      md: { raw: "(min-device-width: 768px)" },
+      lg: { raw: "(min-device-width: 1025px)" },
+      xl: { raw: "(min-device-width: 1280px)" },
+    },
     },
   },
   plugins: [],

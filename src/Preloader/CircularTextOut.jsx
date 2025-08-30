@@ -22,7 +22,6 @@ const CircularText = ({
   useEffect(() => {
   startRotation(spinDuration);
 
-  // Check the screen width to determine the appropriate scale values
   const isSmallScreen = window.innerWidth < 768;
   const initialScale = isSmallScreen ? 5 : 10;
   const targetScale = isSmallScreen ? 3 : 5;
@@ -64,7 +63,7 @@ const CircularText = ({
         return (
           <span
             key={i}
-            className="absolute inline-block inset-0 text-3xl transition-all duration-500 ease-[cubic-bezier(0,0,0,1)]"
+            className="absolute inline-block inset-0 text-4xl transition-all duration-500 ease-[cubic-bezier(0,0,0,1)]"
             style={{ transform, WebkitTransform: transform, color }}
           >
             {letter}

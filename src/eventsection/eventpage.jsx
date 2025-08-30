@@ -3,33 +3,51 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Draggable } from "gsap/Draggable";
 import event from "./assets/event.png";
-import bg from "./assets/bg2.png";
+import bg from "./assets/backgrnd.jpg";
+import pin from "./assets/pin.png";
 
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
-const EventCard = ({ title, image, hasOverlay = false, overlayText, first = false }) => {
+const EventCard = ({
+  title,
+  image,
+  hasOverlay = false,
+  overlayText,
+  first = false,
+}) => {
   return (
     <div
-      className={`flex-shrink-0 w-[calc(374px*0.8)] sm:w-[403px] md:w-[320px] ${
-        first ? "ml-8 mr-4" : "mx-4"
+      className={`relative flex-shrink-0 w-[calc(374px*0.8)] sm:w-[403px] md:w-[320px] ${
+        first ? "ml-8 mr-6" : "mx-4"
       } last:mr-8 mb-6 md:mb-12`}
+      style={{ fontFamily: "Special Elite, cursive" }}
     >
-      <div className="relative bg-gradient-to-br from-[#F8F4ED] to-[#F1ECE5] p-6 sm:p-8 md:p-5 rounded-2xl shadow-lg border border-gray-200/30 flex flex-col items-center justify-center h-full">
-        <div className="relative w-[calc(373px*0.8)] sm:w-[389px] md:w-[320px] h-[calc(404px*0.8)] sm:h-[451px] md:h-[323px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center">
+      <div className="relative bg-gradient-to-br from-[#F8F4ED] to-[#F1ECE5] p-6 sm:p-8 md:p-5 rounded-2xl border border-gray-200/30 flex flex-col items-center justify-center h-full shadow-[0_8px_30px_rgba(255,255,255,0.15)]">
+        <div className="absolute -top-24 -right-24 md:-top-40 md:-right-72 md:-translate-x-36 z-30">
+          <img
+            src={pin}
+            alt="Pin"
+            className="w-60 sm:w-72 md:w-80 h-auto sm:h-60 md:h-96 drop-shadow-md"
+          />
+        </div>
+
+        <div className="relative w-[calc(320px*0.8)] sm:w-[360px] md:w-[280px] h-[calc(360px*0.8)] sm:h-[400px] md:h-[320px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center bg-white/80">
           <img
             src={image || "/placeholder.svg"}
             alt={title}
-            className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 ease-out"
+            className="w-full h-full object-contain rounded-lg grayscale hover:grayscale-10 transition-all duration-500 ease-out scale-110"
           />
+
           {hasOverlay && (
-            <div className="absolute inset-0 bg-gradient-to-t from-[#2C2A2A]/90 via-[#5D5A5A]/70 to-transparent flex items-center justify-center p-6 md:p-4 opacity-0 hover:opacity-100 transition-all duration-500 ease-out backdrop-blur-sm">
-              <p className="text-white text-base sm:text-lg md:text-sm text-center font-serif tracking-wide leading-relaxed px-4 sm:px-6 py-4 break-words">
+            <div className="absolute w-full h-full bg-gradient-to-t from-[#4A4A4A]/70 via-[#6D6D6D]/50 to-transparent flex items-center justify-center p-6 md:p-4 opacity-0 hover:opacity-100 transition-all duration-500 ease-out backdrop-blur-sm rounded-md">
+              <p className="text-white text-base sm:text-xl md:text-xl text-center tracking-wide leading-relaxed px-4 sm:px-6 py-4 break-words">
                 {overlayText}
               </p>
             </div>
           )}
         </div>
-        <h3 className="text-gray-800 text-xl sm:text-2xl md:text-lg text-center tracking-wider mt-6 md:mt-4 font-mono hover:text-gray-900 transition-colors duration-300 drop-shadow-sm">
+
+        <h3 className="text-gray-800 text-4xl sm:text-2xl md:text-3xl text-center tracking-wider mt-6 md:mt-4 hover:text-gray-900 transition-colors duration-300 drop-shadow-sm">
           {title}
         </h3>
       </div>
@@ -39,84 +57,137 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
 
 export default function EventsPage() {
   const items = [
-    { id: 1, title: "HackBattle", image: event, overlayText: "A high-stakes coding face-off for the brave and bold minds." },
-    { id: 2, title: "Cicada 3310", image: event, overlayText: "A virtual maze packed with mind-bending puzzles and hidden clues." },
-    { id: 3, title: "WTF", image: event, overlayText: "Tech takes a twist. Expect the unexpected in this quirky event." },
-    { id: 4, title: "BattleCode", image: event, overlayText: "Strategy meets code. Automate bots to battle in real-time arenas." },
-    { id: 5, title: "PixelQuest", image: event, overlayText: "A retro-style game challenge where creativity meets coding." },
-    { id: 6, title: "AlgoArena", image: event, overlayText: "Compete to solve algorithmic challenges in a timed battle." },
-    { id: 7, title: "Debug Derby", image: event, overlayText: "Race against time to fix bugs and restore systems." },
-    { id: 8, title: "CryptoQuest", image: event, overlayText: "Unravel ciphers and cryptographic challenges under pressure." },
-    { id: 9, title: "CodeGolf", image: event, overlayText: "Solve problems in the shortest possible code." },
-    { id: 10, title: "TechTrivia", image: event, overlayText: "Test your tech knowledge in a rapid-fire trivia challenge." },
+    {
+      id: 1,
+      title: "HackBattle",
+      image: event,
+      overlayText:
+        "A high-stakes coding face-off for the brave and bold minds.",
+    },
+    {
+      id: 2,
+      title: "Cicada 3310",
+      image: event,
+      overlayText:
+        "A virtual maze packed with mind-bending puzzles and hidden clues.",
+    },
+    {
+      id: 3,
+      title: "WTF",
+      image: event,
+      overlayText:
+        "Tech takes a twist. Expect the unexpected in this quirky event.",
+    },
+    {
+      id: 4,
+      title: "BattleCode",
+      image: event,
+      overlayText:
+        "Strategy meets code. Automate bots to battle in real-time arenas.",
+    },
+    {
+      id: 5,
+      title: "PixelQuest",
+      image: event,
+      overlayText:
+        "A retro-style game challenge where creativity meets coding.",
+    },
+    {
+      id: 6,
+      title: "AlgoArena",
+      image: event,
+      overlayText: "Compete to solve algorithmic challenges in a timed battle.",
+    },
+    {
+      id: 7,
+      title: "Debug Derby",
+      image: event,
+      overlayText: "Race against time to fix bugs and restore systems.",
+    },
+    {
+      id: 8,
+      title: "CryptoQuest",
+      image: event,
+      overlayText:
+        "Unravel ciphers and cryptographic challenges under pressure.",
+    },
+    {
+      id: 9,
+      title: "CodeGolf",
+      image: event,
+      overlayText: "Solve problems in the shortest possible code.",
+    },
+    {
+      id: 10,
+      title: "TechTrivia",
+      image: event,
+      overlayText: "Test your tech knowledge in a rapid-fire trivia challenge.",
+    },
   ];
 
   const scrollerRef = useRef(null);
   const pinRef = useRef(null);
 
   useEffect(() => {
-  const scroller = scrollerRef.current;
-  const pin = pinRef.current;
-  if (!scroller || !pin) return;
+    const scroller = scrollerRef.current;
+    const pin = pinRef.current;
+    if (!scroller || !pin) return;
 
-  const totalScroll = scroller.scrollWidth - window.innerWidth;
+    const totalScroll = scroller.scrollWidth - window.innerWidth;
 
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: pin,
-      start: "top top",
-      end: `+=${totalScroll * 1.2}`,
-      scrub: 1,
-      pin: true,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-    },
-  });
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: pin,
+        start: "top top",
+        end: `+=${totalScroll}`,
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    });
 
+    tl.fromTo(scroller, { x: -totalScroll }, { x: 0, ease: "none" });
 
-  tl.fromTo(scroller, { x: -totalScroll }, { x: 0, ease: "none" });
+    const proxy = document.createElement("div");
+    const draggable = Draggable.create(proxy, {
+      type: "x",
+      trigger: scroller,
+      inertia: true,
+      bounds: { minX: 0, maxX: totalScroll },
+      onPress() {
+        gsap.set(proxy, { x: tl.progress() * totalScroll });
+      },
+      onDrag() {
+        const progress = this.x / totalScroll;
+        tl.progress(progress);
 
+        const st = tl.scrollTrigger;
+        if (st) st.scroll(st.start + progress * (st.end - st.start));
+      },
+      onThrowUpdate() {
+        const progress = this.x / totalScroll;
+        tl.progress(progress);
+        const st = tl.scrollTrigger;
+        if (st) st.scroll(st.start + progress * (st.end - st.start));
+      },
+      onRelease() {
+        const progress = this.x / totalScroll;
+        const st = tl.scrollTrigger;
+        if (st) st.scroll(st.start + progress * (st.end - st.start));
+      },
+    })[0];
 
-  const proxy = document.createElement("div");
-  const draggable = Draggable.create(proxy, {
-    type: "x",
-    trigger: scroller,
-    inertia: true,
-    bounds: { minX: 0, maxX: totalScroll },
-    onPress() {
+    ScrollTrigger.addEventListener("scrollEnd", () => {
       gsap.set(proxy, { x: tl.progress() * totalScroll });
-    },
-    onDrag() {
-      const progress = this.x / totalScroll;
-      tl.progress(progress);
+    });
 
-      const st = tl.scrollTrigger;
-      if (st) st.scroll(st.start + progress * (st.end - st.start));
-    },
-    onThrowUpdate() {
-      const progress = this.x / totalScroll;
-      tl.progress(progress);
-      const st = tl.scrollTrigger;
-      if (st) st.scroll(st.start + progress * (st.end - st.start));
-    },
-    onRelease() {
-
-      const progress = this.x / totalScroll;
-      const st = tl.scrollTrigger;
-      if (st) st.scroll(st.start + progress * (st.end - st.start));
-    },
-  })[0];
-
-  ScrollTrigger.addEventListener("scrollEnd", () => {
-    gsap.set(proxy, { x: tl.progress() * totalScroll });
-  });
-
-  return () => {
-    ScrollTrigger.getAll().forEach((st) => st.kill());
-    gsap.killTweensOf(scroller);
-    draggable.kill();
-  };
-}, []);
+    return () => {
+      ScrollTrigger.getAll().forEach((st) => st.kill());
+      gsap.killTweensOf(scroller);
+      draggable.kill();
+    };
+  }, []);
 
   return (
     <div
@@ -129,15 +200,18 @@ export default function EventsPage() {
       }}
     >
       <div className="flex flex-col items-center justify-center w-full">
-        <h1 className="text-white text-5xl sm:text-6xl font-bold mb-6 tracking-widest text-center">
+        <h1 className="text-white text-5xl sm:text-6xl font-bold -mt-4 mb-10 tracking-widest text-center">
           EVENTS
         </h1>
 
-        <div className="w-screen sm:w-screen h-0.5 bg-white mb-2" />
-        <div className="w-screen sm:w-screen h-0.5 bg-white mb-10 sm:mb-16" />
+        <div className="w-screen sm:w-screen h-0.5 bg-white mb-2 -mt-4" />
+        <div className="w-screen sm:w-screen h-0.5 bg-white mb-10 -mt-4 sm:mb-16" />
 
         <div className="w-full overflow-hidden">
-          <div ref={scrollerRef} className="flex cursor-grab active:cursor-grabbing will-change-transform">
+          <div
+            ref={scrollerRef}
+            className="flex cursor-grab active:cursor-grabbing will-change-transform"
+          >
             {items.map((item, idx) => (
               <EventCard
                 key={item.id}

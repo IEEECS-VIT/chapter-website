@@ -6,7 +6,7 @@ import Left from "./1.png";
 import Right from "./2.png";
 import MobileHero from "./mobile-view.png";
 import OurStory from "../homepage/OurStory";
-import Project from "../Project/Project";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -128,7 +128,7 @@ const HeroSection = ({ contentRef }) => {
               clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
               transformOrigin: "left center",
               boxShadow: "4px 0 20px rgba(0,0,0,0.25)",
-              filter: "brightness(0.55)"
+              filter: "brightness(0.50)"
             }}
           />
 
@@ -144,7 +144,7 @@ const HeroSection = ({ contentRef }) => {
               clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
               transformOrigin: "right center",
               boxShadow: "-4px 0 20px rgba(0,0,0,0.25)",
-              filter: "brightness(0.55)"
+              filter: "brightness(0.50)"
             }}
           />
 
@@ -155,9 +155,9 @@ const HeroSection = ({ contentRef }) => {
             >
               
               <h1
-                className="text-white mt-12"
+                className="text-white mt-12 font-black"
                 style={{
-                  fontSize: "clamp(11rem, 10vw, 12rem)",
+                  fontSize: "clamp(12rem, 10vw, 13rem)",
                   fontFamily: "Henju",
                   lineHeight: "1.0"
                 }}
@@ -165,9 +165,9 @@ const HeroSection = ({ contentRef }) => {
                 IEEE-CS
               </h1>
               <h2
-                className="text-[#EF9E00] mt-3 font-bold"
+                className="text-[#EF9E00] mt-3 font-black"
                 style={{
-                  fontSize: "clamp(6.5rem, 6vw, 6rem)",
+                  fontSize: "clamp(7.2rem, 6vw, 7.5rem)",
                   fontFamily: "Henju",
                   lineHeight: "1.0"
                 }}

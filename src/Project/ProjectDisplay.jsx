@@ -64,7 +64,7 @@ const ProjectDisplay = ({ data }) => {
           <img
             src={clip2}
             alt="clip2"
-            className="absolute -top-7 md:-top-12 -left-7 w-[16vw] md:w-[14vw] xl:w-[6vw]"
+            className="absolute -top-7 md:-top-14 -left-7 w-[16vw] md:w-[14vw] xl:w-[6vw]"
           />
 
           <div className="absolute inset-0 p-4 text-sm md:text-lg xl:text-base text-left text-[#4B3200] flex items-start justify-start">

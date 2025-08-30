@@ -52,7 +52,7 @@ const CircularText = ({
     <div
       ref={containerRef}
       className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-        w-[230px] h-[230px] rounded-full text-white font-black text-center ${className}`}
+        w-[240px] h-[240px] rounded-full text-white font-black text-center ${className}`}
     >
       {letters.map((letter, i) => {
         const rotationDeg = (360 / letters.length) * i;
@@ -66,7 +66,7 @@ const CircularText = ({
         return (
           <span
             key={i}
-            className="absolute inset-0 text-2xl transition-all duration-500 ease-[cubic-bezier(0,0,0,1)]"
+            className="absolute inset-0 text-3xl transition-all duration-500 ease-[cubic-bezier(0,0,0,1)]"
             style={{ transform, WebkitTransform: transform, color }}
           >
             {letter}

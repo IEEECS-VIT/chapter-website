@@ -54,6 +54,8 @@ const ParticleBackground = () => {
         ctx.save();
         ctx.globalAlpha = particle.opacity;
         ctx.fillStyle = "#ffffff";
+        ctx.shadowColor = "#ffffff";   
+        ctx.shadowBlur = 10; 
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
@@ -90,10 +92,10 @@ const PreLoader = ({ onEnter }) => {
   const hasFinished = useRef(false);
 
   const textStyle = {
-    fontFamily: "'Times New Roman', Times, serif",
+    fontFamily: "'Henju', serif",
     fontWeight: "800",
-    fontSize: "1.7rem",
-    letterSpacing: "-2px",
+    fontSize: "1.6rem",
+    letterSpacing: "-0.5px",
     color: "black",
     textTransform: "uppercase",
     display: "inline-block",
@@ -164,18 +166,18 @@ const PreLoader = ({ onEnter }) => {
             className="h-12 w-auto"
           />
         </div>
-        <div className="absolute z-10 font-McLaren font-extralight">
+        <div className="absolute z-10 font-Henju font-extralight">
           <CircularTextOut
             text="WE LIVE IN A COMPUTER SOCIETY "
             spinDuration={20}
           />
         </div>
-        <div className="absolute z-20 font-McLaren font-extralight">
+        <div className="absolute z-20 font-Henju font-extralight">
           <CircularText text="IEEE~COMPUTER~SOCIETY~" spinDuration={20} />
         </div>
         <div
           onClick={handleEnter}
-          className="w-28 h-28 text-2xl text-black z-30 rounded-full bg-[#F5AD12] flex items-center justify-center cursor-pointer transition duration-100 hover:scale-105 overflow-hidden shadow-[0_0_8vw_20px_rgba(255,234,138,0.5)]"
+          className="w-28 h-28 text-2xl font-henju text-black z-30 rounded-full bg-[#F5AD12] flex items-center justify-center cursor-pointer transition duration-100 hover:scale-105 overflow-hidden shadow-[0_0_8vw_20px_rgba(255,234,138,0.5)]"
         >
           <div className="overflow-hidden h-8 flex items-end">
             <div ref={textRef} className="translate-y-0">

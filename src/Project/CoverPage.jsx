@@ -25,13 +25,13 @@ const CoverPage = ({ data }) => {
           <div className="absolute flex flex-col items-center top-[10%] xl:top-[18%]">
             <h1
               className="text-5xl xl:text-6xl md:text-7xl font-extrabold mt-14 xl:mt-0 text-[#4B3200]"
-              style={{ fontFamily: "serif" }}
+              style={{ fontFamily: "Special Elite" }}
             >
               OUR
             </h1>
             <h1
               className="text-5xl xl:text-6xl md:text-7xl font-extrabold text-[#4B3200]"
-              style={{ fontFamily: "serif" }}
+              style={{ fontFamily: "Special Elite" }}
             >
               PROJECTS
             </h1>

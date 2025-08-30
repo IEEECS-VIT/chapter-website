@@ -1,12 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import pic1 from "./pic1.jpg";
-import pic2 from "./pic2.jpg";
-import pic3 from "./pic3.jpg";
-import pic4 from "./pic4.jpg";
-import pic5 from "./pic1.jpg";
 
-const images = [pic1, pic2, pic3, pic4, pic5];
+import s1 from "./s1.jpg";
+import s2 from "./s2.jpg";
+import s3 from "./s3.jpg";
+import s4 from "./s4.jpg";
+import s5 from "./s5.jpg";
+import s6 from "./s6.jpg";
+import s7 from "./s7.jpg";
+import s8 from "./s8.jpg";
+import s9 from "./s9.jpg";
+import s10 from "./s10.jpg";
+
+const images = [s1,s2,s3,s4,s5,s6,s7,s8,s9,s10];
 
 const FilmstripGallery = () => {
   const scrollRef = useRef(null);
@@ -36,8 +42,7 @@ const FilmstripGallery = () => {
 
   return (
     <div className="w-full h-screen bg-black overflow-hidden relative">
-      {/* Top yellow strip */}
-      <div className="absolute top-0 left-0 right-0 h-16 bg-black z-10 flex justify-start overflow-hidden">
+      <div className="absolute top-20 left-0 right-0 h-16 bg-black z-10 flex justify-start overflow-hidden">
         {Array.from({ length: 50 }).map((_, i) => (
           <div
             key={`top-${i}`}
@@ -46,8 +51,7 @@ const FilmstripGallery = () => {
         ))}
       </div>
 
-      {/* Bottom yellow strip */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 bg-black z-10 flex justify-start overflow-hidden">
+      <div className="absolute bottom-20 left-0 right-0 h-16 bg-black z-10 flex justify-start overflow-hidden">
         {Array.from({ length: 50 }).map((_, i) => (
           <div
             key={`bottom-${i}`}
@@ -56,8 +60,7 @@ const FilmstripGallery = () => {
         ))}
       </div>
 
-      {/* Main gallery */}
-      <div className="h-full flex items-center py-20">
+      <div className="h-full flex items-center py-10">
         <div
           ref={scrollRef}
           className="flex"
@@ -67,11 +70,11 @@ const FilmstripGallery = () => {
           }}
         >
           {[...images, ...images].map((src, i) => (
-            <div key={i} className="flex-shrink-0 mx-8">
+            <div key={i} className="flex-shrink-0 mx-5">
               <img
                 src={src}
                 alt={`Gallery image ${(i % images.length) + 1}`}
-                className="w-[500px] h-[400px] object-cover shadow-2xl rounded-lg transition-transform duration-300 hover:scale-105"
+                className="w-[500px] h-[400px] object-cover shadow-2xl rounded-lg transition-transform duration-300 hover:scale-105 grayscale"
                 onMouseEnter={() => setIsPaused(true)}
                 onMouseLeave={() => setIsPaused(false)}
               />
