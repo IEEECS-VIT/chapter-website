@@ -13,7 +13,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 const GRID_BG = {
   backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.2) 1px, transparent 1px),
                     linear-gradient(to right,  rgba(0,0,0,0.2) 1px, transparent 1px)`,
-  backgroundSize: "20px 20px",
+  backgroundSize: "40px 40px",
 };
 
 const Project = () => {
@@ -28,6 +28,7 @@ const Project = () => {
 
   const currentTopIdxRef = useRef(0);
   const currentBottomIdxRef = useRef(1);
+  const activeIndexRef = useRef(0);
 
   const triggerRef = useRef(null);
   const liftMaxRef = useRef(24);
@@ -115,6 +116,12 @@ const Project = () => {
             });
             currentBottomIdxRef.current = desiredBottomIdx;
           }
+
+          const newActive = Math.min(Math.round(pos), pages - 1);
+          if (newActive !== activeIndexRef.current) {
+            activeIndexRef.current = newActive;
+            setActiveIndex(newActive);
+          }
         },
       });
     };
@@ -138,20 +145,27 @@ const Project = () => {
 
   const handleTabClick = (idx) => {
     const st = triggerRef.current;
-    if (!st || !assemblyRef.current) return;
+    if (!st) return;
 
-    setActiveIndex(idx);
+    const clampedIndex = Math.max(1, Math.min(idx, pages - 1));
+    setActiveIndex(clampedIndex);
+    activeIndexRef.current = clampedIndex;
 
-    const rect = assemblyRef.current.getBoundingClientRect();
-    const sectionY = window.scrollY + rect.top;
     const segmentSize =
       window.innerWidth > 1024 ? window.innerHeight : window.innerWidth;
-    const targetY = sectionY + idx * segmentSize;
-    const currentY = window.scrollY;
 
-    if (Math.abs(currentY - targetY) > 10) {
+    const offsetScreens = 1;
+
+    const multiplier = clampedIndex === pages - 1 ? 2.09 : 2.14;
+    const targetY =
+      st.start + multiplier * (clampedIndex + offsetScreens) * segmentSize;
+
+    const currentY = window.scrollY;
+    if (Math.abs(currentY - targetY) > 4) {
       const distanceSegments = Math.abs(targetY - currentY) / segmentSize;
-      const duration = Math.min(1.2, Math.max(0.45, distanceSegments * 0.6));
+
+      const duration = Math.min(1.5, Math.max(0.45, distanceSegments * 0.6));
+
       gsap.to(window, {
         duration,
         ease: "power2.out",
