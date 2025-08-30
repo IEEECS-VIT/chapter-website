@@ -154,11 +154,9 @@ const Project = () => {
     const segmentSize =
       window.innerWidth > 1024 ? window.innerHeight : window.innerWidth;
 
-    const offsetScreens = 1;
-
-    const multiplier = clampedIndex === pages - 1 ? 2.09 : 2.14;
+    
     const targetY =
-      st.start + multiplier * (clampedIndex + offsetScreens) * segmentSize;
+      st.start + clampedIndex * segmentSize;
 
     const currentY = window.scrollY;
     if (Math.abs(currentY - targetY) > 4) {

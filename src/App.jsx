@@ -55,11 +55,11 @@ const App = () => {
       const smoother = ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
         content: "#smooth-content",
-        smooth: isMobile ? 0 : 0.4, 
+        smooth: isMobile ? 0 : 0.3, 
         effects: !isMobile,
-        smoothTouch: isMobile ? 0.7 : false, 
+        smoothTouch: isMobile ? 0.55 : false, 
       });
-
+      smoother.effects(".your-class", { speed: 0.5, lag: 0.3 });
       
       if (smoothContentRef.current) {
         gsap.set(smoothContentRef.current, { 
