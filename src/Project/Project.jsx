@@ -8,6 +8,7 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import Binding from "./Binding.jsx";
 import Binding2 from "./Binding2.jsx";
 
+
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const GRID_BG = {

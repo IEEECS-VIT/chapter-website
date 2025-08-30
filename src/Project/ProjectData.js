@@ -16,7 +16,7 @@ export const projectData = [
     id: 1,
     title: "The Airport Project",
     image: airport,
-    text1: "A modern airport management system designed to streamline operations and enhance passenger experience. It integrates real-time flight tracking and automated scheduling for improved efficiency."
+    text1: "A modern airport management system designed to <H>streamline operations and enhance passenger experience. It integrates real-time flight tracking and automated scheduling for improved efficiency."
   },
   {
     id: 2,
