@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Draggable } from "gsap/Draggable"
 
 import bgImage from "./assets/bg.png"
@@ -20,7 +19,7 @@ import varun from "./assets/varun.png"
 import parth from "./assets/parth.png"
 import medhansh from "./assets/medhansh.png"
 
-gsap.registerPlugin(ScrollTrigger, Draggable)
+gsap.registerPlugin(Draggable)
 
 const TeamCard = ({ name, position, photo, linkedin }) => {
   return (
@@ -33,7 +32,7 @@ const TeamCard = ({ name, position, photo, linkedin }) => {
       <div className="relative z-10 flex flex-col items-center w-full h-full justify-between">
         <div className="flex flex-col items-center space-y-1 text-center">
           <div className="text-yellow-400 text-3xl font-caveat leading-tight">{name}</div>
-          <div className="text-black text-sm font-karla">{position}</div>
+          <div className="text-black text-sm " style={{fontFamily:"Special Elite"}}>{position}</div>
         </div>
         <div className="w-[240px] h-[240px] flex items-center justify-center relative">
           <img
@@ -56,10 +55,15 @@ const TeamCard = ({ name, position, photo, linkedin }) => {
                 fill="currentColor"
                 className="text-black-600 hover:text-black-800 transition-colors"
               >
-                <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 
-                5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.29c-.96 0-1.75-.79-1.75-1.75s.79-1.75 
-                1.75-1.75 1.75.79 1.75 1.75-.79 1.75-1.75 1.75zm13.5 11.29h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 
-                0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.88v1.36h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 
+                <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 
+                5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 
+                19h-3v-10h3v10zm-1.5-11.29c-.96 
+                0-1.75-.79-1.75-1.75s.79-1.75 
+                1.75-1.75 1.75.79 1.75 
+                1.75-.79 1.75-1.75 
+                1.75zm13.5 11.29h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 
+                0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.88v1.36h.04c.4-.75 
+                1.38-1.54 2.84-1.54 3.04 
                 0 3.6 2 3.6 4.59v5.59z"/>
               </svg>
             </a>
@@ -73,6 +77,7 @@ const TeamCard = ({ name, position, photo, linkedin }) => {
 const MobileBoard = () => {
   const wrapperRef = useRef(null)
   const containerRef = useRef(null)
+  const progressRef = useRef(null)
 
   const allCards = [
     { name: "Ram Krishna", position: "Chairperson", photo: ram, linkedin: "https://www.linkedin.com/in/ramkrishna2967/" },
@@ -88,7 +93,6 @@ const MobileBoard = () => {
     { name: "Medhansh Jain", position: "Web Lead", photo: medhansh, linkedin: "https://www.linkedin.com/in/medhansh-jain/" },
     { name: "Krish Mehta", position: "App Lead", photo: krish, linkedin: "https://www.linkedin.com/in/krish1604/" },
     { name: "Arya", position: "IOT Lead", photo: arya, linkedin: "https://www.linkedin.com/in/arya-patil-2a8366330/" },
-   
   ]
 
   const cardPairs = []
@@ -100,128 +104,58 @@ const MobileBoard = () => {
   }
 
   useEffect(() => {
-  const mm = gsap.matchMedia()
-
-  mm.add("(max-width: 768px)", () => {
+    const scroller = containerRef.current
     const wrapper = wrapperRef.current
-    const container = containerRef.current
-    if (!wrapper || !container) return
+    const progress = progressRef.current
+    if (!scroller || !wrapper || !progress) return
 
-    let totalScroll = Math.max(container.scrollWidth - window.innerWidth, 0)
-    wrapper.style.height = `${container.scrollWidth / 2.4}px`
+    const totalScroll = scroller.scrollWidth - window.innerWidth
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: wrapper,
-        start: "top top",
-        end: () => `+=${totalScroll * 2.3}`,
-        scrub: 1,
-        allowNativeTouchScrolling: false,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
-    })
+    gsap.set(scroller, { x: 0 })
+    gsap.set(progress, { width: "0%" })
 
-    tl.fromTo(container, { x: 0 }, { x: () => -totalScroll, ease: "none" })
+    const updateProgress = (x) => {
+      const progressValue = Math.abs(x) / totalScroll
+      gsap.set(progress, { width: `${progressValue * 100}%` })
+    }
 
     const proxy = document.createElement("div")
-
-    const syncFromProxy = function () {
-      const progress = 1 - (this.x / totalScroll || 0)
-      tl.progress(progress)
-      const st = tl.scrollTrigger
-      if (st) st.scroll(st.start + progress * (st.end - st.start))
-    }
+    gsap.set(proxy, { x: 0 })
 
     const draggable = Draggable.create(proxy, {
       type: "x",
-      trigger: container,
+      trigger: wrapper, 
       inertia: true,
-      allowNativeTouchScrolling: false,
-        allowEventDefault: true, 
-      bounds: { minX: 0, maxX: totalScroll },
-      onPress() {
-        gsap.set(proxy, { x: (1 - tl.progress()) * totalScroll })
+      bounds: { minX: -totalScroll, maxX: 0 },
+      throwResistance: 30,
+      edgeResistance: 0.75,
+      dragResistance: 0.1,
+      onDrag() {
+        const clampedX = gsap.utils.clamp(-totalScroll, 0, this.x)
+        gsap.set(scroller, { x: clampedX })
+        updateProgress(clampedX)
       },
-      onDrag: syncFromProxy,
-      onThrowUpdate: syncFromProxy,
-      onRelease: syncFromProxy,
+      onThrowUpdate() {
+        const clampedX = gsap.utils.clamp(-totalScroll, 0, this.x)
+        gsap.set(scroller, { x: clampedX })
+        updateProgress(clampedX)
+      },
     })[0]
 
-    const syncProxyToScroll = () => {
-      gsap.set(proxy, { x: (1 - tl.progress()) * totalScroll })
-    }
-
-    const onRefresh = () => {
-      totalScroll = Math.max(container.scrollWidth - window.innerWidth, 0)
-      wrapper.style.height = `${container.scrollWidth / 2.4}px`
-      if (draggable && draggable.applyBounds) {
-        draggable.applyBounds({ minX: 0, maxX: totalScroll })
-      }
-      syncProxyToScroll()
-    }
-
-    ScrollTrigger.addEventListener("scrollEnd", syncProxyToScroll)
-    ScrollTrigger.addEventListener("refresh", onRefresh)
-    syncProxyToScroll()
-
-    let startX = 0
-    let startY = 0
-    let locked = false
-
-    function onTouchStart(e) {
-      const touch = e.touches[0]
-      startX = touch.clientX
-      startY = touch.clientY
-      locked = false
-    }
-
-    function onTouchMove(e) {
-      if (locked) return
-      const touch = e.touches[0]
-      const dx = touch.clientX - startX
-      const dy = touch.clientY - startY
-      const angle = Math.abs(Math.atan2(dy, dx) * (180 / Math.PI))
-
-      if (
-        (angle < 15 || angle > 165) || // horizontal
-        (angle > 75 && angle < 105)    // vertical
-      ) {
-        locked = true 
-      } else {
-        e.preventDefault()
-        e.stopPropagation()
-      }
-    }
-
-    wrapper.addEventListener("touchstart", onTouchStart, { passive: true })
-    wrapper.addEventListener("touchmove", onTouchMove, { passive: false })
+    updateProgress(0)
 
     return () => {
-      ScrollTrigger.removeEventListener("scrollEnd", syncProxyToScroll)
-      ScrollTrigger.removeEventListener("refresh", onRefresh)
-      if (tl.scrollTrigger) tl.scrollTrigger.kill()
-      tl.kill()
-      if (draggable) draggable.kill()
-
-      wrapper.removeEventListener("touchstart", onTouchStart)
-      wrapper.removeEventListener("touchmove", onTouchMove)
+      draggable.kill()
+      gsap.killTweensOf(scroller)
     }
-  })
-
-  return () => mm.revert()
-}, [])
-
-
-
+  }, [])
 
   return (
     <div>
       <div ref={wrapperRef} className="relative w-full overflow-hidden bg-black">
         <div
           ref={containerRef}
-          className="flex items-center gap-12 h-screen pl-8 pr-8 cursor-grab active:cursor-grabbing select-none touch-pan-y"
+          className="flex items-center gap-12 h-screen pl-8 pr-8 select-none"
         >
           <div className="flex-shrink-0 flex items-center justify-center w-6">
             <div className="text-yellow-400 text-6xl font-extrabold uppercase tracking-wider transform -rotate-90 whitespace-nowrap">
@@ -236,8 +170,14 @@ const MobileBoard = () => {
             </div>
           ))}
         </div>
-      </div>
 
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-3/4 h-2 bg-white/30 rounded-full">
+          <div
+            ref={progressRef}
+            className="h-full bg-white rounded-full"
+          />
+        </div>
+      </div>
     </div>
   )
 }
