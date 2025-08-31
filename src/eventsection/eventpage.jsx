@@ -61,6 +61,7 @@ export default function EventsPage() {
   const scrollerRef = useRef(null);
   const pinRef = useRef(null);
   const progressRef = useRef(null);
+  const knobRef = useRef(null);
   const arrowRef = useRef(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -68,126 +69,64 @@ export default function EventsPage() {
     const scroller = scrollerRef.current;
     const pin = pinRef.current;
     const progress = progressRef.current;
-    if (!scroller || !pin) return;
+    const knob = knobRef.current;
+    if (!scroller || !pin || !progress || !knob) return;
 
     const totalScroll = scroller.scrollWidth - window.innerWidth;
+    const maxKnobX = progress.parentElement.offsetWidth - knob.offsetWidth;
 
-    if (!isMobile) {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: pin,
-          start: "top top",
-          end: `+=${totalScroll * 2.3}`,
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-      tl.fromTo(scroller, { x: -totalScroll }, { x: 0, ease: "none" });
+    gsap.set(scroller, { x: 0 });
+    gsap.set(progress, { width: "0%" });
+    gsap.set(knob, { x: 0 });
 
-      const proxy = document.createElement("div");
-      let mode = "idle";
+    const updateProgress = (knobX) => {
+      const progressValue = knobX / maxKnobX;
+      gsap.set(progress, { width: `${progressValue * 100}%` });
+      gsap.set(knob, { x: knobX });
+      gsap.set(scroller, { x: -progressValue * totalScroll });
+    };
 
-      const draggable = Draggable.create(proxy, {
-        type: "x",
-        trigger: pin,
-        inertia: true,
-        bounds: { minX: 0, maxX: totalScroll },
-        onPress() {
-          if (mode === "idle") mode = "drag";
-          if (mode !== "drag") return;
-          gsap.set(proxy, { x: tl.progress() * totalScroll });
-        },
-        onDrag() {
-          if (mode !== "drag") return;
-          const progressVal = this.x / totalScroll;
-          tl.progress(progressVal);
-          const st = tl.scrollTrigger;
-          if (st) st.scroll(st.start + progressVal * (st.end - st.start));
-        },
-        onThrowUpdate() {
-          if (mode !== "drag") return;
-          const progressVal = this.x / totalScroll;
-          tl.progress(progressVal);
-          const st = tl.scrollTrigger;
-          if (st) st.scroll(st.start + progressVal * (st.end - st.start));
-        },
-      })[0];
+    const proxy = document.createElement("div");
+    gsap.set(proxy, { x: 0 });
 
-      ScrollTrigger.addEventListener("scrollStart", () => {
-        if (mode === "idle") mode = "scroll";
-      });
-      ScrollTrigger.addEventListener("scrollEnd", () => {
-        gsap.set(proxy, { x: tl.progress() * totalScroll });
-        mode = "idle";
-      });
+    const draggable = Draggable.create(proxy, {
+      type: "x",
+      trigger: knob,
+      inertia: true,
+      bounds: { minX: 0, maxX: maxKnobX },
+      onPress() {
+        document.body.style.userSelect = "none";
+      },
+      onDrag() {
+        updateProgress(this.x);
+      },
+      onThrowUpdate() {
+        updateProgress(this.x);
+      },
+      onRelease() {
+        document.body.style.userSelect = "";
+      },
+    })[0];
 
-      return () => {
-        ScrollTrigger.getAll().forEach((st) => st.kill());
-        gsap.killTweensOf(scroller);
-        draggable.kill();
-      };
-    } else {
-      gsap.set(scroller, { x: -totalScroll });
-      gsap.set(progress, { width: "0%", right: 0, left: "auto" });
+    ScrollTrigger.create({
+      trigger: pin,
+      start: "top top",
+      end: `+=${maxKnobX * 5.5}`,
+      pin: true,
+      scrub: true,
+      onUpdate: (self) => {
+        const knobX = self.progress * maxKnobX;
+        updateProgress(knobX);
+      },
+    });
 
-      ScrollTrigger.create({
-        trigger: pin,
-        start: "top top",
-        end: "+=0",
-        pin: true,
-        anticipatePin: 1,
-      });
+    updateProgress(0);
 
-      const proxy = document.createElement("div");
-      gsap.set(proxy, { x: -totalScroll });
-
-      const updateProgress = (x) => {
-        const progressValue = 1 - Math.abs(x) / totalScroll;
-        gsap.set(progress, { width: `${progressValue * 100}%` });
-      };
-
-      const draggable = Draggable.create(proxy, {
-        type: "x",
-        trigger: pin,
-        inertia: true,
-        bounds: { minX: -totalScroll, maxX: 0 },
-        throwResistance: 30,
-        edgeResistance: 0.85,
-        dragResistance: 0.1,
-        onPress() {
-          document.body.style.userSelect = "none";
-          gsap.set(proxy, { x: gsap.getProperty(scroller, "x") });
-          if (arrowRef.current) {
-            gsap.to(arrowRef.current, { opacity: 0, duration: 0.6, ease: "power2.out" });
-            arrowRef.current = null;
-          }
-        },
-        onDrag() {
-          const clampedX = gsap.utils.clamp(-totalScroll, 0, this.x);
-          gsap.set(scroller, { x: clampedX });
-          updateProgress(clampedX);
-        },
-        onThrowUpdate() {
-          const clampedX = gsap.utils.clamp(-totalScroll, 0, this.x);
-          gsap.set(scroller, { x: clampedX });
-          updateProgress(clampedX);
-        },
-        onRelease() {
-          const clampedX = gsap.utils.clamp(-totalScroll, 0, this.x);
-          gsap.to(scroller, { x: clampedX, duration: 0.3, ease: "power2.out" });
-        }
-      })[0];
-
-      updateProgress(-totalScroll);
-
-      return () => {
-        draggable.kill();
-        ScrollTrigger.getAll().forEach((st) => st.kill());
-        gsap.killTweensOf(scroller);
-      };
-    }
+    return () => {
+      draggable.kill();
+      ScrollTrigger.getAll().forEach((st) => st.kill());
+      gsap.killTweensOf(scroller);
+    };
   }, [isMobile]);
 
   return (
@@ -217,28 +156,18 @@ export default function EventsPage() {
             ))}
           </div>
         </div>
+
         {isMobile && (
           <div className="relative w-3/4 h-2 bg-white/30 rounded-full mt-8">
             <div ref={progressRef} className="absolute top-0 h-full bg-white rounded-full" />
+            <div
+              ref={knobRef}
+              className="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-white rounded-full shadow-md cursor-pointer"
+            />
           </div>
         )}
-        <div
-          ref={arrowRef}
-          className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center z-50 opacity-100 sm:hidden"
-        >
-          <div className="animate-pulse">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-10 h-10 text-white drop-shadow-lg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </div>
-        </div>
+
+
         <div className="w-screen h-0.5 bg-white mt-10 mb-2" />
         <div className="w-screen h-0.5 bg-white mb-5" />
       </div>
