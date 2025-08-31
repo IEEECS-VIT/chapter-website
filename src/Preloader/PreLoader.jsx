@@ -25,12 +25,12 @@ const ParticleBackground = () => {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
     const isMobile = window.innerWidth < 768;
-    const particleCount = isMobile ? 150 : 400;
+    const particleCount = isMobile ? 80 : 120;
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 2 + 1,
+        size: Math.random() * 2 + 2,
         speedX: (Math.random() - 0.5) * 0.5,
         speedY: Math.random() * 1 + 0.5,
         opacity: Math.random() * 0.45 + 0.1,
@@ -45,7 +45,7 @@ const ParticleBackground = () => {
         particle.y -= particle.speedY;
 
         if (particle.y < -10) {
-          particle.y = canvas.height + 10;
+          particle.y = canvas.height + 12;
           particle.x = Math.random() * canvas.width;
         }
         if (particle.x < -10 || particle.x > canvas.width + 10) {
@@ -56,7 +56,7 @@ const ParticleBackground = () => {
         ctx.globalAlpha = particle.opacity;
         ctx.fillStyle = "#ffffff";
         ctx.shadowColor = "#ffffff";   
-        ctx.shadowBlur = 8; 
+        ctx.shadowBlur = 10; 
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
@@ -184,7 +184,7 @@ const PreLoader = ({ onEnter }) => {
           className="w-28 h-28 text-2xl font-henju text-black z-30 rounded-full bg-[#F5AD12] flex items-center justify-center cursor-pointer transition duration-100 hover:scale-105 overflow-hidden shadow-[0_0_8vw_20px_rgba(255,234,138,0.5)]"
         >
           <div className="overflow-hidden h-8 flex items-end">
-            <div ref={textRef} className="translate-y-0">
+            <div ref={textRef} className="translate-y-1">
               {text}
             </div>
           </div>

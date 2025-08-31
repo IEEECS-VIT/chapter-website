@@ -139,6 +139,7 @@ const MobileBoard = () => {
       trigger: container,
       inertia: true,
       allowNativeTouchScrolling: false,
+        allowEventDefault: true, 
       bounds: { minX: 0, maxX: totalScroll },
       onPress() {
         gsap.set(proxy, { x: (1 - tl.progress()) * totalScroll })

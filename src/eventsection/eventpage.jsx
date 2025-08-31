@@ -129,9 +129,9 @@ export default function EventsPage() {
   ];
 
   const scrollerRef = useRef(null);
+  
   const pinRef = useRef(null);
-
-  useEffect(() => {
+useEffect(() => {
   const scroller = scrollerRef.current;
   const pin = pinRef.current;
   if (!scroller || !pin) return;
@@ -144,7 +144,6 @@ export default function EventsPage() {
       start: "top top",
       end: `+=${totalScroll*2.3}`,
       scrub: 1,
-      allowNativeTouchScrolling: false,
       pin: true,
       anticipatePin: 1,
       invalidateOnRefresh: true,
@@ -154,16 +153,23 @@ export default function EventsPage() {
   tl.fromTo(scroller, { x: -totalScroll }, { x: 0, ease: "none" });
 
   const proxy = document.createElement("div");
+
+  let mode="idle"; // who gets priority
+
   const draggable = Draggable.create(proxy, {
     type: "x",
     trigger: scroller,
-    allowNativeTouchScrolling: false,
     inertia: true,
     bounds: { minX: 0, maxX: totalScroll },
     onPress() {
+      if (mode === "idle") {
+        mode = "drag"; // drag takes control
+      }
+      if (mode !== "drag") return; // ignore if scroll already active
       gsap.set(proxy, { x: tl.progress() * totalScroll });
     },
     onDrag() {
+      if (mode !== "drag") return;
       const progress = this.x / totalScroll;
       tl.progress(progress);
 
@@ -171,63 +177,47 @@ export default function EventsPage() {
       if (st) st.scroll(st.start + progress * (st.end - st.start));
     },
     onThrowUpdate() {
+      if (mode !== "drag") return;
       const progress = this.x / totalScroll;
       tl.progress(progress);
       const st = tl.scrollTrigger;
       if (st) st.scroll(st.start + progress * (st.end - st.start));
     },
     onRelease() {
+      if (mode !== "drag") return;
       const progress = this.x / totalScroll;
       const st = tl.scrollTrigger;
       if (st) st.scroll(st.start + progress * (st.end - st.start));
     },
   })[0];
 
-  ScrollTrigger.addEventListener("scrollEnd", () => {
-    gsap.set(proxy, { x: tl.progress() * totalScroll });
+  ScrollTrigger.addEventListener("scrollStart", () => {
+    if (mode === "idle") {
+      mode = "scroll"; // scroll takes control
+    }
   });
 
-  let startX = 0;
-  let startY = 0;
-  let locked = false;
+  ScrollTrigger.addEventListener("scrollEnd", () => {
+    gsap.set(proxy, { x: tl.progress() * totalScroll });
+    mode = "idle"; // reset priority after scroll ends
+  });
 
-  function onTouchStart(e) {
-    const touch = e.touches[0];
-    startX = touch.clientX;
-    startY = touch.clientY;
-    locked = false;
-  }
-
-  function onTouchMove(e) {
-    if (locked) return;
-    const touch = e.touches[0];
-    const dx = touch.clientX - startX;
-    const dy = touch.clientY - startY;
-    const angle = Math.abs(Math.atan2(dy, dx) * (180 / Math.PI));
-
-    if (
-      (angle < 15 || angle > 165) || // horizontal
-      (angle > 75 && angle < 105)    // vertical
-    ) {
-      locked = true;
-    } else {
-      e.preventDefault();
-      e.stopPropagation();
+  draggable.addEventListener("release", () => {
+    if (mode === "drag") {
+      // keep drag active until user stops interacting
+      setTimeout(() => {
+        mode = "idle";
+      }, 50);
     }
-  }
-
-  scroller.addEventListener("touchstart", onTouchStart, { passive: true });
-  scroller.addEventListener("touchmove", onTouchMove, { passive: false });
+  });
 
   return () => {
     ScrollTrigger.getAll().forEach((st) => st.kill());
     gsap.killTweensOf(scroller);
     draggable.kill();
-
-    scroller.removeEventListener("touchstart", onTouchStart);
-    scroller.removeEventListener("touchmove", onTouchMove);
   };
 }, []);
+
 
   return (
     <div

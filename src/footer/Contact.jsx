@@ -259,16 +259,22 @@ const Contact = () => {
       </div>
 
       <div className="absolute bottom-5 left-5 flex flex-col">
-         {/*
-<lottie-player
-  src="/sd.json"
-  background="transparent"
-  speed="1"
-  style={{ width: "60px", height: "60px", transform: "rotate(180deg)" }}
-  loop
-  autoplay
-></lottie-player>
-*/}
+         
+      <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="flex items-center gap-2 text-[clamp(1rem,1.2vw,1.2rem)] font-normal hover:underline"
+          >
+           
+        <lottie-player
+          src="/sd.json"
+          background="transparent"
+          speed="1"
+          style={{ width: "60px", height: "60px", transform: "rotate(180deg)" }}
+          loop
+          autoplay
+        ></lottie-player>
+
+          </button>
 
         <h3
           className="mb-[6px]"
@@ -523,16 +529,16 @@ const Contact = () => {
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="flex items-center gap-2 text-[clamp(1rem,1.2vw,1.2rem)] font-normal hover:underline"
           >
-           {/*
-<lottie-player
-  src="/sd.json"
-  background="transparent"
-  speed="1"
-  style={{ width: "60px", height: "60px", transform: "rotate(180deg)" }}
-  loop
-  autoplay
-></lottie-player>
-*/}
+           
+        <lottie-player
+          src="/sd.json"
+          background="transparent"
+          speed="1"
+          style={{ width: "60px", height: "60px", transform: "rotate(180deg)" }}
+          loop
+          autoplay
+        ></lottie-player>
+
           </button>
 
           <div className="flex flex-row gap-8">
