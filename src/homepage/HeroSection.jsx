@@ -156,7 +156,7 @@ const HeroSection = ({ contentRef }) => {
             >
               
               <h1
-                className="text-white mt-12 font-black"
+                className="text-white mt-36 font-black"
                 style={{
                   fontSize: "clamp(12rem, 10vw, 13rem)",
                   fontFamily: "Henju",
