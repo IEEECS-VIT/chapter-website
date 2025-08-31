@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import CoverPage from "./CoverPage";
-import clip1 from "./clip1.png";
-import clip2 from "./clip2.png";
-import texturedbg from "./texturedbg.png";
-import view from "./view.png";
+import clip1 from "./assets/clip1.png";
+import clip2 from "./assets/clip2.png";
+import texturedbg from "./assets/texturedbg.png";
+import view from "./assets/view.png";
 
 const ProjectDisplay = ({ data }) => {
   const containerRef = useRef();

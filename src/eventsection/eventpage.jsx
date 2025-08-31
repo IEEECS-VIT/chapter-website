@@ -5,6 +5,9 @@ import { Draggable } from "gsap/Draggable";
 import event from "./assets/event.png";
 import bg from "./assets/backgrnd.jpg";
 import pin from "./assets/pin.png";
+import cicada from "./assets/cicada.png";
+import bc from "./assets/battlecode.png"
+import wtf from "./assets/wtf.png";
 
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
@@ -67,61 +70,61 @@ export default function EventsPage() {
     {
       id: 2,
       title: "Cicada 3310",
-      image: event,
+      image: cicada,
       overlayText:
-        "A virtual maze packed with mind-bending puzzles and hidden clues.",
+        "A virtual maze filled with a series of mind-boggling puzzles and hidden messages.",
     },
     {
       id: 3,
       title: "WTF",
-      image: event,
+      image: wtf,
       overlayText:
         "Tech takes a twist. Expect the unexpected in this quirky event.",
     },
     {
       id: 4,
       title: "BattleCode",
-      image: event,
+      image: bc,
       overlayText:
         "Strategy meets code. Automate bots to battle in real-time arenas.",
     },
     {
       id: 5,
-      title: "PixelQuest",
+      title: "SDG",
       image: event,
       overlayText:
         "A retro-style game challenge where creativity meets coding.",
     },
     {
       id: 6,
-      title: "AlgoArena",
+      title: "Casa",
       image: event,
       overlayText: "Compete to solve algorithmic challenges in a timed battle.",
     },
     {
       id: 7,
-      title: "Debug Derby",
+      title: "MozDev",
       image: event,
-      overlayText: "Race against time to fix bugs and restore systems.",
+      overlayText: "A premium 6 hour hands-on session on Web Development for the developers of tomorrow.",
     },
     {
       id: 8,
-      title: "CryptoQuest",
+      title: "Emerald City",
       image: event,
       overlayText:
         "Unravel ciphers and cryptographic challenges under pressure.",
     },
     {
       id: 9,
-      title: "CodeGolf",
+      title: "Hack For Impact",
       image: event,
       overlayText: "Solve problems in the shortest possible code.",
     },
     {
       id: 10,
-      title: "TechTrivia",
+      title: "Cyberbattle",
       image: event,
-      overlayText: "Test your tech knowledge in a rapid-fire trivia challenge.",
+      overlayText: "An adventure ride for the competitive coders, TBC is your chance to unleash the problem solver within you.",
     },
   ];
 

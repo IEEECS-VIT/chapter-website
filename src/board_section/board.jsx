@@ -186,18 +186,19 @@ const BoardGrid = () => {
           <TeamCard name="Arjun Bector" position="Co-secretary" photo={arjun} linkedin="https://www.linkedin.com/in/arjun-bector/" innerRef={r1c4Ref} />
           <div ref={boardTextRef} className="col-span-2 sm:col-span-3 lg:col-span-4 flex justify-start items-center text-yellow-400 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold py-2 sm:py-3 md:py-4 uppercase">THE BOARD</div>
           <TeamCard name="Ansh Mehta" position="Technical Head" photo={ansh} linkedin="https://www.linkedin.com/in/anshmehta/" />
-          <TeamCard name="Medhansh Jain" position="Web Lead" photo={medhansh} linkedin="https://www.linkedin.com/in/medhansh-jain/" />
-          <TeamCard name="Krish Mehta" position="App Lead" photo={krish} linkedin="https://www.linkedin.com/in/krish1604/" innerRef={r2c3Ref} />
+          <TeamCard name="Akshit Anand" position="Projects Head" photo={akshit} linkedin="https://www.linkedin.com/in/akshit-anand-10a90b219/" />
+          <TeamCard name="Dhriti Sharma" position="Events Head" photo={dhriti} linkedin="https://www.linkedin.com/in/dhriti-sharma-b03014275/" innerRef={r2c3Ref} />
           <div></div>
           <div ref={dateTextRef} className="col-span-full board-date text-yellow-400 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold py-2 sm:py-3 md:py-4 uppercase text-left">25–26</div>
-          <TeamCard name="Dhriti Sharma" position="Events Head" photo={dhriti} linkedin="https://www.linkedin.com/in/dhriti-sharma-b03014275/" />
-          <TeamCard name="Gouri Kanade" position="RND Head" photo={gouri} linkedin="https://www.linkedin.com/in/gourikanade1012/" innerRef={r3c2Ref} />
-          <div className="hidden sm:block"></div>
-          <TeamCard name="Parth Jadhav" position="Design Head" photo={parth} linkedin="https://www.linkedin.com/in/parthjadhav2004/" />
           <TeamCard name="Varun Sharith" position="PNM Head" photo={varun} linkedin="https://www.linkedin.com/in/varun-shirsath-50403534b/" />
+          <TeamCard name="Parth Jadhav" position="Design Head" photo={parth} linkedin="https://www.linkedin.com/in/parthjadhav2004/" innerRef={r3c2Ref} />
+          <div className="hidden sm:block"></div>
+          <TeamCard name="Gouri Kanade" position="RND Head" photo={gouri} linkedin="https://www.linkedin.com/in/gourikanade1012/"  />
+          <TeamCard name="Medhansh Jain" position="Web Lead" photo={medhansh} linkedin="https://www.linkedin.com/in/medhansh-jain/" />
           <div></div>
+          <TeamCard name="Krish Mehta" position="App Lead" photo={krish} linkedin="https://www.linkedin.com/in/krish1604/"  />
           <TeamCard name="Arya" position="IOT Lead" photo={arya} linkedin="https://www.linkedin.com/in/arya-patil-2a8366330/" />
-          <TeamCard name="Akshit Anand" position="Projects Head" photo={akshit} linkedin="https://www.linkedin.com/in/akshit-anand-10a90b219/" />
+             
         </div>
       </div>
       <div className="h-[8vh] sm:h-[10vh] md:h-[15vh]" />

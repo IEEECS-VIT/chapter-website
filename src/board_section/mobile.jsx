@@ -80,14 +80,15 @@ const MobileBoard = () => {
     { name: "Aditya Verma", position: "Secretary", photo: aditya, linkedin: "https://www.linkedin.com/in/adityaverma121/" },
     { name: "Arjun Bector", position: "Co-secretary", photo: arjun, linkedin: "https://www.linkedin.com/in/arjun-bector/" },
     { name: "Ansh Mehta", position: "Technical Head", photo: ansh, linkedin: "https://www.linkedin.com/in/anshmehta/" },
+    { name: "Akshit Anand", position: "Projects Head", photo: akshit, linkedin: "https://www.linkedin.com/in/akshit-anand-10a90b219/" },
+    { name: "Dhriti Sharma", position: "Events Head", photo: dhriti, linkedin: "https://www.linkedin.com/in/dhriti-sharma-b03014275/" },
+    { name: "Varun Sharith", position: "PNM Head", photo: varun, linkedin: "https://www.linkedin.com/in/varun-shirsath-50403534b/" },
+    { name: "Parth Jadhav", position: "Design Head", photo: parth, linkedin: "https://www.linkedin.com/in/parthjadhav2004/" },
+    { name: "Gouri Kanade", position: "RND Head", photo: gouri, linkedin: "https://www.linkedin.com/in/gourikanade1012/" },
     { name: "Medhansh Jain", position: "Web Lead", photo: medhansh, linkedin: "https://www.linkedin.com/in/medhansh-jain/" },
     { name: "Krish Mehta", position: "App Lead", photo: krish, linkedin: "https://www.linkedin.com/in/krish1604/" },
-    { name: "Dhriti Sharma", position: "Events Head", photo: dhriti, linkedin: "https://www.linkedin.com/in/dhriti-sharma-b03014275/" },
-    { name: "Gouri Kanade", position: "RND Head", photo: gouri, linkedin: "https://www.linkedin.com/in/gourikanade1012/" },
-    { name: "Parth Jadhav", position: "Design Head", photo: parth, linkedin: "https://www.linkedin.com/in/parthjadhav2004/" },
-    { name: "Varun Sharith", position: "PNM Head", photo: varun, linkedin: "https://www.linkedin.com/in/varun-shirsath-50403534b/" },
     { name: "Arya", position: "IOT Lead", photo: arya, linkedin: "https://www.linkedin.com/in/arya-patil-2a8366330/" },
-    { name: "Akshit Anand", position: "Projects Head", photo: akshit, linkedin: "https://www.linkedin.com/in/akshit-anand-10a90b219/" },
+   
   ]
 
   const cardPairs = []

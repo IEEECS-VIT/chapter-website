@@ -24,8 +24,9 @@ const ParticleBackground = () => {
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
-
-    for (let i = 0; i < 450; i++) {
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 150 : 400;
+    for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -55,7 +56,7 @@ const ParticleBackground = () => {
         ctx.globalAlpha = particle.opacity;
         ctx.fillStyle = "#ffffff";
         ctx.shadowColor = "#ffffff";   
-        ctx.shadowBlur = 10; 
+        ctx.shadowBlur = 8; 
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
@@ -122,7 +123,7 @@ const PreLoader = ({ onEnter }) => {
 
     tl.to(obj, {
       val: 100,
-      duration: 2,
+      duration: 1.5,
       ease: "linear",
       onUpdate: () => {
         if (!hasFinished.current) {

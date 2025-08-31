@@ -57,7 +57,7 @@ const OurStory = () => {
             <img
               src={MobileBoard}
               alt="IEEE Computer Society Team"
-              className={`rounded-xl opacity-0 translate-y-16 transition-opacity duration-700 w-auto h-auto object-cover ${
+              className={`rounded-xl opacity-0 translate-y-12 transition-opacity duration-700 w-auto h-auto object-cover ${
                 imageLoaded ? "opacity-100" : ""
               }`}
               onLoad={() => setImageLoaded(true)}
@@ -65,7 +65,7 @@ const OurStory = () => {
           </div>
 
           <p
-            className="text-[#0b0b0a] max-w-3xl leading-relaxed translate-y-28"
+            className="text-[#0b0b0a] max-w-3xl leading-relaxed translate-y-20"
             style={{
               fontFamily: "Special Elite",
               fontSize: "1rem",
