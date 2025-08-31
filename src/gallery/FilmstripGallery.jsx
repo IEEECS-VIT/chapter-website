@@ -12,7 +12,7 @@ import s8 from "./assets/s8.jpg";
 import s9 from "./assets/s9.jpg";
 import s10 from "./assets/s10.jpg";
 
-const images = [s1,s2,s3,s4,s5,s6,s7,s8,s9,s10];
+const images = [s1,s2,s7,s6,s5,s3,s4,s8,s9,s10];
 
 const FilmstripGallery = () => {
   const scrollRef = useRef(null);

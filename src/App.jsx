@@ -7,6 +7,7 @@ import HeroSection from "./homepage/HeroSection";
 import Board from "./board_section/board";
 import Mobile from "./board_section/mobile";
 import Events from "./eventsection/eventpage";
+import EventsD from "./eventsection/eventspageD";
 import Gallery from "./gallery/FilmstripGallery";
 import Footer from "./footer/Contact";
 import PreLoader from "./Preloader/PreLoader";
@@ -134,7 +135,9 @@ const App = () => {
               <Project />
             </section>
 
-            <Events />
+            <section className="relative w-full">
+              {isMobile ? <Events /> : <EventsD />}
+            </section>
 
             <section className="relative w-full">
               {isMobile ? <Mobile /> : <Board />}

@@ -102,66 +102,74 @@ const MobileBoard = () => {
     })
   }
 
- useEffect(() => {
+useEffect(() => {
   const scroller = containerRef.current
   const wrapper = wrapperRef.current
   const progress = progressRef.current
   const knob = knobRef.current
   if (!scroller || !wrapper || !progress || !knob) return
 
-  const totalScroll = (scroller.scrollWidth - window.innerWidth)
+  const totalScroll = scroller.scrollWidth - window.innerWidth
   const maxKnobX = progress.parentElement.offsetWidth - knob.offsetWidth
 
-  gsap.set(scroller, { x: 0 })
-  gsap.set(progress, { width: "0%" })
-  gsap.set(knob, { x: 0 })
+  let syncProgress = 0 // shared [0 → 1]
 
-  const updateProgress = (knobX) => {
-    const progressValue = knobX / maxKnobX
-    gsap.set(progress, { width: `${progressValue * 100}%` })
-    gsap.set(knob, { x: knobX })
-    gsap.set(scroller, { x: -progressValue * totalScroll})
+  const applyProgress = (p) => {
+    syncProgress = Math.min(1, Math.max(0, p))
+    gsap.set(progress, { width: `${syncProgress * 100}%` })
+    gsap.set(knob, { x: syncProgress * maxKnobX })
+    gsap.set(scroller, { x: -syncProgress * totalScroll })
   }
 
-
-  const proxy = document.createElement("div")
-  gsap.set(proxy, { x: 0 })
-
-  const draggable = Draggable.create(proxy, {
+  // Draggable knob
+  const draggable = Draggable.create(knob, {
     type: "x",
-    trigger: knob,
-    inertia: true,
     bounds: { minX: 0, maxX: maxKnobX },
+    inertia: true,
     onDrag() {
-      const invertedX =this.x
-      updateProgress(invertedX)
+      applyProgress(this.x / maxKnobX)
+      if (scrollTriggerInstance) {
+        scrollTriggerInstance.scroll(
+          scrollTriggerInstance.start +
+            syncProgress * (scrollTriggerInstance.end - scrollTriggerInstance.start)
+        )
+      }
     },
     onThrowUpdate() {
-      const invertedX = this.x
-      updateProgress(invertedX)
+      applyProgress(this.x / maxKnobX)
+      if (scrollTriggerInstance) {
+        scrollTriggerInstance.scroll(
+          scrollTriggerInstance.start +
+            syncProgress * (scrollTriggerInstance.end - scrollTriggerInstance.start)
+        )
+      }
     },
   })[0]
 
-  ScrollTrigger.create({
+ 
+  let scrollTriggerInstance = ScrollTrigger.create({
     trigger: wrapper,
     start: "top top",
-    end: `+=${maxKnobX*5.5}`, 
+    end: `+=${maxKnobX * 5}`, 
     pin: true,
     scrub: true,
     onUpdate: (self) => {
-      const knobX = self.progress * maxKnobX
-      updateProgress(knobX)
+    
+      if (!draggable.isDragging) {
+        applyProgress(self.progress)
+      }
     },
   })
 
-  updateProgress(0)
+  applyProgress(0)
 
   return () => {
     draggable.kill()
+    scrollTriggerInstance.kill()
     ScrollTrigger.getAll().forEach((st) => st.kill())
-    gsap.killTweensOf(scroller)
   }
 }, [])
+
 
   return (
     <div>
@@ -175,7 +183,6 @@ const MobileBoard = () => {
               THE BOARD
             </div>
           </div>
-
           {cardPairs.map((pair, index) => (
             <div key={index} className="flex flex-col gap-8 flex-shrink-0">
               <TeamCard {...pair.first} />
@@ -183,7 +190,6 @@ const MobileBoard = () => {
             </div>
           ))}
         </div>
-
         <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-3/4 h-2 bg-white/30 rounded-full">
           <div ref={progressRef} className="h-full bg-white rounded-full relative">
             <div
