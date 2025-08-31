@@ -62,7 +62,6 @@ export default function EventsPage() {
   const pinRef = useRef(null);
   const progressRef = useRef(null);
   const knobRef = useRef(null);
-  const arrowRef = useRef(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
@@ -74,16 +73,36 @@ export default function EventsPage() {
 
     const totalScroll = scroller.scrollWidth - window.innerWidth;
     const maxKnobX = progress.parentElement.offsetWidth - knob.offsetWidth;
+    const clamp = gsap.utils.clamp;
 
     gsap.set(scroller, { x: 0 });
     gsap.set(progress, { width: "0%" });
     gsap.set(knob, { x: 0 });
 
-    const updateProgress = (knobX) => {
-      const progressValue = knobX / maxKnobX;
+    let scrollTriggerInstance;
+    let isDragging = false;
+
+    const updateFromKnob = (knobX) => {
+      const clampedX = clamp(0, maxKnobX, knobX);
+      const progressValue = clampedX / maxKnobX;
+      const scrollerX = clamp(-totalScroll, 0, -progressValue * totalScroll);
       gsap.set(progress, { width: `${progressValue * 100}%` });
+      gsap.set(knob, { x: clampedX });
+      gsap.set(scroller, { x: scrollerX });
+      if (scrollTriggerInstance && isDragging) {
+        const st = scrollTriggerInstance;
+        st.scroll(st.start + progressValue * (st.end - st.start));
+      }
+    };
+
+    const updateFromScroll = (progressValue) => {
+      if (isDragging) return;
+      const clampedProgress = clamp(0, 1, progressValue);
+      const knobX = clampedProgress * maxKnobX;
+      const scrollerX = clamp(-totalScroll, 0, -clampedProgress * totalScroll);
+      gsap.set(progress, { width: `${clampedProgress * 100}%` });
       gsap.set(knob, { x: knobX });
-      gsap.set(scroller, { x: -progressValue * totalScroll });
+      gsap.set(scroller, { x: scrollerX });
     };
 
     const proxy = document.createElement("div");
@@ -93,34 +112,36 @@ export default function EventsPage() {
       type: "x",
       trigger: knob,
       inertia: true,
+      edgeResistance: 0.65,
       bounds: { minX: 0, maxX: maxKnobX },
       onPress() {
+        isDragging = true;
         document.body.style.userSelect = "none";
       },
       onDrag() {
-        updateProgress(this.x);
+        updateFromKnob(this.x);
       },
       onThrowUpdate() {
-        updateProgress(this.x);
+        updateFromKnob(this.x);
       },
       onRelease() {
+        isDragging = false;
         document.body.style.userSelect = "";
       },
     })[0];
 
-    ScrollTrigger.create({
+    scrollTriggerInstance = ScrollTrigger.create({
       trigger: pin,
       start: "top top",
-      end: `+=${maxKnobX * 5.5}`,
+      end: `+=${maxKnobX * 6.5}`,
       pin: true,
       scrub: true,
       onUpdate: (self) => {
-        const knobX = self.progress * maxKnobX;
-        updateProgress(knobX);
+        updateFromScroll(self.progress);
       },
     });
 
-    updateProgress(0);
+    updateFromScroll(0);
 
     return () => {
       draggable.kill();
@@ -166,7 +187,6 @@ export default function EventsPage() {
             />
           </div>
         )}
-
 
         <div className="w-screen h-0.5 bg-white mt-10 mb-2" />
         <div className="w-screen h-0.5 bg-white mb-5" />
