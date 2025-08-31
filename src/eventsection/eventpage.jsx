@@ -154,7 +154,7 @@ export default function EventsPage() {
         inertia: true,
         bounds: { minX: -totalScroll, maxX: 0 },
         throwResistance: 30,
-        edgeResistance: 0.25,
+        edgeResistance: 0.85,
         dragResistance: 0.1,
         onPress() {
           document.body.style.userSelect = "none";
@@ -165,13 +165,19 @@ export default function EventsPage() {
           }
         },
         onDrag() {
-          gsap.set(scroller, { x: this.x });
-          updateProgress(this.x);
+          const clampedX = gsap.utils.clamp(-totalScroll, 0, this.x);
+          gsap.set(scroller, { x: clampedX });
+          updateProgress(clampedX);
         },
         onThrowUpdate() {
-          gsap.set(scroller, { x: this.x });
-          updateProgress(this.x);
+          const clampedX = gsap.utils.clamp(-totalScroll, 0, this.x);
+          gsap.set(scroller, { x: clampedX });
+          updateProgress(clampedX);
         },
+        onRelease() {
+          const clampedX = gsap.utils.clamp(-totalScroll, 0, this.x);
+          gsap.to(scroller, { x: clampedX, duration: 0.3, ease: "power2.out" });
+        }
       })[0];
 
       updateProgress(-totalScroll);
