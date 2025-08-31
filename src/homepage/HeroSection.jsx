@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Logo from "./ieee_logo.png";
-import Left from "./1.png";
-import Right from "./2.png";
-import MobileHero from "./mobile-view.png";
+import Left from "./assets/1.png";
+import Right from "./assets/2.png";
+import MobileHero from "./assets/mobile-view.png";
 import OurStory from "../homepage/OurStory";
 
 

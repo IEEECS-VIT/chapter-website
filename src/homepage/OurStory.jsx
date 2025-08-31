@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Logo from "./IEEECS.png";
-import Background from "./paper_effect.png";
-import Team from "./team.png";
-import MobileBoard from "./mobile-board.jpg";
+import Logo from "./assets/IEEECS.png";
+import Background from "./assets/paper_effect.png";
+import Team from "./assets/team.png";
+import MobileBoard from "./assets/mobile-board.jpg";
 
 const OurStory = () => {
   const [screenType, setScreenType] = useState("lg");
