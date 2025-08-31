@@ -28,3 +28,6 @@ html, body {
   font-weight: normal;
   font-style: normal;
 }
+* {
+  user-select: none !important;
+}
