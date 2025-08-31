@@ -117,33 +117,35 @@ const HeroSection = ({ contentRef }) => {
         <div className="hidden xl:block sticky top-10 z-20 h-screen pointer-events-auto overflow-hidden">
           <div
             ref={leftRef}
-            className="absolute top-0 left-0 h-screen z-30"
+            className="absolute -top-2 left-0 h-screen z-30"
             style={{
               width: "min(51vw, 1200px)",
               backgroundImage: `url(${Left})`,
+               height: "103vh",
               backgroundSize: "100% 100%",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
               clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
               transformOrigin: "left center",
               boxShadow: "4px 0 20px rgba(0,0,0,0.25)",
-              filter: "brightness(0.50)"
+             
             }}
           />
 
           <div
             ref={rightRef}
-            className="absolute top-0 right-0 h-screen z-30"
+            className="absolute -top-2 right-0 h-screen z-30"
             style={{
               width: "min(51.25vw, 1000px)",
               backgroundImage: `url(${Right})`,
+               height: "103vh",
               backgroundSize: "100% 100%",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
               clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
               transformOrigin: "right center",
               boxShadow: "-4px 0 20px rgba(0,0,0,0.25)",
-              filter: "brightness(0.50)"
+             
             }}
           />
 

@@ -100,6 +100,9 @@ const PreLoader = ({ onEnter }) => {
     color: "black",
     textTransform: "uppercase",
     display: "inline-block",
+      userSelect: "none",
+    WebkitUserSelect: "none",
+    MozUserSelect: "none",
   };
 
   useEffect(() => {
