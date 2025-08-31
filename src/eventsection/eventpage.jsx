@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Draggable } from "gsap/Draggable";
-
+import H from "../effects/Highlight";
 import event from "./assets/event.png";
 import bg from "./assets/backgrnd.jpg";
 import pin from "./assets/pin.png";
 import cicada from "./assets/cicada.png";
 import bc from "./assets/battlecode.png";
 import wtf from "./assets/wtf.png";
+import h4i from "./assets/h4i.png";
 
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
@@ -47,14 +48,14 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
 export default function EventsPage() {
   const items = [
     { id: 1, title: "HackBattle", image: event, overlayText: "A high-stakes coding face-off for the brave and bold minds." },
-    { id: 2, title: "Cicada 3302", image: cicada, overlayText: "A virtual maze filled with puzzles and hidden messages." },
+    { id: 2, title: "Cicada 3310", image: cicada, overlayText: "A virtual maze filled with puzzles and hidden messages." },
     { id: 3, title: "WTF", image: wtf, overlayText: "Tech takes a twist. Expect the unexpected in this quirky event." },
     { id: 4, title: "BattleCode", image: bc, overlayText: "Strategy meets code. Automate bots to battle in real-time arenas." },
     { id: 5, title: "SDG", image: event, overlayText: "A retro-style game challenge where creativity meets coding." },
     { id: 6, title: "Casa", image: event, overlayText: "Compete to solve algorithmic challenges in a timed battle." },
     { id: 7, title: "MozDev", image: event, overlayText: "A 6 hour hands-on session on Web Development for tomorrow’s devs." },
     { id: 8, title: "Emerald City", image: event, overlayText: "Unravel ciphers and cryptographic challenges under pressure." },
-    { id: 9, title: "Hack For Impact", image: event, overlayText: "Solve problems in the shortest possible code." },
+    { id: 9, title: "Hack For Impact", image: h4i, overlayText: "Solve problems in the shortest possible code." },
     { id: 10, title: "Cyberbattle", image: event, overlayText: "An adventure ride for competitive coders." },
   ];
 

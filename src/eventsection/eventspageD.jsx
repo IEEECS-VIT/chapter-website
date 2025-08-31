@@ -9,6 +9,7 @@ import pin from "./assets/pin.png";
 import cicada from "./assets/cicada.png";
 import bc from "./assets/battlecode.png";
 import wtf from "./assets/wtf.png";
+import h4i from "./assets/h4i.png";
 
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
@@ -54,7 +55,7 @@ export default function EventsPage() {
     { id: 6, title: "Casa", image: event, overlayText: "Compete to solve algorithmic challenges in a timed battle." },
     { id: 7, title: "MozDev", image: event, overlayText: "A 6 hour hands-on session on Web Development for tomorrow’s devs." },
     { id: 8, title: "Emerald City", image: event, overlayText: "Unravel ciphers and cryptographic challenges under pressure." },
-    { id: 9, title: "Hack For Impact", image: event, overlayText: "Solve problems in the shortest possible code." },
+    { id: 9, title: "Hack For Impact", image: h4i, overlayText: "Solve problems in the shortest possible code." },
     { id: 10, title: "Cyberbattle", image: event, overlayText: "An adventure ride for competitive coders." },
   ];
 

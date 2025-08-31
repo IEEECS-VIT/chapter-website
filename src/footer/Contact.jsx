@@ -151,17 +151,17 @@ const Contact = () => {
           top: emblemTop + emblemHeight * 1.5,
         }}
       >
-        <h2
-          className="mb-[20px]"
+        <h1
+          className="mb-[20px] font-semibold font"
           style={{
             color: "#4B3200",
-            fontSize: `${21.6 * s}px`,
+            fontSize: `${28.6 * s}px`,
             letterSpacing: `${1.513 * s}px`,
-            fontFamily: "Henju, serif",
+            fontFamily: "henju, serif",
           }}
         >
           Contact Us
-        </h2>
+        </h1>
 
         <form className="flex flex-col gap-4 items-center">
           <div className="w-full max-w-[320px] text-left">
@@ -170,11 +170,11 @@ const Contact = () => {
               style={{
                 color: "#4B3200",
                 fontSize: `${13 * s}px`,
-                fontFamily: "Henju, serif",
+                fontFamily: "henju, serif",
                 letterSpacing: `${0.911 * s}px`,
               }}
             >
-              Full name*
+              Full name
             </label>
             <input
               type="text"
@@ -183,7 +183,7 @@ const Contact = () => {
               style={{
                 color: "#4B3200",
                 fontSize: `${10.8 * s}px`,
-                fontFamily: "Henju, serif",
+                fontFamily: "henju, serif",
                 letterSpacing: `${0.756 * s}px`,
               }}
             />
@@ -195,7 +195,7 @@ const Contact = () => {
               style={{
                 color: "#4B3200",
                 fontSize: `${13 * s}px`,
-                fontFamily: "Henju, serif",
+                fontFamily: "henju, serif",
                 letterSpacing: `${0.911 * s}px`,
               }}
             >
@@ -208,7 +208,7 @@ const Contact = () => {
               style={{
                 color: "#4B3200",
                 fontSize: `${10.8 * s}px`,
-                fontFamily: "Henju, serif",
+                fontFamily: "henju, serif",
                 letterSpacing: `${0.756 * s}px`,
               }}
             />
@@ -220,20 +220,20 @@ const Contact = () => {
               style={{
                 color: "#4B3200",
                 fontSize: `${13 * s}px`,
-                fontFamily: "Henju, serif",
+                fontFamily: "henju, serif",
                 letterSpacing: `${0.911 * s}px`,
               }}
             >
-              Contact number*
+              Message
             </label>
             <input
               type="tel"
-              placeholder="enter your contact number..."
-              className="w-full rounded-[16px] px-2 py-2 bg-[#ECE0D0] border-none outline-none"
+              placeholder="enter your message..."
+              className="w-full rounded-[16px] px-2 py-2 h-14 bg-[#ECE0D0] border-none outline-none"
               style={{
                 color: "#4B3200",
                 fontSize: `${10.8 * s}px`,
-                fontFamily: "Henju, serif",
+                fontFamily: "henju, serif",
                 letterSpacing: `${0.756 * s}px`,
               }}
             />
@@ -248,8 +248,8 @@ const Contact = () => {
               borderColor: "#DDB373",
               background: "black",
               color: "white",
-              fontSize: `${18 * s}px`,
-              fontFamily: "Henju, serif",
+              fontSize: `${20 * s}px`,
+              fontFamily: "henju, serif",
               letterSpacing: `${0.589 * s}px`,
             }}
           >
@@ -281,7 +281,7 @@ const Contact = () => {
           style={{
             color: "black",
             fontSize: `${14.9 * s}px`,
-            fontFamily: "Henju, serif",
+            fontFamily: "henju, serif",
             letterSpacing: `${1.044 * s}px`,
           }}
         >
@@ -291,7 +291,7 @@ const Contact = () => {
           style={{
             color: "black",
             fontSize: `${11.15 * s}px`,
-            fontFamily: "Henju, serif",
+            fontFamily: "henju, serif",
             letterSpacing: `${0.781 * s}px`,
             lineHeight: 1.4,
           }}
@@ -417,7 +417,7 @@ const Contact = () => {
       className="min-h-screen w-full flex flex-col justify-start items-center relative overflow-hidden font-serif"
       style={{
         backgroundColor: "#EF9E00",
-       fontFamily: "Henju, serif",
+       fontFamily: "henju, serif",
         color: "#4B3200",
       }}
     >
@@ -437,7 +437,7 @@ const Contact = () => {
         <div className="flex flex-col justify-center w-full">
           <h2
             className="text-[clamp(1.5rem,2vw,2.8rem)] font-semibold mb-8 text-center"
-            style={{ color: "black",fontFamily: "Henju, serif" }}
+            style={{ color: "black",fontFamily: "henju, serif" }}
           >
             Contact Us
           </h2>
@@ -446,22 +446,22 @@ const Contact = () => {
             <div>
               <label
                 className="block text-[clamp(0.95rem,1.1vw,1.3rem)] font-semibold mb-2"
-                style={{ color: "black", fontFamily: "Henju, serif" }}
+                style={{ color: "black", fontFamily: "henju, serif" }}
               >
-                Full name*
+                Full name
               </label>
               <input
                 type="text"
                 placeholder="Enter your name..."
                 className="w-full px-4 py-2 rounded-full shadow-sm text-[clamp(0.95rem,1.05vw,1.05rem)]"
-                style={{ color: "#4B3200",fontFamily: "Henju, serif" }}
+                style={{ color: "#4B3200",fontFamily: "henju, serif" }}
               />
             </div>
 
             <div>
               <label
                 className="block text-[clamp(0.95rem,1.1vw,1.3rem)] font-semibold mb-2"
-                style={{ color: "black",fontFamily: "Henju, serif" }}
+                style={{ color: "black",fontFamily: "henju, serif" }}
               >
                 Email address*
               </label>
@@ -469,40 +469,40 @@ const Contact = () => {
                 type="email"
                 placeholder="Enter your email address..."
                 className="w-full px-4 py-2 rounded-full shadow-sm text-[clamp(0.95rem,1.05vw,1.05rem)]"
-                style={{ color: "#4B3200",fontFamily: "Henju, serif", }}
+                style={{ color: "#4B3200",fontFamily: "henju, serif", }}
               />
             </div>
 
             <div>
               <label
                 className="block text-[clamp(0.95rem,1.1vw,1.3rem)] font-semibold mb-2"
-                style={{ color: "black", fontFamily: "Henju, serif", }}
+                style={{ color: "black", fontFamily: "henju, serif", }}
               >
-                Contact number*
+                Message
               </label>
               <input
                 type="tel"
-                placeholder="Enter your contact number..."
-                className="w-full px-4 py-2 rounded-full shadow-sm text-[clamp(0.95rem,1.05vw,1.05rem)]"
-                style={{ color: "#4B3200", fontFamily: "Henju, serif", }}
+                placeholder="Enter your message..."
+                className="w-full px-4 h-14 py-2 rounded-full shadow-sm text-[clamp(0.95rem,1.05vw,1.05rem)]"
+                style={{ color: "#4B3200", fontFamily: "henju, serif", }}
               />
             </div>
 
             <div className="flex justify-center mt-6">
               <button
                 type="button"
-                className="flex justify-center w-[60%] items-center rounded-full border hover:shadow-lg transition-shadow duration-200"
+                className="flex justify-center w-[40%] items-center rounded-full border hover:shadow-lg transition-shadow duration-200"
                 style={{
                   borderColor: "#DDB373",
                   background: "black",
                   color: "white",
-                  fontFamily: "Gloock, serif",
+                  fontFamily: "henju, serif",
                   fontSize: "clamp(0.9rem,1.05vw,1.2rem)",
                   letterSpacing: "0.05em",
                   padding: "0.6em 1.4em",
                 }}
               >
-                <span style={{ fontWeight: "bold" , fontFamily: "Henju, serif" }}>Submit</span>
+                <span style={{ fontWeight: "bold" , fontFamily: "henju, serif" }}>Submit</span>
               </button>
             </div>
           </form>
@@ -522,7 +522,7 @@ const Contact = () => {
 
       <footer
         className="w-full relative z-10 flex items-center justify-between mt-auto px-40 py-6"
-        style={{ color: "#4B3200",fontFamily: "Henju, serif",}}
+        style={{ color: "#4B3200",fontFamily: "henju, serif",}}
       >
         <div className="flex flex-row md:flex-row items-start md:items-center gap-12">
           <button
@@ -542,8 +542,8 @@ const Contact = () => {
           </button>
 
           <div className="flex flex-row gap-8">
-            <p className="text-[clamp(1rem,1.2vw,1.2rem)] font-henju">IEEECS@vit.ac.in</p>
-            <p className="text-[clamp(1rem,1.2vw,1.2rem)] font-henju">+91 9380302937</p>
+            <p className="text-[clamp(1rem,1.2vw,1.2rem)] font-henju text-black">ieeecs@vit.ac.in</p>
+            <p className="text-[clamp(1rem,1.2vw,1.2rem)] font-henju text-black">+91 9380302937</p>
           </div>
         </div>
 

@@ -30,10 +30,11 @@ const TeamCard = ({ name, position, photo, linkedin, innerRef, extraClass = "" }
         <div className="flex flex-col items-center space-y-1">
           <div className="text-yellow-400 text-4xl sm:text-4xl font-caveat">{name}</div>
           <div
-          className="text-black text-sm sm:text-base"
-          style={{ fontFamily: "'Special Elite', cursive" }}>
-          {position}
-        </div>
+            className="text-black text-sm sm:text-base"
+            style={{ fontFamily: "'Special Elite', cursive" }}
+          >
+            {position}
+          </div>
         </div>
         <div className="w-[275px] h-[275px] overflow-hidden flex justify-center">
           <img src={photo} alt={name} className="w-[275px] h-[275px] object-contain" />
@@ -118,7 +119,8 @@ const BoardGrid = () => {
       let translateY = startOffset
       if (currentScrollY >= settlePoint) translateY = 0
       else if (currentScrollY > componentOffsetTop) {
-        const progress = (currentScrollY - componentOffsetTop) / (settlePoint - componentOffsetTop)
+        let progress = (currentScrollY - componentOffsetTop) / (settlePoint - componentOffsetTop)
+        progress = Math.min(Math.max(progress, 0), 1)
         translateY = startOffset * (1 - progress)
       }
       r1c2Ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`
@@ -129,7 +131,8 @@ const BoardGrid = () => {
       let translateY = 0
       if (currentScrollY >= endScrollPoint) translateY = maxTranslate
       else if (currentScrollY > startScrollPoint) {
-        const progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
+        let progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
+        progress = Math.min(Math.max(progress, 0), 1)
         translateY = maxTranslate * progress
       }
       r1c4Ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`
@@ -140,7 +143,8 @@ const BoardGrid = () => {
       let translateY = 0
       if (currentScrollY >= endScrollPoint) translateY = maxTranslate
       else if (currentScrollY > startScrollPoint) {
-        const progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
+        let progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
+        progress = Math.min(Math.max(progress, 0), 1)
         translateY = maxTranslate * progress
       }
       r2c3Ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`
@@ -151,7 +155,8 @@ const BoardGrid = () => {
       let translateY = 0
       if (currentScrollY >= endScrollPoint) translateY = maxTranslate
       else if (currentScrollY > startScrollPoint) {
-        const progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
+        let progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
+        progress = Math.min(Math.max(progress, 0), 1)
         translateY = maxTranslate * progress
       }
       r3c2Ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`
@@ -177,7 +182,9 @@ const BoardGrid = () => {
     requestAnimationFrame(animateCards)
   }, [getResponsiveValues, componentOffsetTop])
 
-  useEffect(() => { requestAnimationFrame(animateCards) }, [animateCards])
+  useEffect(() => {
+    requestAnimationFrame(animateCards)
+  }, [animateCards])
 
   return (
     <div ref={componentRef} className="hidden md:flex min-h-[200vh] bg-black flex-col items-center justify-center py-6 sm:py-8 md:py-10 overflow-x-hidden">
@@ -197,12 +204,11 @@ const BoardGrid = () => {
           <TeamCard name="Varun Sharith" position="PnM Head" photo={varun} linkedin="https://www.linkedin.com/in/varun-shirsath-50403534b/" />
           <TeamCard name="Parth Jadhav" position="Design Head" photo={parth} linkedin="https://www.linkedin.com/in/parthjadhav2004/" innerRef={r3c2Ref} />
           <div className="hidden sm:block"></div>
-          <TeamCard name="Gouri Kanade" position="RnD Head" photo={gouri} linkedin="https://www.linkedin.com/in/gourikanade1012/"  />
+          <TeamCard name="Gouri Kanade" position="RnD Head" photo={gouri} linkedin="https://www.linkedin.com/in/gourikanade1012/" />
           <TeamCard name="Medhansh Jain" position="Web Lead" photo={medhansh} linkedin="https://www.linkedin.com/in/medhansh-jain/" />
           <div></div>
-          <TeamCard name="Krish Mehta" position="App Lead" photo={krish} linkedin="https://www.linkedin.com/in/krish1604/"  />
+          <TeamCard name="Krish Mehta" position="App Lead" photo={krish} linkedin="https://www.linkedin.com/in/krish1604/" />
           <TeamCard name="Arya" position="IOT Lead" photo={arya} linkedin="https://www.linkedin.com/in/arya-patil-2a8366330/" />
-             
         </div>
       </div>
       <div className="h-[8vh] sm:h-[10vh] md:h-[15vh]" />

@@ -1,6 +1,6 @@
-// tailwind.config.js
+
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"], // make sure paths are correct
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       keyframes: {

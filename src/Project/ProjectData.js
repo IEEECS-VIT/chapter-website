@@ -30,7 +30,7 @@ export const projectData = [
     id: 3,
     title: "Chota Dhobi App",
     image: cd,
-    text1: "A convenient laundry service app connecting users with local providers for quick and reliable cleaning. Users can schedule pickups and deliveries easily through an intuitive interface."
+    text1: "With 80,000+ students having used the platform and 5000 daily users, it ensures efficient tracking, notifications,and record management. "
   },
   {
     id: 4,

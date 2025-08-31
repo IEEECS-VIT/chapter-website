@@ -121,7 +121,7 @@ const HeroSection = ({ contentRef }) => {
             style={{
               width: "min(51vw, 1200px)",
               backgroundImage: `url(${Left})`,
-               height: "103vh",
+               height: "104vh",
               backgroundSize: "100% 100%",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
@@ -138,7 +138,7 @@ const HeroSection = ({ contentRef }) => {
             style={{
               width: "min(51.25vw, 1000px)",
               backgroundImage: `url(${Right})`,
-               height: "103vh",
+               height: "104vh",
               backgroundSize: "100% 100%",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
