@@ -14,7 +14,6 @@ const ParticleBackground = () => {
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
-    const particles = [];
     let animationId;
 
     const resizeCanvas = () => {
@@ -24,44 +23,42 @@ const ParticleBackground = () => {
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
-    const isMobile = window.innerWidth < 768;
-    const particleCount = isMobile ? 80 : 120;
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 2 + 2,
-        speedX: (Math.random() - 0.5) * 0.5,
-        speedY: Math.random() * 1 + 0.5,
-        opacity: Math.random() * 0.45 + 0.1,
-      });
-    }
+
+    const particleCount =
+      window.innerWidth < 640 ? 70 : window.innerWidth < 1024 ? 150 : 450;
+    const particles = Array.from({ length: particleCount }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 2 + 1,
+      speedX: (Math.random() - 0.5) * 0.5,
+      speedY: Math.random() * 1 + 0.5,
+      opacity: Math.random() * 0.45 + 0.1,
+    }));
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particles.forEach((particle) => {
-        particle.x += particle.speedX;
-        particle.y -= particle.speedY;
+      for (const p of particles) {
+        p.x += p.speedX;
+        p.y -= p.speedY;
+        70;
 
-        if (particle.y < -10) {
-          particle.y = canvas.height + 12;
-          particle.x = Math.random() * canvas.width;
+        if (p.y < -10) {
+          p.y = canvas.height + 10;
+          p.x = Math.random() * canvas.width;
         }
-        if (particle.x < -10 || particle.x > canvas.width + 10) {
-          particle.x = Math.random() * canvas.width;
+        if (p.x < -10 || p.x > canvas.width + 10) {
+          p.x = Math.random() * canvas.width;
         }
 
-        ctx.save();
-        ctx.globalAlpha = particle.opacity;
+        ctx.globalAlpha = p.opacity;
         ctx.fillStyle = "#ffffff";
-        ctx.shadowColor = "#ffffff";   
-        ctx.shadowBlur = 10; 
+        ctx.shadowColor = "#ffffff";
+        ctx.shadowBlur = window.innerWidth < 1024 ? 0 : 10;
         ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.restore();
-      });
+      }
 
       animationId = requestAnimationFrame(animate);
     };
@@ -100,9 +97,6 @@ const PreLoader = ({ onEnter }) => {
     color: "black",
     textTransform: "uppercase",
     display: "inline-block",
-      userSelect: "none",
-    WebkitUserSelect: "none",
-    MozUserSelect: "none",
   };
 
   useEffect(() => {
@@ -126,15 +120,17 @@ const PreLoader = ({ onEnter }) => {
 
     tl.to(obj, {
       val: 100,
-      duration: 1.5,
+      duration: 2,
       ease: "linear",
       onUpdate: () => {
         if (!hasFinished.current) {
-          setText(
-            <span ref={textRef} style={textStyle}>
-              {Math.floor(obj.val).toString()}
-            </span>
-          );
+          if (Math.floor(obj.val) % 2 === 0) {
+            setText(
+              <span ref={textRef} style={textStyle}>
+                {Math.floor(obj.val).toString()}
+              </span>
+            );
+          }
         }
       },
     });
@@ -181,7 +177,7 @@ const PreLoader = ({ onEnter }) => {
         </div>
         <div
           onClick={handleEnter}
-          className="w-28 h-28 text-2xl font-henju text-black z-30 rounded-full bg-[#F5AD12] flex items-center justify-center cursor-pointer transition duration-100 hover:scale-105 overflow-hidden shadow-[0_0_8vw_20px_rgba(255,234,138,0.5)]"
+          className="w-28 h-28 text-2xl font-henju text-black z-30 rounded-full bg-[#F5AD12] flex items-center justify-center cursor-pointer transition duration-100 hover:scale-105 overflow-hidden  shadow-[0_0_8vw_20px_rgba(255,234,138,0.5)]"
         >
           <div className="overflow-hidden h-8 flex items-end">
             <div ref={textRef} className="translate-y-1">

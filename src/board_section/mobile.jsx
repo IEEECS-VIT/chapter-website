@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
 import { Draggable } from "gsap/Draggable"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 import bgImage from "./assets/bg.png"
 import ram from "./assets/ram.png"
@@ -19,7 +20,7 @@ import varun from "./assets/varun.png"
 import parth from "./assets/parth.png"
 import medhansh from "./assets/medhansh.png"
 
-gsap.registerPlugin(Draggable)
+gsap.registerPlugin(Draggable, ScrollTrigger)
 
 const TeamCard = ({ name, position, photo, linkedin }) => {
   return (
@@ -32,14 +33,10 @@ const TeamCard = ({ name, position, photo, linkedin }) => {
       <div className="relative z-10 flex flex-col items-center w-full h-full justify-between">
         <div className="flex flex-col items-center space-y-1 text-center">
           <div className="text-yellow-400 text-3xl font-caveat leading-tight">{name}</div>
-          <div className="text-black text-sm " style={{fontFamily:"Special Elite"}}>{position}</div>
+          <div className="text-black text-sm" style={{ fontFamily: "Special Elite" }}>{position}</div>
         </div>
         <div className="w-[240px] h-[240px] flex items-center justify-center relative">
-          <img
-            src={photo}
-            alt={name}
-            className="w-[240px] h-[240px] object-contain"
-          />
+          <img src={photo} alt={name} className="w-[240px] h-[240px] object-contain" />
           {linkedin && (
             <a
               href={linkedin}
@@ -55,7 +52,8 @@ const TeamCard = ({ name, position, photo, linkedin }) => {
                 fill="currentColor"
                 className="text-black-600 hover:text-black-800 transition-colors"
               >
-                <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 
+                <path d="M19 0h-14c-2.76 0-5 2.24-5 
+                5v14c0 2.76 2.24 5 
                 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 
                 19h-3v-10h3v10zm-1.5-11.29c-.96 
                 0-1.75-.79-1.75-1.75s.79-1.75 
@@ -78,6 +76,7 @@ const MobileBoard = () => {
   const wrapperRef = useRef(null)
   const containerRef = useRef(null)
   const progressRef = useRef(null)
+  const knobRef = useRef(null)
 
   const allCards = [
     { name: "Ram Krishna", position: "Chairperson", photo: ram, linkedin: "https://www.linkedin.com/in/ramkrishna2967/" },
@@ -103,52 +102,66 @@ const MobileBoard = () => {
     })
   }
 
-  useEffect(() => {
-    const scroller = containerRef.current
-    const wrapper = wrapperRef.current
-    const progress = progressRef.current
-    if (!scroller || !wrapper || !progress) return
+ useEffect(() => {
+  const scroller = containerRef.current
+  const wrapper = wrapperRef.current
+  const progress = progressRef.current
+  const knob = knobRef.current
+  if (!scroller || !wrapper || !progress || !knob) return
 
-    const totalScroll = scroller.scrollWidth - window.innerWidth
+  const totalScroll = (scroller.scrollWidth - window.innerWidth)
+  const maxKnobX = progress.parentElement.offsetWidth - knob.offsetWidth
 
-    gsap.set(scroller, { x: 0 })
-    gsap.set(progress, { width: "0%" })
+  gsap.set(scroller, { x: 0 })
+  gsap.set(progress, { width: "0%" })
+  gsap.set(knob, { x: 0 })
 
-    const updateProgress = (x) => {
-      const progressValue = Math.abs(x) / totalScroll
-      gsap.set(progress, { width: `${progressValue * 100}%` })
-    }
+  const updateProgress = (knobX) => {
+    const progressValue = knobX / maxKnobX
+    gsap.set(progress, { width: `${progressValue * 100}%` })
+    gsap.set(knob, { x: knobX })
+    gsap.set(scroller, { x: -progressValue * totalScroll})
+  }
 
-    const proxy = document.createElement("div")
-    gsap.set(proxy, { x: 0 })
 
-    const draggable = Draggable.create(proxy, {
-      type: "x",
-      trigger: wrapper, 
-      inertia: true,
-      bounds: { minX: -totalScroll, maxX: 0 },
-      throwResistance: 30,
-      edgeResistance: 0.75,
-      dragResistance: 0.1,
-      onDrag() {
-        const clampedX = gsap.utils.clamp(-totalScroll, 0, this.x)
-        gsap.set(scroller, { x: clampedX })
-        updateProgress(clampedX)
-      },
-      onThrowUpdate() {
-        const clampedX = gsap.utils.clamp(-totalScroll, 0, this.x)
-        gsap.set(scroller, { x: clampedX })
-        updateProgress(clampedX)
-      },
-    })[0]
+  const proxy = document.createElement("div")
+  gsap.set(proxy, { x: 0 })
 
-    updateProgress(0)
+  const draggable = Draggable.create(proxy, {
+    type: "x",
+    trigger: knob,
+    inertia: true,
+    bounds: { minX: 0, maxX: maxKnobX },
+    onDrag() {
+      const invertedX =this.x
+      updateProgress(invertedX)
+    },
+    onThrowUpdate() {
+      const invertedX = this.x
+      updateProgress(invertedX)
+    },
+  })[0]
 
-    return () => {
-      draggable.kill()
-      gsap.killTweensOf(scroller)
-    }
-  }, [])
+  ScrollTrigger.create({
+    trigger: wrapper,
+    start: "top top",
+    end: `+=${maxKnobX*5.5}`, 
+    pin: true,
+    scrub: true,
+    onUpdate: (self) => {
+      const knobX = self.progress * maxKnobX
+      updateProgress(knobX)
+    },
+  })
+
+  updateProgress(0)
+
+  return () => {
+    draggable.kill()
+    ScrollTrigger.getAll().forEach((st) => st.kill())
+    gsap.killTweensOf(scroller)
+  }
+}, [])
 
   return (
     <div>
@@ -172,10 +185,12 @@ const MobileBoard = () => {
         </div>
 
         <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-3/4 h-2 bg-white/30 rounded-full">
-          <div
-            ref={progressRef}
-            className="h-full bg-white rounded-full"
-          />
+          <div ref={progressRef} className="h-full bg-white rounded-full relative">
+            <div
+              ref={knobRef}
+              className="absolute top-1/2 -translate-y-1/2 w-6 h-6 bg-yellow-400 rounded-full shadow-lg cursor-pointer"
+            />
+          </div>
         </div>
       </div>
     </div>
