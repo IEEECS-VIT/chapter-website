@@ -29,7 +29,11 @@ const TeamCard = ({ name, position, photo, linkedin, innerRef, extraClass = "" }
       <div className="relative z-10 flex flex-col justify-between items-center w-full h-full">
         <div className="flex flex-col items-center space-y-1">
           <div className="text-yellow-400 text-4xl sm:text-4xl font-caveat">{name}</div>
-          <div className="text-black text-sm sm:text-base font-karla">{position}</div>
+          <div
+          className="text-black text-sm sm:text-base"
+          style={{ fontFamily: "'Special Elite', cursive" }}>
+          {position}
+        </div>
         </div>
         <div className="w-[275px] h-[275px] overflow-hidden flex justify-center">
           <img src={photo} alt={name} className="w-[275px] h-[275px] object-contain" />
@@ -190,10 +194,10 @@ const BoardGrid = () => {
           <TeamCard name="Dhriti Sharma" position="Events Head" photo={dhriti} linkedin="https://www.linkedin.com/in/dhriti-sharma-b03014275/" innerRef={r2c3Ref} />
           <div></div>
           <div ref={dateTextRef} className="col-span-full board-date text-yellow-400 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold py-2 sm:py-3 md:py-4 uppercase text-left">25–26</div>
-          <TeamCard name="Varun Sharith" position="PNM Head" photo={varun} linkedin="https://www.linkedin.com/in/varun-shirsath-50403534b/" />
+          <TeamCard name="Varun Sharith" position="PnM Head" photo={varun} linkedin="https://www.linkedin.com/in/varun-shirsath-50403534b/" />
           <TeamCard name="Parth Jadhav" position="Design Head" photo={parth} linkedin="https://www.linkedin.com/in/parthjadhav2004/" innerRef={r3c2Ref} />
           <div className="hidden sm:block"></div>
-          <TeamCard name="Gouri Kanade" position="RND Head" photo={gouri} linkedin="https://www.linkedin.com/in/gourikanade1012/"  />
+          <TeamCard name="Gouri Kanade" position="RnD Head" photo={gouri} linkedin="https://www.linkedin.com/in/gourikanade1012/"  />
           <TeamCard name="Medhansh Jain" position="Web Lead" photo={medhansh} linkedin="https://www.linkedin.com/in/medhansh-jain/" />
           <div></div>
           <TeamCard name="Krish Mehta" position="App Lead" photo={krish} linkedin="https://www.linkedin.com/in/krish1604/"  />

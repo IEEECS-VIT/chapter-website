@@ -132,65 +132,102 @@ export default function EventsPage() {
   const pinRef = useRef(null);
 
   useEffect(() => {
-    const scroller = scrollerRef.current;
-    const pin = pinRef.current;
-    if (!scroller || !pin) return;
+  const scroller = scrollerRef.current;
+  const pin = pinRef.current;
+  if (!scroller || !pin) return;
 
-    const totalScroll = scroller.scrollWidth - window.innerWidth;
+  const totalScroll = scroller.scrollWidth - window.innerWidth;
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: pin,
-        start: "top top",
-        end: `+=${totalScroll}`,
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
-    });
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: pin,
+      start: "top top",
+      end: `+=${totalScroll}`,
+      scrub: 1,
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+    },
+  });
 
-    tl.fromTo(scroller, { x: -totalScroll }, { x: 0, ease: "none" });
+  tl.fromTo(scroller, { x: -totalScroll }, { x: 0, ease: "none" });
 
-    const proxy = document.createElement("div");
-    const draggable = Draggable.create(proxy, {
-      type: "x",
-      trigger: scroller,
-      inertia: true,
-      bounds: { minX: 0, maxX: totalScroll },
-      onPress() {
-        gsap.set(proxy, { x: tl.progress() * totalScroll });
-      },
-      onDrag() {
-        const progress = this.x / totalScroll;
-        tl.progress(progress);
-
-        const st = tl.scrollTrigger;
-        if (st) st.scroll(st.start + progress * (st.end - st.start));
-      },
-      onThrowUpdate() {
-        const progress = this.x / totalScroll;
-        tl.progress(progress);
-        const st = tl.scrollTrigger;
-        if (st) st.scroll(st.start + progress * (st.end - st.start));
-      },
-      onRelease() {
-        const progress = this.x / totalScroll;
-        const st = tl.scrollTrigger;
-        if (st) st.scroll(st.start + progress * (st.end - st.start));
-      },
-    })[0];
-
-    ScrollTrigger.addEventListener("scrollEnd", () => {
+  const proxy = document.createElement("div");
+  const draggable = Draggable.create(proxy, {
+    type: "x",
+    trigger: scroller,
+    inertia: true,
+    bounds: { minX: 0, maxX: totalScroll },
+    onPress() {
       gsap.set(proxy, { x: tl.progress() * totalScroll });
-    });
+    },
+    onDrag() {
+      const progress = this.x / totalScroll;
+      tl.progress(progress);
 
-    return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-      gsap.killTweensOf(scroller);
-      draggable.kill();
-    };
-  }, []);
+      const st = tl.scrollTrigger;
+      if (st) st.scroll(st.start + progress * (st.end - st.start));
+    },
+    onThrowUpdate() {
+      const progress = this.x / totalScroll;
+      tl.progress(progress);
+      const st = tl.scrollTrigger;
+      if (st) st.scroll(st.start + progress * (st.end - st.start));
+    },
+    onRelease() {
+      const progress = this.x / totalScroll;
+      const st = tl.scrollTrigger;
+      if (st) st.scroll(st.start + progress * (st.end - st.start));
+    },
+  })[0];
+
+  ScrollTrigger.addEventListener("scrollEnd", () => {
+    gsap.set(proxy, { x: tl.progress() * totalScroll });
+  });
+
+  // 🔒 Angle-based swipe lock
+  let startX = 0;
+  let startY = 0;
+  let locked = false;
+
+  function onTouchStart(e) {
+    const touch = e.touches[0];
+    startX = touch.clientX;
+    startY = touch.clientY;
+    locked = false;
+  }
+
+  function onTouchMove(e) {
+    if (locked) return;
+    const touch = e.touches[0];
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    const angle = Math.abs(Math.atan2(dy, dx) * (180 / Math.PI));
+
+    // ✅ Only allow horizontal (0°/180°) or vertical (90°/270°)
+    if (
+      (angle < 15 || angle > 165) || // horizontal
+      (angle > 75 && angle < 105)    // vertical
+    ) {
+      locked = true; // let GSAP handle
+    } else {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }
+
+  scroller.addEventListener("touchstart", onTouchStart, { passive: true });
+  scroller.addEventListener("touchmove", onTouchMove, { passive: false });
+
+  return () => {
+    ScrollTrigger.getAll().forEach((st) => st.kill());
+    gsap.killTweensOf(scroller);
+    draggable.kill();
+
+    scroller.removeEventListener("touchstart", onTouchStart);
+    scroller.removeEventListener("touchmove", onTouchMove);
+  };
+}, []);
 
   return (
     <div

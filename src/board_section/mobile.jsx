@@ -100,80 +100,120 @@ const MobileBoard = () => {
   }
 
   useEffect(() => {
-    const mm = gsap.matchMedia()
+  const mm = gsap.matchMedia()
 
-    mm.add("(max-width: 768px)", () => {
-      const wrapper = wrapperRef.current
-      const container = containerRef.current
-      if (!wrapper || !container) return
+  mm.add("(max-width: 768px)", () => {
+    const wrapper = wrapperRef.current
+    const container = containerRef.current
+    if (!wrapper || !container) return
 
-      let totalScroll = Math.max(container.scrollWidth - window.innerWidth, 0)
-      wrapper.style.height = `${container.scrollWidth / 2.4}px`
+    let totalScroll = Math.max(container.scrollWidth - window.innerWidth, 0)
+    wrapper.style.height = `${container.scrollWidth / 2.4}px`
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: wrapper,
-          start: "top top",
-          end: () => `+=${totalScroll * 1.2}`,
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      })
-
-      tl.fromTo(container, { x: 0 }, { x: () => -totalScroll, ease: "none" })
-
-      const proxy = document.createElement("div")
-
-      const syncFromProxy = function () {
-        const progress = 1 - (this.x / totalScroll || 0)
-        tl.progress(progress)
-        const st = tl.scrollTrigger
-        if (st) st.scroll(st.start + progress * (st.end - st.start))
-      }
-
-      const draggable = Draggable.create(proxy, {
-        type: "x",
-        trigger: container,
-        inertia: true,
-        bounds: { minX: 0, maxX: totalScroll },
-        onPress() {
-          gsap.set(proxy, { x: (1 - tl.progress()) * totalScroll })
-        },
-        onDrag: syncFromProxy,
-        onThrowUpdate: syncFromProxy,
-        onRelease: syncFromProxy,
-      })[0]
-
-      const syncProxyToScroll = () => {
-        gsap.set(proxy, { x: (1 - tl.progress()) * totalScroll })
-      }
-
-      const onRefresh = () => {
-        totalScroll = Math.max(container.scrollWidth - window.innerWidth, 0)
-        wrapper.style.height = `${container.scrollWidth / 2.4}px`
-        if (draggable && draggable.applyBounds) {
-          draggable.applyBounds({ minX: 0, maxX: totalScroll })
-        }
-        syncProxyToScroll()
-      }
-
-      ScrollTrigger.addEventListener("scrollEnd", syncProxyToScroll)
-      ScrollTrigger.addEventListener("refresh", onRefresh)
-      syncProxyToScroll()
-
-      return () => {
-        ScrollTrigger.removeEventListener("scrollEnd", syncProxyToScroll)
-        ScrollTrigger.removeEventListener("refresh", onRefresh)
-        if (tl.scrollTrigger) tl.scrollTrigger.kill()
-        tl.kill()
-        if (draggable) draggable.kill()
-      }
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: wrapper,
+        start: "top top",
+        end: () => `+=${totalScroll * 1.2}`,
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
     })
 
-    return () => mm.revert()
-  }, [])
+    tl.fromTo(container, { x: 0 }, { x: () => -totalScroll, ease: "none" })
+
+    const proxy = document.createElement("div")
+
+    const syncFromProxy = function () {
+      const progress = 1 - (this.x / totalScroll || 0)
+      tl.progress(progress)
+      const st = tl.scrollTrigger
+      if (st) st.scroll(st.start + progress * (st.end - st.start))
+    }
+
+    const draggable = Draggable.create(proxy, {
+      type: "x",
+      trigger: container,
+      inertia: true,
+      bounds: { minX: 0, maxX: totalScroll },
+      onPress() {
+        gsap.set(proxy, { x: (1 - tl.progress()) * totalScroll })
+      },
+      onDrag: syncFromProxy,
+      onThrowUpdate: syncFromProxy,
+      onRelease: syncFromProxy,
+    })[0]
+
+    const syncProxyToScroll = () => {
+      gsap.set(proxy, { x: (1 - tl.progress()) * totalScroll })
+    }
+
+    const onRefresh = () => {
+      totalScroll = Math.max(container.scrollWidth - window.innerWidth, 0)
+      wrapper.style.height = `${container.scrollWidth / 2.4}px`
+      if (draggable && draggable.applyBounds) {
+        draggable.applyBounds({ minX: 0, maxX: totalScroll })
+      }
+      syncProxyToScroll()
+    }
+
+    ScrollTrigger.addEventListener("scrollEnd", syncProxyToScroll)
+    ScrollTrigger.addEventListener("refresh", onRefresh)
+    syncProxyToScroll()
+
+    // 🔒 Add angle-based swipe lock
+    let startX = 0
+    let startY = 0
+    let locked = false
+
+    function onTouchStart(e) {
+      const touch = e.touches[0]
+      startX = touch.clientX
+      startY = touch.clientY
+      locked = false
+    }
+
+    function onTouchMove(e) {
+      if (locked) return
+      const touch = e.touches[0]
+      const dx = touch.clientX - startX
+      const dy = touch.clientY - startY
+      const angle = Math.abs(Math.atan2(dy, dx) * (180 / Math.PI))
+
+      // allow only horizontal (0°/180°) or vertical (90°)
+      if (
+        (angle < 15 || angle > 165) || // horizontal
+        (angle > 75 && angle < 105)    // vertical
+      ) {
+        locked = true // let GSAP handle
+      } else {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+    }
+
+    wrapper.addEventListener("touchstart", onTouchStart, { passive: true })
+    wrapper.addEventListener("touchmove", onTouchMove, { passive: false })
+
+    return () => {
+      ScrollTrigger.removeEventListener("scrollEnd", syncProxyToScroll)
+      ScrollTrigger.removeEventListener("refresh", onRefresh)
+      if (tl.scrollTrigger) tl.scrollTrigger.kill()
+      tl.kill()
+      if (draggable) draggable.kill()
+
+      wrapper.removeEventListener("touchstart", onTouchStart)
+      wrapper.removeEventListener("touchmove", onTouchMove)
+    }
+  })
+
+  return () => mm.revert()
+}, [])
+
+
+
 
   return (
     <div>
