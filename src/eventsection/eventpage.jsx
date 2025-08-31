@@ -142,8 +142,9 @@ export default function EventsPage() {
     scrollTrigger: {
       trigger: pin,
       start: "top top",
-      end: `+=${totalScroll}`,
+      end: `+=${totalScroll*2.3}`,
       scrub: 1,
+      allowNativeTouchScrolling: false,
       pin: true,
       anticipatePin: 1,
       invalidateOnRefresh: true,
@@ -156,6 +157,7 @@ export default function EventsPage() {
   const draggable = Draggable.create(proxy, {
     type: "x",
     trigger: scroller,
+    allowNativeTouchScrolling: false,
     inertia: true,
     bounds: { minX: 0, maxX: totalScroll },
     onPress() {
@@ -185,7 +187,6 @@ export default function EventsPage() {
     gsap.set(proxy, { x: tl.progress() * totalScroll });
   });
 
-  // 🔒 Angle-based swipe lock
   let startX = 0;
   let startY = 0;
   let locked = false;
@@ -204,12 +205,11 @@ export default function EventsPage() {
     const dy = touch.clientY - startY;
     const angle = Math.abs(Math.atan2(dy, dx) * (180 / Math.PI));
 
-    // ✅ Only allow horizontal (0°/180°) or vertical (90°/270°)
     if (
       (angle < 15 || angle > 165) || // horizontal
       (angle > 75 && angle < 105)    // vertical
     ) {
-      locked = true; // let GSAP handle
+      locked = true;
     } else {
       e.preventDefault();
       e.stopPropagation();

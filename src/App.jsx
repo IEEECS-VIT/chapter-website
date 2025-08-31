@@ -68,14 +68,14 @@ const App = () => {
       const smoother = ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
         content: "#smooth-content",
-        smooth: isMobile ? 0 : 0.3,
+        smooth: isMobile ? 0 : 1.6,
         transform: isMobile
           ? "translate3d(0,0,0)"
           : "scale(0.8) translate3d(0,0,0)",
         transformOrigin: "top center",
         willChange: isMobile ? "auto" : "transform",
         effects: !isMobile,
-        smoothTouch: isMobile ? 0.55 : false,
+        smoothTouch: isMobile ? 1.6 : false,
       });
       smoother.effects(".your-class", { speed: 0.5, lag: 0.4 });
 

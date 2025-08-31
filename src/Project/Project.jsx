@@ -66,7 +66,7 @@ const Project = () => {
         end: () => {
           const segmentSize =
             window.innerWidth > 1024 ? window.innerHeight : window.innerWidth;
-          return `+=${(flips - 0.01) * segmentSize}`;
+          return `+=${(flips - 0.01) * segmentSize*2.2}`;
         },
         pin: true,
         scrub: 2,
@@ -153,7 +153,7 @@ const Project = () => {
     activeIndexRef.current = clampedIndex;
 
     const segmentSize =
-      window.innerWidth > 1024 ? window.innerHeight : window.innerWidth;
+      window.innerWidth > 1024 ? window.innerHeight*2.2 : 2.2*window.innerWidth;
 
     
     const targetY =

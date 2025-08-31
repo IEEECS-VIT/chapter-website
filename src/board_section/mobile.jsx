@@ -114,8 +114,9 @@ const MobileBoard = () => {
       scrollTrigger: {
         trigger: wrapper,
         start: "top top",
-        end: () => `+=${totalScroll * 1.2}`,
+        end: () => `+=${totalScroll * 2.3}`,
         scrub: 1,
+        allowNativeTouchScrolling: false,
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
@@ -137,6 +138,7 @@ const MobileBoard = () => {
       type: "x",
       trigger: container,
       inertia: true,
+      allowNativeTouchScrolling: false,
       bounds: { minX: 0, maxX: totalScroll },
       onPress() {
         gsap.set(proxy, { x: (1 - tl.progress()) * totalScroll })
@@ -163,7 +165,6 @@ const MobileBoard = () => {
     ScrollTrigger.addEventListener("refresh", onRefresh)
     syncProxyToScroll()
 
-    // 🔒 Add angle-based swipe lock
     let startX = 0
     let startY = 0
     let locked = false
@@ -182,12 +183,11 @@ const MobileBoard = () => {
       const dy = touch.clientY - startY
       const angle = Math.abs(Math.atan2(dy, dx) * (180 / Math.PI))
 
-      // allow only horizontal (0°/180°) or vertical (90°)
       if (
         (angle < 15 || angle > 165) || // horizontal
         (angle > 75 && angle < 105)    // vertical
       ) {
-        locked = true // let GSAP handle
+        locked = true 
       } else {
         e.preventDefault()
         e.stopPropagation()
