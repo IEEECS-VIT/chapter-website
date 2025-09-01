@@ -124,7 +124,7 @@ const Contact = () => {
           height: emblemHeight * 1.6,
         }}
       >
-        <div style={{ width: "100%", height: "100%", position: "relative" }}>
+        <div style={{ width: "70%", height: "60%", position: "relative" }} className="top-20 left-14">
            <LocalModelViewer />
         </div>
       </div>
