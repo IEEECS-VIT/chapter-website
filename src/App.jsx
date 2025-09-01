@@ -3,15 +3,15 @@ import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
-import HeroSection from "./homepage/HeroSection";
+import HeroSection from "./homepage/Herosection";
 import Board from "./board/Desktop";
 import Mobile from "./board/Mobile";
 import Events from "./events/Mobile";
 import EventsD from "./events/Desktop";
-import Gallery from "./gallery/FilmStrip";
+import Gallery from "./gallery/Filmstrip";
 import Footer from "./footer/Contact";
-import PreLoader from "./preloader/PreLoader";
-import Project from "./Project/Project";
+import PreLoader from "./preloader/Preloader";
+import Project from "./project/Project";
 
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
