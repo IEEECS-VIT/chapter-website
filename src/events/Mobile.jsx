@@ -143,7 +143,7 @@ export default function EventsPage() {
     scrollTriggerInstance = ScrollTrigger.create({
       trigger: pin,
       start: "top top",
-      end: `+=${maxKnobX * 7.0}`,
+      end: `+=${maxKnobX * 19.0}`,
       pin: true,
       scrub: true,
       onUpdate: (self) => {

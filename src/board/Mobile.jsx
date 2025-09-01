@@ -150,7 +150,7 @@ useEffect(() => {
   let scrollTriggerInstance = ScrollTrigger.create({
     trigger: wrapper,
     start: "top top",
-    end: `+=${maxKnobX * 7}`, 
+    end: `+=${maxKnobX * 15}`, 
     pin: true,
     scrub: true,
     onUpdate: (self) => {

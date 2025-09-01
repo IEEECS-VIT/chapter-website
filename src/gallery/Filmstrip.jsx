@@ -41,49 +41,51 @@ const FilmstripGallery = () => {
   }, [isPaused]);
 
   return (
-    <div className="w-full h-screen bg-black overflow-hidden relative">
-      <div className="absolute top-20 left-0 right-0 h-16 bg-black z-10 flex justify-start overflow-hidden">
-        {Array.from({ length: 50 }).map((_, i) => (
-          <div
-            key={`top-${i}`}
-            className="w-10 h-10 bg-yellow-500 mx-1 mt-3 flex-shrink-0 rounded-lg"
-          />
-        ))}
-      </div>
-
-      <div className="absolute bottom-20 left-0 right-0 h-16 bg-black z-10 flex justify-start overflow-hidden">
-        {Array.from({ length: 50 }).map((_, i) => (
-          <div
-            key={`bottom-${i}`}
-            className="w-10 h-10 bg-yellow-500 mx-1 mb-3 flex-shrink-0 rounded-lg"
-          />
-        ))}
-      </div>
-
-      <div className="h-full flex items-center py-10">
+  <div className="w-full h-screen bg-black overflow-hidden relative flex flex-col">
+ 
+    <div className="flex justify-start overflow-hidden h-16 bg-black z-10">
+      {Array.from({ length: 50 }).map((_, i) => (
         <div
-          ref={scrollRef}
-          className="flex"
-          style={{
-            width: `${images.length * 2 * 520}px`,
-            willChange: "transform",
-          }}
-        >
-          {[...images, ...images].map((src, i) => (
-            <div key={i} className="flex-shrink-0 mx-5">
-              <img
-                src={src}
-                alt={`Gallery image ${(i % images.length) + 1}`}
-                className="w-[500px] h-[400px] object-cover shadow-2xl rounded-lg transition-transform duration-300 hover:scale-105 grayscale"
-                onMouseEnter={() => setIsPaused(true)}
-                onMouseLeave={() => setIsPaused(false)}
-              />
-            </div>
-          ))}
-        </div>
+          key={`top-${i}`}
+          className="w-10 h-10 bg-yellow-500 mx-1.5 flex-shrink-0 rounded-lg"
+        />
+      ))}
+    </div>
+
+    <div className="flex-1 flex items-center justify-center">
+      <div
+        ref={scrollRef}
+        className="flex"
+        style={{
+          width: `${images.length * 2 * 520}px`,
+          willChange: "transform",
+        }}
+      >
+        {[...images, ...images].map((src, i) => (
+          <div key={i} className="flex-shrink-0 mx-3">
+            <img
+              src={src}
+              alt={`Gallery image ${(i % images.length) + 1}`}
+              className="w-[500px] h-[400px] object-cover shadow-2xl rounded-lg transition-transform duration-300 hover:scale-105 grayscale"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+            />
+          </div>
+        ))}
       </div>
     </div>
-  );
+
+    <div className="flex justify-start overflow-hidden h-16 bg-black z-10">
+      {Array.from({ length: 50 }).map((_, i) => (
+        <div
+          key={`bottom-${i}`}
+          className="w-10 h-10 bg-yellow-500 mx-1.5 flex-shrink-0 rounded-lg"
+        />
+      ))}
+    </div>
+  </div>
+);
+
 };
 
 export default FilmstripGallery;

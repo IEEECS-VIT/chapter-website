@@ -10,8 +10,8 @@ const OurStory = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      const deviceWidth = window.screen.width;
-      if (deviceWidth < 1024) {
+      const deviceWidth = window.innerWidth;
+      if (deviceWidth < 1280) {
         setScreenType("mobile");
       } else {
         setScreenType("desktop");
@@ -29,35 +29,35 @@ const OurStory = () => {
         style={{ backgroundImage: `url(${Background})` }}
       />
 
-      <div className="absolute top-4 left-4 p-2 z-10">
+      <div className="absolute top-[2vh] left-[2vh] p-[1vh] z-10">
         <img
           src={Logo}
           alt="IEEE Computer Society Logo"
-          className="w-[40vw] max-w-[200px] min-w-[100px] object-contain"
+          className="w-[20vh] max-w-[25vw] min-w-[8vh] object-contain"
         />
       </div>
 
       {screenType === "mobile" ? (
-        <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-16 pt-14">
+        <div className="relative z-10 flex flex-col items-center text-center px-[4vw] pt-[12vh]">
           <h1
-            className="text-[#0b0b0a] tracking-wide mt-7 font-semibold translate-y-5"
+            className="text-[#0b0b0a] tracking-wide font-semibold"
             style={{
               fontFamily: "Special Elite,serif",
-              fontSize: "clamp(4.1rem, 8vw, 50px)",
-              lineHeight: "1.0",
+              fontSize: "clamp(3.5vh, 6vh, 6.5vh)",
+              lineHeight: "1.1",
             }}
           >
             OUR STORY
           </h1>
 
           <div
-            className="relative w-full flex items-center justify-center px-4"
+            className="relative w-full flex items-center justify-center px-[2vh] mt-[3vh]"
             style={{ filter: "grayscale(100%)" }}
           >
             <img
               src={MobileBoard}
               alt="IEEE Computer Society Team"
-              className={`rounded-xl opacity-0 translate-y-12 transition-opacity duration-700 w-auto h-auto object-cover ${
+              className={`rounded-xl opacity-0 translate-y-[3vh] transition-opacity duration-700 w-auto max-h-[40vh] object-cover ${
                 imageLoaded ? "opacity-100" : ""
               }`}
               onLoad={() => setImageLoaded(true)}
@@ -65,10 +65,10 @@ const OurStory = () => {
           </div>
 
           <p
-            className="text-[#0b0b0a] max-w-3xl leading-relaxed translate-y-20"
+            className="text-[#0b0b0a] max-w-[80vw] leading-relaxed mt-[4vh]"
             style={{
               fontFamily: "Special Elite",
-              fontSize: "1rem",
+              fontSize: "clamp(1.2vh, 2vh, 2.4vh)",
               whiteSpace: "pre-line",
             }}
           >
@@ -78,12 +78,12 @@ const OurStory = () => {
           </p>
         </div>
       ) : (
-        <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-16 pt-20">
+        <div className="relative z-10 flex flex-col items-center text-center px-[6vw] pt-[12vh]">
           <h1
             className="text-[#0b0b0a] tracking-wide"
             style={{
               fontFamily: "Special Elite",
-              fontSize: "clamp(3rem, 10vw, 100px)",
+              fontSize: "clamp(6vh, 10vh, 12vh)", 
               lineHeight: "1.0",
             }}
           >
@@ -91,25 +91,25 @@ const OurStory = () => {
           </h1>
 
           <p
-            className="mt-1 text-[#0b0b0a] max-w-4xl leading-relaxed"
+            className="mt-[2vh] text-[#0b0b0a] max-w-[70vw] leading-relaxed"
             style={{
               fontFamily: "Special Elite",
-              fontSize: "1.55rem",
+              fontSize: "clamp(1.6vh, 2.4vh, 3vh)",
               whiteSpace: "pre-line",
             }}
           >
             IEEE Computer Society, VIT—established in February 2012 under IEEE
             Region 10, Madras Section—drives innovation by leveraging
             cutting-edge technology to solve real-world problems. As a globally
-            recognized hub of technical excellence, we inspire
+            recognized hub of technical excellence, we inspire and shape
             inquisitive minds for the challenges of tomorrow.
           </p>
 
-          <div className="fixed bottom-0 left-0 w-full flex items-center justify-center px-4">
+          <div className="fixed bottom-0 left-0 w-full flex items-center justify-center px-[2vh]">
             <img
               src={Team}
               alt="IEEE Computer Society Team"
-              className={`rounded-xl opacity-0 transition-opacity  duration-700 w-screen h-[60vh] object-cover ${
+              className={`rounded-xl opacity-0 transition-opacity duration-700 w-screen h-[70vh] object-cover ${
                 imageLoaded ? "opacity-100" : ""
               }`}
               onLoad={() => setImageLoaded(true)}
