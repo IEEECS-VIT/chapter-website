@@ -5,7 +5,7 @@ import coverImg2 from "../assets/cover2.png";
 import coverImg3 from "../assets/cover3.png";
 import iitk from "../assets/techkriti.jpg";
 import cd from "../assets/cd.png";
-import air from "../assets/air-im.png";
+import air from "../assets/airport3.png";
 import pravega from "../assets/pravega.png";
 import tc from "../assets/tc.png";
 import view from "../assets/view.png";
