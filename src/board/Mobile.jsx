@@ -190,7 +190,7 @@ useEffect(() => {
             </div>
           ))}
         </div>
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-3/4 h-2 bg-white/30 rounded-full">
+        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 w-3/4 h-2 bg-white/30 rounded-full">
           <div ref={progressRef} className="h-full bg-white rounded-full relative">
             <div
               ref={knobRef}
