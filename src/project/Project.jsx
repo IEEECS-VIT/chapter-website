@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import ProjectDisplay from "./ProjectDisplay.jsx";
-import ProjectTabs from "./ProjectTabs.jsx";
-import { projectData } from "./ProjectData.js";
+import ProjectDisplay from "./Projectdisplay.jsx";
+import ProjectTabs from "./Projecttabs.jsx";
+import { projectData } from "./Projectdata.js";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";

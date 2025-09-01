@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import CircularText from "./CircularText";
-import CircularTextOut from "./CircularTextOut";
+import CircularTextOut from "./CircularTextout";
 import gsap from "gsap";
 import ieeeLogo from "../assets/ieeecs_logo.png";
 

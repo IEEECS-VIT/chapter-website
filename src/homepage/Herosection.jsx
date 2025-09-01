@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Left from "../assets/1.png";
 import Right from "../assets/2.png";
 import MobileHero from "../assets/mobile-view.png";
-import OurStory from "./OurStory";
+import OurStory from "./Ourstory";
 
 
 gsap.registerPlugin(ScrollTrigger);
