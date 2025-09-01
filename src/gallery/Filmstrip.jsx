@@ -43,7 +43,7 @@ const FilmstripGallery = () => {
   return (
   <div className="w-full h-screen bg-black overflow-hidden relative flex flex-col">
  
-    <div className="flex justify-start overflow-hidden h-16 bg-black z-10">
+    <div className="flex justify-start overflow-hidden h-16 mt-24 bg-black z-10">
       {Array.from({ length: 50 }).map((_, i) => (
         <div
           key={`top-${i}`}
@@ -62,7 +62,7 @@ const FilmstripGallery = () => {
         }}
       >
         {[...images, ...images].map((src, i) => (
-          <div key={i} className="flex-shrink-0 mx-3">
+          <div key={i} className="flex-shrink-0 mx-3 -mt-4">
             <img
               src={src}
               alt={`Gallery image ${(i % images.length) + 1}`}

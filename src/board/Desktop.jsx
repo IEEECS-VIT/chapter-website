@@ -97,7 +97,7 @@ const BoardGrid = () => {
     const baseMultiplier = isTablet ? 0.8 : 1
     const translateMultiplier = isTablet ? 0.85 : 1
     return {
-      r1c2: { startOffset: -200 * translateMultiplier, settlePoint: componentOffsetTop + 200 * baseMultiplier },
+      r1c2: { startOffset: -160 * translateMultiplier, settlePoint: componentOffsetTop + 200 * baseMultiplier },
       r1c4: { startScrollPoint: componentOffsetTop + 250 * baseMultiplier, endScrollPoint: componentOffsetTop + 600 * baseMultiplier, maxTranslate: 425 * translateMultiplier },
       r2c3: { startScrollPoint: componentOffsetTop + 700 * baseMultiplier, endScrollPoint: componentOffsetTop + 950 * baseMultiplier, maxTranslate: 425 * translateMultiplier },
       r3c2: { startScrollPoint: componentOffsetTop + 1000 * baseMultiplier, endScrollPoint: componentOffsetTop + 1300 * baseMultiplier, maxTranslate: 309 * translateMultiplier },

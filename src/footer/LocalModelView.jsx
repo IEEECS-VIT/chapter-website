@@ -35,7 +35,7 @@ const LocalModelViewer = () => {
         <hemisphereLight skyColor={"#ffffff"} groundColor={"#444444"} intensity={0.6} />
 
         <Suspense fallback={null}>
-          <Model path="/models/ieeeLOGO1.glb" scale={isMobile ? 1 : 1.3} />
+          <Model path="/models/ieeeLOGO1.glb" scale={isMobile ? 0.85 : 1.2} />
         </Suspense>
 
         <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={3} />
