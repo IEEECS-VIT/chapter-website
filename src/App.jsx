@@ -10,8 +10,8 @@ import Events from "./events/Mobile";
 import EventsD from "./events/Desktop";
 import Gallery from "./gallery/FilmStrip";
 import Footer from "./footer/Contact";
-import PreLoader from "./Preloader/PreLoader";
-import Project from "./project/Project";
+import PreLoader from "./preloader/PreLoader";
+import Project from "./Project/Project";
 
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
