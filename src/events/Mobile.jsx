@@ -12,7 +12,7 @@ import wtf from "../assets/wtf.png";
 import h4i from "../assets/h4i.png";
 import mozdev from "../assets/mozdev.jpg";
 import casa from "../assets/casa.jpg";
-import sdg from "../assets/sdg.jpg"
+import sdg from "../assets/sdg.jpg";
 
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
@@ -107,6 +107,7 @@ export default function EventsPage() {
       gsap.set(progress, { width: `${clampedProgress * 100}%` });
       gsap.set(knob, { x: knobX });
       gsap.set(scroller, { x: scrollerX });
+      gsap.set(proxy, { x: knobX });
     };
 
     const proxy = document.createElement("div");
@@ -120,6 +121,9 @@ export default function EventsPage() {
       bounds: { minX: 0, maxX: maxKnobX },
       onPress() {
         isDragging = true;
+        const currentX = gsap.getProperty(knob, "x");
+        gsap.set(proxy, { x: currentX });
+        this.update();
         document.body.style.userSelect = "none";
       },
       onDrag() {

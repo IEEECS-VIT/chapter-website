@@ -227,7 +227,7 @@ const Contact = () => {
               Message
             </label>
             <input
-              type="tel"
+              type="text"
               placeholder="enter your message..."
               className="w-full rounded-[16px] px-2 py-2 h-14 bg-[#ECE0D0] border-none outline-none"
               style={{
@@ -481,7 +481,7 @@ const Contact = () => {
                 Message
               </label>
               <input
-                type="tel"
+                type="text"
                 placeholder="Enter your message..."
                 className="w-full px-4 h-14 py-2 rounded-full shadow-sm text-[clamp(0.95rem,1.05vw,1.05rem)]"
                 style={{ color: "#4B3200", fontFamily: "henju, serif", }}
