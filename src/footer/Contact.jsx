@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SketchfabModel from "./SketchFabModel";
-
+import LocalModelViewer from "./LocalModelView";
 
 const Contact = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -118,30 +118,14 @@ const Contact = () => {
         className="absolute"
         style={{
           left: "50%",
-          top: emblemTop,
+           top: emblemTop - 100,
           transform: "translateX(-50%)",
           width: emblemWidth * 1.6,
           height: emblemHeight * 1.6,
         }}
       >
         <div style={{ width: "100%", height: "100%", position: "relative" }}>
-          <SketchfabModel
-            modelId="1eecbfe0ae134b4886e3fff4198eb6c3"
-            ratio={emblemRatio}
-            width="100%"
-            maxWidth="none"
-            showCredits={false}
-            autoLoad={true}
-            iframeProps={{
-              style: {
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-              },
-            }}
-          />
+           <LocalModelViewer />
         </div>
       </div>
 
@@ -508,16 +492,9 @@ const Contact = () => {
           </form>
         </div>
 
-        <div className="flex items-center justify-center w-full h-full">
-          <SketchfabModel
-            modelId="1eecbfe0ae134b4886e3fff4198eb6c3"
-            ratio={1}
-            width="100%"
-            maxWidth="100%"
-            showCredits={false}
-            autoLoad={true}
-          />
-        </div>
+<div className="flex items-center justify-center w-full h-full mb-10">
+  <LocalModelViewer />
+</div>
       </main>
 
       <footer

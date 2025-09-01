@@ -1,13 +1,12 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import ProjectDisplay from "./Projectdisplay.jsx";
+import ProjectDisplay from "./ProjectDisplay.jsx";
 import ProjectTabs from "./Projecttabs.jsx";
-import { projectData } from "./Projectdata.js";
+import { projectData } from "./Projectdata.jsx";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import Binding from "./Binding1.jsx";
 import Binding2 from "./Binding2.jsx";
-
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -66,7 +65,7 @@ const Project = () => {
         end: () => {
           const segmentSize =
             window.innerWidth > 1024 ? window.innerHeight : window.innerWidth;
-          return `+=${(flips - 0.01) * segmentSize*2.2}`;
+          return `+=${(flips - 0.01) * segmentSize * 2.2}`;
         },
         pin: true,
         scrub: 2,
@@ -153,16 +152,13 @@ const Project = () => {
     activeIndexRef.current = clampedIndex;
 
     const segmentSize =
-      window.innerWidth > 1024 ? window.innerHeight*2.2 : 2.2*window.innerWidth;
+      window.innerWidth > 1024 ? window.innerHeight * 2.2 : 2.2 * window.innerWidth;
 
-    
-    const targetY =
-      st.start + clampedIndex * segmentSize;
+    const targetY = st.start + clampedIndex * segmentSize;
 
     const currentY = window.scrollY;
     if (Math.abs(currentY - targetY) > 4) {
       const distanceSegments = Math.abs(targetY - currentY) / segmentSize;
-
       const duration = Math.min(1.5, Math.max(0.45, distanceSegments * 0.6));
 
       gsap.to(window, {
@@ -215,8 +211,8 @@ const Project = () => {
                 <div
                   key={`bottom-${p.id}`}
                   ref={(el) => (bottomPageRefs.current[i] = el)}
-                  className="absolute inset-0  font-extralight"
-                  style={{ pointerEvents: "none",fontFamily: "Henju, serif"  }}
+                  className="absolute inset-0 font-extralight"
+                  style={{ pointerEvents: "none", fontFamily: "Henju, serif" }}
                 >
                   <ProjectDisplay data={p} />
                 </div>

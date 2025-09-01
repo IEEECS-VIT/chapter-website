@@ -7,12 +7,14 @@ import event from "../assets/event.png";
 import bg from "../assets/backgrnd.jpg";
 import pin from "../assets/pin.png";
 import cicada from "../assets/cicada.png";
-import bc from "../assets/battlecode.png";
+import bc from "../assets/bccb.png";
 import wtf from "../assets/wtf.png";
 import h4i from "../assets/h4i.png";
 import mozdev from "../assets/mozdev.jpg";
 import casa from "../assets/casa.jpg";
 import sdg from "../assets/sdg.jpg";
+import cb from "../assets/cyberbattle.jpg";
+import ec from "../assets/ec.jpg";
 
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
@@ -57,9 +59,9 @@ export default function EventsPage() {
     { id: 5, title: "SDG", image: sdg, overlayText: "A retro-style game challenge where creativity meets coding." },
     { id: 6, title: "Casa", image: casa, overlayText: "Compete to solve algorithmic challenges in a timed battle." },
     { id: 7, title: "MozDev", image: mozdev, overlayText: "A 6 hour hands-on session on Web Development for tomorrow’s devs." },
-    { id: 8, title: "Emerald City", image: event, overlayText: "Unravel ciphers and cryptographic challenges under pressure." },
+    { id: 8, title: "Emerald City", image: ec, overlayText: "Unravel ciphers and cryptographic challenges under pressure." },
     { id: 9, title: "Hack For Impact", image: h4i, overlayText: "Solve problems in the shortest possible code." },
-    { id: 10, title: "Cyberbattle", image: event, overlayText: "An adventure ride for competitive coders." },
+    { id: 10, title: "Cyberbattle", image: cb, overlayText: "An adventure ride for competitive coders." },
   ];
 
   const scrollerRef = useRef(null);
