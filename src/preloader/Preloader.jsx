@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import CircularText from "./CircularText";
 import CircularTextOut from "./CircularTextout";
 import gsap from "gsap";
-import ieeeLogo from "../assets/ieeecs_logo.png";
+import ieeeLogo from "../assets/logos/ieeecs_logo.png";
 
 const ParticleBackground = () => {
   const canvasRef = useRef(null);
@@ -92,7 +92,7 @@ const PreLoader = ({ onEnter }) => {
   const textStyle = {
     fontFamily: "'Henju', serif",
     fontWeight: "800",
-    fontSize: "1.6rem",
+    fontSize: "1.4",
     letterSpacing: "-0.5px",
     color: "black",
     textTransform: "uppercase",
@@ -154,18 +154,18 @@ const PreLoader = ({ onEnter }) => {
       className="fixed inset-0 bg-black text-white flex items-center justify-center z-50"
     >
       <ParticleBackground />
-
-      <div
-        ref={wrapperRef}
-        className="relative w-full h-full flex items-center justify-center preloader-wrapper"
-      >
-        <div className="absolute top-5 left-5 z-40">
+      <div className="absolute top-5 left-5 z-40">
           <img
             src={ieeeLogo}
             alt="IEEE Computer Society Logo"
             className="h-12 w-auto"
           />
         </div>
+      <div
+        ref={wrapperRef}
+        className="relative w-full h-full flex items-center justify-center preloader-wrapper"
+      >
+        
         <div className="absolute z-10 font-Henju font-extralight">
           <CircularTextOut
             text="WE LIVE IN A COMPUTER SOCIETY "

@@ -1,20 +1,22 @@
 "use client"
 
+
 import { useState, useEffect, useRef, useCallback } from "react"
-import bgImage from "../assets/bg.png"
-import ram from "../assets/ram.png"
-import anubhav from "../assets/anubhav.png"
-import aditya from "../assets/aditya.png"
-import akshit from "../assets/Akshit.png"
-import ansh from "../assets/ansh.png"
-import arjun from "../assets/Arjun.png"
-import arya from "../assets/arya.png"
-import dhriti from "../assets/dhriti.png"
-import gouri from "../assets/Gouri.png"
-import krish from "../assets/Krish.png"
-import varun from "../assets/varun.png"
-import parth from "../assets/parth.png"
-import medhansh from "../assets/medhansh.png"
+import bgImage from "../assets/board/bg.png"
+import ram from "../assets/board/ram.png"
+import anubhav from "../assets/board/anubhav.png"
+import aditya from "../assets/board/aditya.png"
+import akshit from "../assets/board/Akshit.png"
+import ansh from "../assets/board/ansh.png"
+import arjun from "../assets/board/Arjun.png"
+import arya from "../assets/board/arya.png"
+import dhriti from "../assets/board/dhriti.png"
+import gouri from "../assets/board/Gouri.png"
+import krish from "../assets/board/Krish.png"
+import varun from "../assets/board/varun.png"
+import parth from "../assets/board/parth.png"
+import medhansh from "../assets/board/medhansh.png"
+
 
 const TeamCard = ({ name, position, photo, linkedin, innerRef, extraClass = "" }) => {
   return (

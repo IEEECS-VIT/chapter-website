@@ -1,17 +1,15 @@
-import airport from "../assets/airport.png";
-import coverBg from "../assets/cover-bg.png";
-import coverImg1 from "../assets/cover1.png";
-import coverImg2 from "../assets/cover2.png";
-import coverImg3 from "../assets/cover3.png";
-import iitk from "../assets/techkriti.jpg";
-import cd from "../assets/cd.png";
-import air from "../assets/airport3.png";
-import pravega from "../assets/pravega.png";
-import tc from "../assets/tc.png";
-import view from "../assets/view.png";
-import cdc from "../assets/cdc.png";
-import prv from "../assets/prv.jpeg";
-
+import airport from "../assets/projects/airport.png";
+import coverBg from "../assets/projects/cover-bg.png";
+import coverImg1 from "../assets/projects/cover1.png";
+import coverImg2 from "../assets/projects/cover2.png";
+import coverImg3 from "../assets/projects/cover3.png";
+import iitk from "../assets/projects/techkriti.jpg";
+import cd from "../assets/projects/cd.png";
+import air from "../assets/projects/airport3.png";
+import pravega from "../assets/projects/pravega.png";
+import tc from "../assets/projects/tc.png";
+import cdc from "../assets/projects/cdc.png";
+import prv from "../assets/projects/prv.jpeg";
 export const projectData = [
   {
     id: 0,

@@ -2,19 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Draggable } from "gsap/Draggable";
-import H from "../effects/HighLight";
-import event from "../assets/event.png";
-import bg from "../assets/backgrnd.jpg";
-import pin from "../assets/pin.png";
-import cicada from "../assets/cicada.png";
-import bc from "../assets/bccb.png";
-import wtf from "../assets/wtf.png";
-import h4i from "../assets/h4i.png";
-import mozdev from "../assets/mozdev.jpg";
-import casa from "../assets/casa.jpg";
-import sdg from "../assets/sdg.jpg";
-import cb from "../assets/cyberbattle.jpg";
-import ec from "../assets/ec.jpg";
+import event from "../assets/events/event.png";
+import bg from "../assets/events/backgrnd.jpg";
+import pin from "../assets/events/pin.png";
+import cicada from "../assets/events/cicada.png";
+import bc from "../assets/events/bccb.png";
+import wtf from "../assets/events/wtf.png";
+import h4i from "../assets/events/h4i.png";
+import mozdev from "../assets/events/mozdev.jpg";
+import casa from "../assets/events/casa.jpg";
+import sdg from "../assets/events/sdg.jpg"
+import cb from "../assets/events/cyberbattle.jpg";
+import ec from "../assets/events/ec.jpg";
 
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
@@ -57,7 +56,7 @@ export default function EventsPage() {
     { id: 3, title: "WTF", image: wtf, overlayText: "Tech takes a twist. Expect the unexpected in this quirky event." },
     { id: 4, title: "BattleCode", image: bc, overlayText: "Strategy meets code. Automate bots to battle in real-time arenas." },
     { id: 5, title: "SDG", image: sdg, overlayText: "A retro-style game challenge where creativity meets coding." },
-    { id: 6, title: "Casa", image: casa, overlayText: "Compete to solve algorithmic challenges in a timed battle." },
+    { id: 6, title: "CASA", image: casa, overlayText: "Compete to solve algorithmic challenges in a timed battle." },
     { id: 7, title: "MozDev", image: mozdev, overlayText: "A 6 hour hands-on session on Web Development for tomorrow’s devs." },
     { id: 8, title: "Emerald City", image: ec, overlayText: "Unravel ciphers and cryptographic challenges under pressure." },
     { id: 9, title: "Hack For Impact", image: h4i, overlayText: "Solve problems in the shortest possible code." },

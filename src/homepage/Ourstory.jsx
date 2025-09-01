@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Logo from "../assets/IEEECS.png";
-import Background from "../assets/paper_effect.png";
-import Team from "../assets/team.png";
-import MobileBoard from "../assets/mobile-board.jpg";
+import Logo from "../assets/logos/IEEECS.png";
+import Background from "../assets/herosection/paper_effect.png";
+import Team from "../assets/herosection/team.png";
+import MobileBoard from "../assets/herosection/mobile-board.jpg";
 
 const OurStory = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
