@@ -188,7 +188,7 @@ const BoardGrid = () => {
 
   return (
     <div ref={componentRef} className="hidden md:flex min-h-[200vh] bg-black flex-col items-center justify-center py-6 sm:py-8 md:py-10 overflow-x-hidden">
-      <div className="h-[10vh] sm:h-[16vh] md:h-[26vh]" />
+      <div className="h-[10vh] sm:h-[15vh] md:h-[20vh]" />
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8" style={{ minHeight: "140vh" }}>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 justify-items-start">
           <TeamCard name="Ram Krishna" position="Chairperson" photo={ram} linkedin="https://www.linkedin.com/in/ramkrishna2967/" />
