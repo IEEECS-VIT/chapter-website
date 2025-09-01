@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=McLaren&display=swap');
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -20,4 +21,13 @@ html, body {
 
 .animate-scroll {
   animation: scroll 30s linear infinite;
+}
+@font-face {
+  font-family: 'Henju';
+  src: url('/fonts/Henju-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  user-select: none !important;
 }
