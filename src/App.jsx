@@ -10,7 +10,7 @@ import Events from "./events/Mobile";
 import EventsD from "./events/Desktop";
 import Gallery from "./gallery/FilmStrip";
 import Footer from "./footer/Contact";
-import PreLoader from "./preloader/PreLoader";
+import PreLoader from "./preLoader/PreLoader";
 import Project from "./project/Project";
 
 
