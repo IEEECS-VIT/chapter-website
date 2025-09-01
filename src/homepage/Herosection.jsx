@@ -89,8 +89,8 @@ const HeroSection = ({ contentRef }) => {
             scrollTrigger: {
               trigger: ourStoryWrapperRef.current,
               start: "top top",
-              end: "+=1800",
-              scrub: 1.2,
+              end: "+=1450",
+              scrub: 0.3,
               pin: true,
               anticipatePin: 1,
             },
