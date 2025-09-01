@@ -20,7 +20,7 @@ function Model({ path }) {
 
 const LocalModelViewer = () => {
   return (
-    <div className="w-full h-[300px]">
+    <div className="w-full h-[260px]">
       <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
         <ambientLight intensity={0.8} />
         <directionalLight position={[5, 5, 5]} intensity={1.2} />
@@ -30,7 +30,7 @@ const LocalModelViewer = () => {
           <Model path="/models/ieeeLOGO1.glb" />
         </Suspense>
 
-        <OrbitControls enableZoom={true} />
+        <OrbitControls enableZoom={false} />
       </Canvas>
     </div>
   );
