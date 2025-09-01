@@ -3,13 +3,16 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Draggable } from "gsap/Draggable";
 
-import event from "./assets/event.png";
-import bg from "./assets/backgrnd.jpg";
-import pin from "./assets/pin.png";
-import cicada from "./assets/cicada.png";
-import bc from "./assets/battlecode.png";
-import wtf from "./assets/wtf.png";
-import h4i from "./assets/h4i.png";
+import event from "../assets/event.png";
+import bg from "../assets/backgrnd.jpg";
+import pin from "../assets/pin.png";
+import cicada from "../assets/cicada.png";
+import bc from "../assets/battlecode.png";
+import wtf from "../assets/wtf.png";
+import h4i from "../assets/h4i.png";
+import mozdev from "../assets/mozdev.jpg";
+import casa from "../assets/casa.jpg";
+import sdg from "../assets/sdg.jpg"
 
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
@@ -51,9 +54,9 @@ export default function EventsPage() {
     { id: 2, title: "Cicada 3302", image: cicada, overlayText: "A virtual maze filled with puzzles and hidden messages." },
     { id: 3, title: "WTF", image: wtf, overlayText: "Tech takes a twist. Expect the unexpected in this quirky event." },
     { id: 4, title: "BattleCode", image: bc, overlayText: "Strategy meets code. Automate bots to battle in real-time arenas." },
-    { id: 5, title: "SDG", image: event, overlayText: "A retro-style game challenge where creativity meets coding." },
-    { id: 6, title: "Casa", image: event, overlayText: "Compete to solve algorithmic challenges in a timed battle." },
-    { id: 7, title: "MozDev", image: event, overlayText: "A 6 hour hands-on session on Web Development for tomorrow’s devs." },
+    { id: 5, title: "SDG", image: sdg, overlayText: "A retro-style game challenge where creativity meets coding." },
+    { id: 6, title: "Casa", image: casa, overlayText: "Compete to solve algorithmic challenges in a timed battle." },
+    { id: 7, title: "MozDev", image: mozdev, overlayText: "A 6 hour hands-on session on Web Development for tomorrow’s devs." },
     { id: 8, title: "Emerald City", image: event, overlayText: "Unravel ciphers and cryptographic challenges under pressure." },
     { id: 9, title: "Hack For Impact", image: h4i, overlayText: "Solve problems in the shortest possible code." },
     { id: 10, title: "Cyberbattle", image: event, overlayText: "An adventure ride for competitive coders." },
@@ -203,7 +206,7 @@ export default function EventsPage() {
       }}
     >
       <div className="flex flex-col items-center justify-center w-full">
-        <h1 className="text-white text-5xl sm:text-6xl font-bold -mt-4 mb-10 tracking-widest text-center select-none">
+        <h1 className="text-white text-5xl sm:text-6xl font-henju mt-3 font-bold mb-10 tracking-widest text-center select-none">
           EVENTS
         </h1>
         <div className="w-screen h-0.5 bg-white mb-2 -mt-4" />

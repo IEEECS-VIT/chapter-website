@@ -5,20 +5,20 @@ import gsap from "gsap"
 import { Draggable } from "gsap/Draggable"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
-import bgImage from "./assets/bg.png"
-import ram from "./assets/ram.png"
-import anubhav from "./assets/anubhav.png"
-import aditya from "./assets/aditya.png"
-import akshit from "./assets/Akshit.png"
-import ansh from "./assets/ansh.png"
-import arjun from "./assets/Arjun.png"
-import arya from "./assets/arya.png"
-import dhriti from "./assets/dhriti.png"
-import gouri from "./assets/Gouri.png"
-import krish from "./assets/Krish.png"
-import varun from "./assets/varun.png"
-import parth from "./assets/parth.png"
-import medhansh from "./assets/medhansh.png"
+import bgImage from "../assets/bg.png"
+import ram from "../assets/ram.png"
+import anubhav from "../assets/anubhav.png"
+import aditya from "../assets/aditya.png"
+import akshit from "../assets/Akshit.png"
+import ansh from "../assets/ansh.png"
+import arjun from "../assets/Arjun.png"
+import arya from "../assets/arya.png"
+import dhriti from "../assets/dhriti.png"
+import gouri from "../assets/Gouri.png"
+import krish from "../assets/Krish.png"
+import varun from "../assets/varun.png"
+import parth from "../assets/parth.png"
+import medhansh from "../assets/medhansh.png"
 
 gsap.registerPlugin(Draggable, ScrollTrigger)
 
@@ -112,7 +112,7 @@ useEffect(() => {
   const totalScroll = scroller.scrollWidth - window.innerWidth
   const maxKnobX = progress.parentElement.offsetWidth - knob.offsetWidth
 
-  let syncProgress = 0 // shared [0 → 1]
+  let syncProgress = 0 
 
   const applyProgress = (p) => {
     syncProgress = Math.min(1, Math.max(0, p))
@@ -121,7 +121,7 @@ useEffect(() => {
     gsap.set(scroller, { x: -syncProgress * totalScroll })
   }
 
-  // Draggable knob
+
   const draggable = Draggable.create(knob, {
     type: "x",
     bounds: { minX: 0, maxX: maxKnobX },
@@ -150,7 +150,7 @@ useEffect(() => {
   let scrollTriggerInstance = ScrollTrigger.create({
     trigger: wrapper,
     start: "top top",
-    end: `+=${maxKnobX * 5}`, 
+    end: `+=${maxKnobX * 7}`, 
     pin: true,
     scrub: true,
     onUpdate: (self) => {

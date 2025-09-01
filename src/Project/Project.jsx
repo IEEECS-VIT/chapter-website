@@ -5,7 +5,7 @@ import { projectData } from "./ProjectData.js";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import Binding from "./Binding.jsx";
+import Binding from "./Binding1.jsx";
 import Binding2 from "./Binding2.jsx";
 
 

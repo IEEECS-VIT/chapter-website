@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import CircularText from "./CircularText";
 import CircularTextOut from "./CircularTextOut";
 import gsap from "gsap";
-import ieeeLogo from "./ieeecs_logo.png";
+import ieeeLogo from "../assets/ieeecs_logo.png";
 
 const ParticleBackground = () => {
   const canvasRef = useRef(null);

@@ -1,11 +1,11 @@
-import airport from "./assets/airport.png";
-import coverBg from "./assets/cover-bg.png";
-import coverImg1 from "./assets/cover1.png";
-import coverImg2 from "./assets/cover2.png";
-import coverImg3 from "./assets/cover3.png";
-import iitk from "./assets/techkriti.jpg";
-import cd from "./assets/cd.png";
-import pravega from "./assets/pravega.png";
+import airport from "../assets/airport.png";
+import coverBg from "../assets/cover-bg.png";
+import coverImg1 from "../assets/cover1.png";
+import coverImg2 from "../assets/cover2.png";
+import coverImg3 from "../assets/cover3.png";
+import iitk from "../assets/techkriti.jpg";
+import cd from "../assets/cd.png";
+import pravega from "../assets/pravega.png";
 export const projectData = [
   {
     id: 0,
@@ -18,13 +18,13 @@ export const projectData = [
     id: 1,
     title: "Kalaburagi Airport Project",
     image: airport,
-    text1: "The Kalaburagi Airport Project integrates technology to enhance airport operations and the travel experience.This tech-driven solution is setting new standards in airport efficiency and passenger convenience"
+    text1: "The Kalaburagi Airport Project integrates technology to enhance airport operations and the travel experience."
   },
   {
     id: 2,
     title: "IIT Kanpur TechKriti",
     image: iitk,
-    text1: "An intuitive recruitment platform that simplifies hiring with seamless application tracking and candidate management. It also offers analytics to help HR teams make informed decisions quickly."
+    text1: "Participated in Techkriti and secured a top position, showcasing innovation and technical excellence."
   },
   {
     id: 3,
@@ -36,6 +36,6 @@ export const projectData = [
     id: 4,
     title: "Pravega Racing Web App",
     image: pravega,
-    text1: "A dynamic web application for Pravega Racing, providing live updates, stats, and interactive user engagement. It includes user dashboards and notifications to keep participants informed in real-time."
+    text1: "Pravega Racing’s web app: fast, responsive, reliable, and globally connected. Enhanced and stylish visuals."
   }
 ];

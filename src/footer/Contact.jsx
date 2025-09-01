@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SketchfabModel from "./SketchfabModel";
+import SketchfabModel from "./SketchFabModel";
 
 
 const Contact = () => {
@@ -296,7 +296,7 @@ const Contact = () => {
             lineHeight: 1.4,
           }}
         >
-          <p>IEEECS@vit.ac.in</p>
+          <p>ieeecs@vit.ac.in</p>
           <p>91 9380302937</p>
         </div>
       </div>

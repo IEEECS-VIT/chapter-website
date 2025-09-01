@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Logo from "./assets/IEEECS.png";
-import Background from "./assets/paper_effect.png";
-import Team from "./assets/team.png";
-import MobileBoard from "./assets/mobile-board.jpg";
+import Logo from "../assets/IEEECS.png";
+import Background from "../assets/paper_effect.png";
+import Team from "../assets/team.png";
+import MobileBoard from "../assets/mobile-board.jpg";
 
 const OurStory = () => {
   const [screenType, setScreenType] = useState("lg");
@@ -101,7 +101,7 @@ const OurStory = () => {
             IEEE Computer Society, VIT—established in February 2012 under IEEE
             Region 10, Madras Section—drives innovation by leveraging
             cutting-edge technology to solve real-world problems. As a globally
-            recognized hub of technical excellence, we inspire and shape
+            recognized hub of technical excellence, we inspire
             inquisitive minds for the challenges of tomorrow.
           </p>
 
@@ -109,7 +109,7 @@ const OurStory = () => {
             <img
               src={Team}
               alt="IEEE Computer Society Team"
-              className={`rounded-xl opacity-0 transition-opacity duration-700 w-screen h-[80vh] object-cover ${
+              className={`rounded-xl opacity-0 transition-opacity  duration-700 w-screen h-[60vh] object-cover ${
                 imageLoaded ? "opacity-100" : ""
               }`}
               onLoad={() => setImageLoaded(true)}
