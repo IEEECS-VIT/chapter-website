@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import SketchfabModel from "./SketchFabModel";
 import LocalModelViewer from "./LocalModelView";
 
 const Contact = () => {

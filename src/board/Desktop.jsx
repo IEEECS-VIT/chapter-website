@@ -1,18 +1,17 @@
 "use client"
 
-
 import { useState, useEffect, useRef, useCallback } from "react"
 import bgImage from "../assets/board/bg.png"
 import ram from "../assets/board/ram.png"
 import anubhav from "../assets/board/anubhav.png"
 import aditya from "../assets/board/aditya.png"
-import akshit from "../assets/board/Akshit.png"
+import akshit from "../assets/board/akshit.png"
 import ansh from "../assets/board/ansh.png"
-import arjun from "../assets/board/Arjun.png"
+import arjun from "../assets/board/arjun.png"
 import arya from "../assets/board/arya.png"
 import dhriti from "../assets/board/dhriti.png"
-import gouri from "../assets/board/Gouri.png"
-import krish from "../assets/board/Krish.png"
+import gouri from "../assets/board/gouri.png"
+import krish from "../assets/board/krish.png"
 import varun from "../assets/board/varun.png"
 import parth from "../assets/board/parth.png"
 import medhansh from "../assets/board/medhansh.png"
@@ -98,8 +97,9 @@ const BoardGrid = () => {
   const getResponsiveValues = useCallback(() => {
     const baseMultiplier = isTablet ? 0.8 : 1
     const translateMultiplier = isTablet ? 0.85 : 1
+   
     return {
-      r1c2: { startOffset: -180 * translateMultiplier, settlePoint: componentOffsetTop + 200 * baseMultiplier },
+      r1c2: { startOffset: -200 * translateMultiplier, settlePoint: componentOffsetTop + 200 * baseMultiplier },
       r1c4: { startScrollPoint: componentOffsetTop + 250 * baseMultiplier, endScrollPoint: componentOffsetTop + 600 * baseMultiplier, maxTranslate: 425 * translateMultiplier },
       r2c3: { startScrollPoint: componentOffsetTop + 700 * baseMultiplier, endScrollPoint: componentOffsetTop + 950 * baseMultiplier, maxTranslate: 425 * translateMultiplier },
       r3c2: { startScrollPoint: componentOffsetTop + 1000 * baseMultiplier, endScrollPoint: componentOffsetTop + 1300 * baseMultiplier, maxTranslate: 309 * translateMultiplier },
