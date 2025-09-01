@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import ProjectDisplay from "./ProjectDisplay.jsx";
+import ProjectDisplay from "./Projectdisplay.jsx";
 import ProjectTabs from "./Projecttabs.jsx";
 import { projectData } from "./Projectdata.jsx";
 import gsap from "gsap";
