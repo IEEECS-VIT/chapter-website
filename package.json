@@ -17,6 +17,7 @@
     "react": "^19.1.1",
     "react-awesome-reveal": "^4.3.1",
     "react-dom": "^19.1.1",
+    "react-responsive": "^10.0.1",
     "three": "^0.179.1"
   },
   "devDependencies": {
