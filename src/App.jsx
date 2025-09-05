@@ -12,6 +12,7 @@ import Gallery from "./gallery/Filmstrip";
 import Footer from "./footer/Contact";
 import PreLoader from "./preloader/Preloader";
 import Project from "./project/Project";
+import Event from "./events/Responsive";
 
 const App = () => {
   const [isAnimating, setIsAnimating] = useState(true);
@@ -52,7 +53,9 @@ const App = () => {
           <section className="relative w-full">
             <HeroSection contentRef={heroContentRef} />
           </section>
-          
+          <section className="relative w-full">
+          <Event />
+        </section>
           {/*<section className="relative w-full">
             <Project />
           </section>
