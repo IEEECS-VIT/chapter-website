@@ -1,11 +1,11 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { Draggable } from "gsap/Draggable"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
-
+import ElasticSlider from "../events/ElasticSlider"
 import bgImage from "../assets/board/bg.png"
 import ram from "../assets/board/ram.png"
 import anubhav from "../assets/board/anubhav.png"
@@ -21,12 +21,11 @@ import varun from "../assets/board/varun.png"
 import parth from "../assets/board/parth.png"
 import medhansh from "../assets/board/medhansh.png"
 
-
 gsap.registerPlugin(Draggable, ScrollTrigger)
 
 const TeamCard = ({ name, position, photo, linkedin }) => {
   return (
-    <div className="relative w-[265px] h-[300px] shadow-2xl overflow-hidden flex flex-col justify-between items-center">
+    <div className="relative w-[265px] h-[280px] shadow-2xl overflow-hidden flex flex-col justify-between items-center">
       <img
         src={bgImage || "/placeholder.svg"}
         alt="card-bg"
@@ -44,7 +43,7 @@ const TeamCard = ({ name, position, photo, linkedin }) => {
               href={linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="absolute bottom-1 right-1 z-20"
+              className="absolute bottom-6 right-1 z-20"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -75,10 +74,11 @@ const TeamCard = ({ name, position, photo, linkedin }) => {
 }
 
 const MobileBoard = () => {
-  const wrapperRef = useRef(null)
-  const containerRef = useRef(null)
-  const progressRef = useRef(null)
-  const knobRef = useRef(null)
+  const scrollerRef = useRef(null)  
+  const pinRef = useRef(null)      
+  const tlRef = useRef(null)
+  const [sliderValue, setSliderValue] = useState(0)
+  const [maxScroll, setMaxScroll] = useState(1000)
 
   const allCards = [
     { name: "Ram Krishna", position: "Chairperson", photo: ram, linkedin: "https://www.linkedin.com/in/ramkrishna2967/" },
@@ -88,12 +88,12 @@ const MobileBoard = () => {
     { name: "Ansh Mehta", position: "Technical Head", photo: ansh, linkedin: "https://www.linkedin.com/in/anshmehta/" },
     { name: "Akshit Anand", position: "Projects Head", photo: akshit, linkedin: "https://www.linkedin.com/in/akshit-anand-10a90b219/" },
     { name: "Dhriti Sharma", position: "Events Head", photo: dhriti, linkedin: "https://www.linkedin.com/in/dhriti-sharma-b03014275/" },
-    { name: "Varun Sharith", position: "PNM Head", photo: varun, linkedin: "https://www.linkedin.com/in/varun-shirsath-50403534b/" },
+    { name: "Varun Shirsath", position: "PNM Head", photo: varun, linkedin: "https://www.linkedin.com/in/varun-shirsath-50403534b/" },
     { name: "Parth Jadhav", position: "Design Head", photo: parth, linkedin: "https://www.linkedin.com/in/parthjadhav2004/" },
     { name: "Gouri Kanade", position: "RND Head", photo: gouri, linkedin: "https://www.linkedin.com/in/gourikanade1012/" },
     { name: "Medhansh Jain", position: "Web Lead", photo: medhansh, linkedin: "https://www.linkedin.com/in/medhansh-jain/" },
     { name: "Krish Mehta", position: "App Lead", photo: krish, linkedin: "https://www.linkedin.com/in/krish1604/" },
-    { name: "Arya", position: "IOT Lead", photo: arya, linkedin: "https://www.linkedin.com/in/arya-patil-2a8366330/" },
+    { name: "Arya Patil", position: "IOT Lead", photo: arya, linkedin: "https://www.linkedin.com/in/arya-patil-2a8366330/" },
   ]
 
   const cardPairs = []
@@ -105,101 +105,127 @@ const MobileBoard = () => {
   }
 
 useEffect(() => {
-  const scroller = containerRef.current
-  const wrapper = wrapperRef.current
-  const progress = progressRef.current
-  const knob = knobRef.current
-  if (!scroller || !wrapper || !progress || !knob) return
+  const scroller = scrollerRef.current
+  const pin = pinRef.current
+  if (!scroller || !pin) return
 
-  const totalScroll = scroller.scrollWidth - window.innerWidth
-  const maxKnobX = progress.parentElement.offsetWidth - knob.offsetWidth
+  const setupAnimation = () => {
+    if (tlRef.current) {
+      tlRef.current.scrollTrigger?.kill()
+      tlRef.current.kill()
+      tlRef.current = null
+    }
 
-  let syncProgress = 0 
+    const totalScroll = scroller.scrollWidth - window.innerWidth
+    if (totalScroll <= 0) return
 
-  const applyProgress = (p) => {
-    syncProgress = Math.min(1, Math.max(0, p))
-    gsap.set(progress, { width: `${syncProgress * 100}%` })
-    gsap.set(knob, { x: syncProgress * maxKnobX })
-    gsap.set(scroller, { x: -syncProgress * totalScroll })
+    setMaxScroll(totalScroll)
+gsap.set(scroller, { x: 0 })
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: pin,
+        start: "top top",
+        end: () => `+=${totalScroll*2}`,
+        scrub: 1,
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const newVal = self.progress * totalScroll
+          setSliderValue(prev => 
+            Math.abs(prev - newVal) > 1 ? newVal : prev
+          )
+        },
+      },
+    })
+
+    tl.fromTo(scroller, { x: 0 }, { x: -totalScroll, ease: "none" })
+
+    tlRef.current = tl
   }
 
+  setupAnimation()
+  ScrollTrigger.refresh()
 
-  const draggable = Draggable.create(knob, {
-    type: "x",
-    bounds: { minX: 0, maxX: maxKnobX },
-    inertia: true,
-    onDrag() {
-      applyProgress(this.x / maxKnobX)
-      if (scrollTriggerInstance) {
-        scrollTriggerInstance.scroll(
-          scrollTriggerInstance.start +
-            syncProgress * (scrollTriggerInstance.end - scrollTriggerInstance.start)
-        )
-      }
-    },
-    onThrowUpdate() {
-      applyProgress(this.x / maxKnobX)
-      if (scrollTriggerInstance) {
-        scrollTriggerInstance.scroll(
-          scrollTriggerInstance.start +
-            syncProgress * (scrollTriggerInstance.end - scrollTriggerInstance.start)
-        )
-      }
-    },
-  })[0]
+  const handleResize = () => {
+    setupAnimation()
+    ScrollTrigger.refresh()
+  }
 
- 
-  let scrollTriggerInstance = ScrollTrigger.create({
-    trigger: wrapper,
-    start: "top top",
-    end: `+=${maxKnobX * 15}`, 
-    pin: true,
-    scrub: true,
-    onUpdate: (self) => {
-    
-      if (!draggable.isDragging) {
-        applyProgress(self.progress)
-      }
-    },
-  })
-
-  applyProgress(0)
+  window.addEventListener("resize", handleResize)
+  window.addEventListener("orientationchange", handleResize)
 
   return () => {
-    draggable.kill()
-    scrollTriggerInstance.kill()
-    ScrollTrigger.getAll().forEach((st) => st.kill())
+    tlRef.current?.scrollTrigger?.kill()
+    tlRef.current?.kill()
+    tlRef.current = null
+    window.removeEventListener("resize", handleResize)
+    window.removeEventListener("orientationchange", handleResize)
   }
 }, [])
 
+const handleSliderChange = (val) => {
+  setSliderValue(val)
+
+  requestAnimationFrame(() => {
+    const tl = tlRef.current
+    if (tl && tl.scrollTrigger) {
+      const progress = Math.min(1, Math.max(0, val / maxScroll))
+
+      if (tl.scrollTrigger.scroll) {
+        tl.scrollTrigger.scroll(
+          progress * (tl.scrollTrigger.end - tl.scrollTrigger.start) + tl.scrollTrigger.start
+        )
+      }
+    }
+  })
+}
+
 
   return (
-    <div>
-      <div ref={wrapperRef} className="relative w-full overflow-hidden bg-black">
-        <div
-          ref={containerRef}
-          className="flex items-center gap-12 h-screen pl-8 pr-8 select-none"
-        >
-          <div className="flex-shrink-0 flex items-center justify-center w-6">
-            <div className="text-yellow-400 text-6xl font-extrabold uppercase tracking-wider transform -rotate-90 whitespace-nowrap">
-              THE BOARD
-            </div>
-          </div>
-          {cardPairs.map((pair, index) => (
-            <div key={index} className="flex flex-col gap-8 flex-shrink-0">
-              <TeamCard {...pair.first} />
-              {pair.second && <TeamCard {...pair.second} />}
-            </div>
-          ))}
-        </div>
-        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 w-3/4 h-2 bg-white/30 rounded-full">
-          <div ref={progressRef} className="h-full bg-white rounded-full relative">
-            <div
-              ref={knobRef}
-              className="absolute top-1/2 -translate-y-1/2 w-6 h-6 bg-yellow-400 rounded-full shadow-lg cursor-pointer"
-            />
+    <div ref={pinRef} className="relative w-full bg-black">
+      <div
+        ref={scrollerRef}
+        className="flex items-center gap-12 h-screen pl-8 pr-8 select-none"
+      >
+        <div className="flex-shrink-0 flex items-center justify-center w-6">
+          <div className="text-yellow-400 text-6xl font-extrabold uppercase tracking-wider transform -rotate-90 whitespace-nowrap">
+            THE BOARD
           </div>
         </div>
+        {cardPairs.map((pair, index) => (
+          <div key={index} className="flex flex-col gap-8 flex-shrink-0">
+            <TeamCard {...pair.first} />
+            {pair.second && <TeamCard {...pair.second} />}
+          </div>
+        ))}
+      </div>
+
+      {/* popup slider */}
+      <div className="absolute left-1/2 bottom-[1%] transform -translate-x-1/2 rounded-2xl p-5 z-50 w-[95%] sm:w-[80%] md:w-[70%] lg:w-[60%] block lg:hidden">
+        <ElasticSlider
+          leftIcon={
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-black text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </span>
+          }
+          rightIcon={
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-black text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
+          }
+          //defaultValue={sliderValue}
+          maxValue={maxScroll}
+          isStepped
+          stepSize={10}
+          value={sliderValue}
+          onChange={handleSliderChange}
+        />
       </div>
     </div>
   )

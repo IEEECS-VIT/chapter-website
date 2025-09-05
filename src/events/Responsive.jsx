@@ -20,7 +20,7 @@ gsap.registerPlugin(ScrollTrigger);
 //Event card template 
 const EventCard = ({ title, image, hasOverlay = false, overlayText, first = false }) => (
   <div
-    className={`relative flex-shrink-0 w-[180px] sm:w-[240px] md:w-[280px] lg:w-[320px] xl:w-[360px] ${
+    className={`relative flex-shrink-0 w-[200px] sm:w-[280px] md:w-[280px] lg:w-[320px] xl:w-[360px] ${
       first ? "ml-4 sm:ml-8" : "ml-4"
     } last:mr-4 sm:last:mr-8`}
     style={{ fontFamily: "Special Elite, cursive" }}
@@ -44,7 +44,7 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
       />
     </div>
 
-      <div className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] lg:h-[300px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center bg-white/80">
+      <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[300px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center bg-white/80">
         <img
           src={image || "/placeholder.svg"}
           alt={title}
@@ -110,7 +110,7 @@ useEffect(() => {
       scrollTrigger: {
         trigger: pin,
         start: "top top",
-        end: () => `+=${totalScroll}`,
+        end: () => `+=${totalScroll*2}`,
         scrub: 1,
         pin: true,
         anticipatePin: 1,
@@ -122,7 +122,7 @@ useEffect(() => {
       },
     });
 
-    tl.fromTo(scroller, { x: -totalScroll }, { x: 0, ease: "none" });
+    tl.fromTo(scroller,{ x: 0, ease: "none" }, { x: -totalScroll });
 
     tlRef.current = tl;
   };
@@ -171,13 +171,14 @@ useEffect(() => {
       }}
     >
       <div className="flex flex-col items-center justify-center w-full">
-        <h1 className="text-white text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-henju mt-3 font-bold mb-8 sm:mb-12 tracking-widest text-center select-none">
+        <h1 className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-henju mt-3 font-bold mb-8 sm:mb-12 tracking-widest text-center select-none">
           EVENTS
         </h1>
 
         {/*top dividers*/}
-        <div className="w-screen h-0.5 bg-white mb-1 sm:mb-2 -mt-2 sm:-mt-4" />
-        <div className="w-screen h-0.5 bg-white mb-6 sm:mb-10 lg:mb-16 -mt-2" />
+        <div className="w-screen h-0.5 bg-white mb-1 sm:mb-2" />
+        <div className="w-screen h-0.5 bg-white mb-4 sm:mb-8 lg:mb-14" />
+
 
         {/*event cards*/}
         <div className="w-full overflow-hidden">
