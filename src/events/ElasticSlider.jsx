@@ -6,7 +6,6 @@ const MAX_OVERFLOW = 50
 export default function ElasticSlider({
   value,
   onChange,
-  defaultValue = 50,
   startingValue = 0,
   maxValue = 100,
   className = '',
@@ -20,7 +19,6 @@ export default function ElasticSlider({
       <Slider
         value={value}
         onChange={onChange}
-        defaultValue={defaultValue}
         startingValue={startingValue}
         maxValue={maxValue}
         isStepped={isStepped}
@@ -32,18 +30,13 @@ export default function ElasticSlider({
   )
 }
 
-function Slider({ value: controlledValue, onChange, defaultValue, startingValue, maxValue, isStepped, stepSize, leftIcon, rightIcon }) {
-  const [value, setValue] = useState(defaultValue)
+function Slider({ value, onChange, startingValue, maxValue, isStepped, stepSize, leftIcon, rightIcon }) {
   const sliderRef = useRef(null)
   const [region, setRegion] = useState('middle')
   const [sliderWidth, setSliderWidth] = useState(0)
   const clientX = useMotionValue(0)
   const overflow = useMotionValue(0)
   const scale = useMotionValue(1)
-
-  useEffect(() => {
-    if (typeof controlledValue === 'number') setValue(controlledValue)
-  }, [controlledValue])
 
   useEffect(() => {
     if (!sliderRef.current) return
@@ -80,7 +73,6 @@ function Slider({ value: controlledValue, onChange, defaultValue, startingValue,
       let newValue = startingValue + ((e.clientX - left) / sliderWidth) * (maxValue - startingValue)
       if (isStepped) newValue = Math.round(newValue / stepSize) * stepSize
       newValue = Math.min(Math.max(newValue, startingValue), maxValue)
-      setValue(newValue)
       onChange?.(newValue)
       clientX.set(e.clientX)
     }
@@ -102,72 +94,70 @@ function Slider({ value: controlledValue, onChange, defaultValue, startingValue,
   }
 
   return (
-    <>
+    <motion.div
+      onHoverStart={() => animate(scale, 1.2)}
+      onHoverEnd={() => animate(scale, 1)}
+      onTouchStart={() => animate(scale, 1.2)}
+      onTouchEnd={() => animate(scale, 1)}
+      style={{
+        scale,
+        opacity: useTransform(scale, [1, 1.2], [0.7, 1])
+      }}
+      className="flex w-full touch-none select-none items-center justify-center gap-4"
+    >
       <motion.div
-        onHoverStart={() => animate(scale, 1.2)}
-        onHoverEnd={() => animate(scale, 1)}
-        onTouchStart={() => animate(scale, 1.2)}
-        onTouchEnd={() => animate(scale, 1)}
-        style={{
-          scale,
-          opacity: useTransform(scale, [1, 1.2], [0.7, 1])
+        animate={{
+          scale: region === 'left' ? [1, 1.4, 1] : 1,
+          transition: { duration: 0.25 }
         }}
-        className="flex w-full touch-none select-none items-center justify-center gap-4"
+        style={{
+          x: useTransform(() => (region === 'left' ? -overflow.get() / scale.get() : 0))
+        }}
+      >
+        {leftIcon}
+      </motion.div>
+
+      <div
+        ref={sliderRef}
+        className="relative flex w-full flex-grow cursor-grab touch-none select-none items-center py-4"
+        onPointerMove={handlePointerMove}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
       >
         <motion.div
-          animate={{
-            scale: region === 'left' ? [1, 1.4, 1] : 1,
-            transition: { duration: 0.25 }
-          }}
           style={{
-            x: useTransform(() => (region === 'left' ? -overflow.get() / scale.get() : 0))
+            scaleX: useTransform(() => 1 + (sliderWidth > 0 ? overflow.get() / sliderWidth : 0)),
+            scaleY: useTransform(overflow, [0, MAX_OVERFLOW], [1, 0.8]),
+            transformOrigin: useTransform(() => {
+              if (sliderRef.current) {
+                const { left } = sliderRef.current.getBoundingClientRect()
+                return clientX.get() < left + sliderWidth / 2 ? 'right' : 'left'
+              }
+            }),
+            height: useTransform(scale, [1, 1.2], [12, 18]),
+            marginTop: useTransform(scale, [1, 1.2], [0, -3]),
+            marginBottom: useTransform(scale, [1, 1.2], [0, -3])
           }}
+          className="flex flex-grow"
         >
-          {leftIcon}
+          <div className="relative h-full flex-grow overflow-hidden rounded-full bg-gray-400">
+            <div className="absolute h-full bg-white rounded-full" style={{ width: `${getRangePercentage()}%` }} />
+          </div>
         </motion.div>
+      </div>
 
-        <div
-          ref={sliderRef}
-          className="relative flex w-full flex-grow cursor-grab touch-none select-none items-center py-4"
-          onPointerMove={handlePointerMove}
-          onPointerDown={handlePointerDown}
-          onPointerUp={handlePointerUp}
-        >
-          <motion.div
-            style={{
-              scaleX: useTransform(() => 1 + (sliderWidth > 0 ? overflow.get() / sliderWidth : 0)),
-              scaleY: useTransform(overflow, [0, MAX_OVERFLOW], [1, 0.8]),
-              transformOrigin: useTransform(() => {
-                if (sliderRef.current) {
-                  const { left } = sliderRef.current.getBoundingClientRect()
-                  return clientX.get() < left + sliderWidth / 2 ? 'right' : 'left'
-                }
-              }),
-              height: useTransform(scale, [1, 1.2], [12, 18]),
-              marginTop: useTransform(scale, [1, 1.2], [0, -3]),
-              marginBottom: useTransform(scale, [1, 1.2], [0, -3])
-            }}
-            className="flex flex-grow"
-          >
-            <div className="relative h-full flex-grow overflow-hidden rounded-full bg-gray-400">
-              <div className="absolute h-full bg-white rounded-full" style={{ width: `${getRangePercentage()}%` }} />
-            </div>
-          </motion.div>
-        </div>
-
-        <motion.div
-          animate={{
-            scale: region === 'right' ? [1, 1.4, 1] : 1,
-            transition: { duration: 0.25 }
-          }}
-          style={{
-            x: useTransform(() => (region === 'right' ? overflow.get() / scale.get() : 0))
-          }}
-        >
-          {rightIcon}
-        </motion.div>
+      <motion.div
+        animate={{
+          scale: region === 'right' ? [1, 1.4, 1] : 1,
+          transition: { duration: 0.25 }
+        }}
+        style={{
+          x: useTransform(() => (region === 'right' ? overflow.get() / scale.get() : 0))
+        }}
+      >
+        {rightIcon}
       </motion.div>
-    </>
+    </motion.div>
   )
 }
 

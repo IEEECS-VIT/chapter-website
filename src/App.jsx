@@ -53,17 +53,17 @@ const App = () => {
           <section className="relative w-full">
             <HeroSection contentRef={heroContentRef} />
           </section>
-          <section className="relative w-full">
+          <section className="relative w-full ">
           <Event />
         </section>
         <section className="relative w-full">
         <div className="block lg:hidden">
           <Mobile />
         </div>
-        <div className="hidden lg:block">
+        <div className="hidden lg:block ">
           <Board />
         </div>
-      </section>
+       </section>
 
         <section className="hidden md:flex min-h-screen bg-neutral-800 items-center justify-center">
             <Gallery />
@@ -75,7 +75,6 @@ const App = () => {
           {/*<section className="relative w-full">
             <Project />
           </section>
-          
           */}
         </div>
       )}

@@ -17,7 +17,6 @@ import ec from "../assets/events/ec.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
-//Event card template 
 const EventCard = ({ title, image, hasOverlay = false, overlayText, first = false }) => (
   <div
     className={`relative flex-shrink-0 w-[200px] sm:w-[280px] md:w-[280px] lg:w-[320px] xl:w-[360px] ${
@@ -26,24 +25,9 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
     style={{ fontFamily: "Special Elite, cursive" }}
   >
     <div className="relative bg-gradient-to-br from-[#F8F4ED] to-[#F1ECE5] p-3 sm:p-5 rounded-2xl border border-gray-200/30 flex flex-col items-center justify-center h-full shadow-[0_6px_20px_rgba(255,255,255,0.15)]">
-
-      <div
-      className="
-        absolute -top-10 -right-10 
-        -translate-y-1/4 translate-x-1/4 
-        sm:-top-14 sm:-right-12
-        md:-top-14 md:-right-12
-        lg:-top-14 lg:-right-12
-        z-30 rotate-[-10deg]
-      "
-     >
-      <img
-        src={pin}
-        alt="Pin"
-        className="w-58 sm:w-96 md:w-78 lg:w-86 h-auto drop-shadow-md"
-      />
-    </div>
-
+      <div className="absolute -top-10 -right-10 -translate-y-1/4 translate-x-1/4 sm:-top-14 sm:-right-12 md:-top-14 md:-right-12 lg:-top-14 lg:-right-12 z-30 rotate-[-10deg]">
+        <img src={pin} alt="Pin" className="w-58 sm:w-96 md:w-78 lg:w-86 h-auto drop-shadow-md" />
+      </div>
       <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[300px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center bg-white/80">
         <img
           src={image || "/placeholder.svg"}
@@ -58,8 +42,6 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
           </div>
         )}
       </div>
-
-      
       <h3 className="text-gray-800 text-lg sm:text-xl md:text-2xl lg:text-3xl text-center tracking-wider mt-3 hover:text-gray-900 transition-colors duration-300 drop-shadow-sm">
         {title}
       </h3>
@@ -68,7 +50,7 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
 );
 
 export default function EventsPage() {
-  const items = [ //update list for adding/subtracting events
+  const items = [
     { id: 1, title: "HackBattle", image: event, overlayText: "A high-stakes coding face-off for the brave and bold minds." },
     { id: 2, title: "Cicada 3310", image: cicada, overlayText: "A virtual maze filled with puzzles and hidden messages." },
     { id: 3, title: "WTF", image: wtf, overlayText: "Tech takes a twist. Expect the unexpected in this quirky event." },
@@ -84,80 +66,77 @@ export default function EventsPage() {
   const scrollerRef = useRef(null);
   const pinRef = useRef(null);
   const tlRef = useRef(null);
+
   const [sliderValue, setSliderValue] = useState(0);
   const [maxScroll, setMaxScroll] = useState(1000);
-  
-// gsap timeline
-useEffect(() => {
-  const scroller = scrollerRef.current;
-  const pin = pinRef.current;
-  if (!scroller || !pin) return;
 
-  let tl;
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    const pin = pinRef.current;
+    if (!scroller || !pin) return;
 
-  const setupAnimation = () => {
-    if (tl) {
-      tl.scrollTrigger?.kill();
-      tl.kill();
-    }
+    let tl;
 
-    const totalScroll = scroller.scrollWidth - scroller.offsetWidth;
-    if (totalScroll <= 0) return;
+    const setupAnimation = () => {
+      if (tl) {
+        tl.scrollTrigger?.kill();
+        tl.kill();
+      }
 
-    setMaxScroll(totalScroll);
+      const totalScroll = scroller.scrollWidth - scroller.offsetWidth;
+      if (totalScroll <= 0) return;
 
-    tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: pin,
-        start: "top top",
-        end: () => `+=${totalScroll*2}`,
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const clampedProgress = Math.min(1, Math.max(0, self.progress));
-          setSliderValue(clampedProgress * totalScroll);
+      setMaxScroll(totalScroll);
+
+      tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pin,
+          start: "top top",
+          end: () => `+=${totalScroll * 2}`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const clampedProgress = Math.min(1, Math.max(0, self.progress));
+            setSliderValue(clampedProgress * totalScroll);
+          },
         },
-      },
-    });
+      });
 
-    tl.fromTo(scroller,{ x: 0, ease: "none" }, { x: -totalScroll });
+      tl.fromTo(scroller, { x: 0 }, { x: -totalScroll, ease: "none" });
+      tlRef.current = tl;
+    };
 
-    tlRef.current = tl;
-  };
-
-  setupAnimation();
-  ScrollTrigger.refresh(true); //force recalculation
-
-  const handleResize = () => {
     setupAnimation();
     ScrollTrigger.refresh(true);
-  };
 
-  window.addEventListener("resize", handleResize);
-  window.addEventListener("orientationchange", handleResize);
+    const handleResize = () => {
+      setupAnimation();
+      ScrollTrigger.refresh(true);
+    };
 
-  return () => {
-    tl?.scrollTrigger?.kill();
-    tl?.kill();
-    window.removeEventListener("resize", handleResize);
-    window.removeEventListener("orientationchange", handleResize);
-  };
-}, []);
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+
+    return () => {
+      tl?.scrollTrigger?.kill();
+      tl?.kill();
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+    };
+  }, []);
 
   const handleSliderChange = (val) => {
     setSliderValue(val);
-
-    requestAnimationFrame(() => {
-      const tl = tlRef.current;
-      if (tl && tl.scrollTrigger) {
-        const progress = Math.min(1, Math.max(0, val / maxScroll)); // clamp
-        tl.scrollTrigger.scroll(
-          progress * (tl.scrollTrigger.end - tl.scrollTrigger.start) + tl.scrollTrigger.start
-        );
-      }
-    });
+    const tl = tlRef.current;
+    if (tl && tl.scrollTrigger) {
+      const progress = Math.min(1, Math.max(0, val / maxScroll));
+      tl.scrollTrigger.scroll(
+        progress * (tl.scrollTrigger.end - tl.scrollTrigger.start) +
+          tl.scrollTrigger.start
+      );
+    }
   };
 
   return (
@@ -174,25 +153,18 @@ useEffect(() => {
         <h1 className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-henju mt-3 font-bold mb-8 sm:mb-12 tracking-widest text-center select-none">
           EVENTS
         </h1>
-
-        {/*top dividers*/}
         <div className="w-screen h-0.5 bg-white mb-1 sm:mb-2" />
         <div className="w-screen h-0.5 bg-white mb-4 sm:mb-8 lg:mb-14" />
-
-
-        {/*event cards*/}
         <div className="w-full overflow-hidden">
           <div
             ref={scrollerRef}
-           className="flex gap-4 sm:gap-6 md:gap-8 cursor-grab active:cursor-grabbing will-change-transform select-none pl-4 sm:pl-8 lg:pl-16 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+            className="flex gap-4 sm:gap-6 md:gap-8 cursor-grab active:cursor-grabbing will-change-transform select-none pl-4 sm:pl-8 lg:pl-16 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
           >
             {items.map((item, idx) => (
               <EventCard key={item.id} {...item} first={idx === 0} hasOverlay />
             ))}
           </div>
         </div>
-
-        {/*popup slider*/}
         <div className="absolute left-1/2 bottom-[10%] transform -translate-x-1/2 bg-black/80 backdrop-blur-md shadow-lg rounded-2xl p-5 z-50 w-[95%] sm:w-[80%] md:w-[70%] lg:w-[60%] block lg:hidden">
           <ElasticSlider
             leftIcon={
@@ -209,16 +181,12 @@ useEffect(() => {
                 </svg>
               </span>
             }
-            defaultValue={sliderValue}
-            maxValue={maxScroll}
-            isStepped
-            stepSize={10}
             value={sliderValue}
+            maxValue={maxScroll}
+            stepSize={10}
             onChange={handleSliderChange}
           />
         </div>
-
-        {/*bottom dividers*/}
         <div className="w-screen h-0.5 bg-white mt-8 sm:mt-10 mb-1 sm:mb-2" />
         <div className="w-screen h-0.5 bg-white mb-4 sm:mb-6" />
       </div>

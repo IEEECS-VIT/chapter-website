@@ -16,7 +16,6 @@ import varun from "../assets/board/varun.png"
 import parth from "../assets/board/parth.png"
 import medhansh from "../assets/board/medhansh.png"
 
-
 const TeamCard = ({ name, position, photo, linkedin, innerRef, extraClass = "" }) => {
   return (
     <div
@@ -59,9 +58,9 @@ const TeamCard = ({ name, position, photo, linkedin, innerRef, extraClass = "" }
   )
 }
 
+
 const BoardGrid = () => {
   const [componentOffsetTop, setComponentOffsetTop] = useState(0)
-  const [isTablet, setIsTablet] = useState(false)
   const r1c2Ref = useRef(null)
   const r1c4Ref = useRef(null)
   const r2c3Ref = useRef(null)
@@ -70,142 +69,120 @@ const BoardGrid = () => {
   const boardTextRef = useRef(null)
   const dateTextRef = useRef(null)
 
-  useEffect(() => {
-    const checkScreenSize = () => setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
-    checkScreenSize()
-    window.addEventListener("resize", checkScreenSize)
-    return () => window.removeEventListener("resize", checkScreenSize)
-  }, [])
+  const animationValues = useCallback(() => {
+    return {
+      r1c2: { startOffset: -200, settlePoint: componentOffsetTop + 200 },
+      r1c4: { startScrollPoint: componentOffsetTop + 250, endScrollPoint: componentOffsetTop + 600, maxTranslate: 425 },
+      r2c3: { startScrollPoint: componentOffsetTop + 700, endScrollPoint: componentOffsetTop + 950, maxTranslate: 425 },
+      r3c2: { startScrollPoint: componentOffsetTop + 1000, endScrollPoint: componentOffsetTop + 1300, maxTranslate: 309 },
+    }
+  }, [componentOffsetTop])
 
   useEffect(() => {
     const updateComponentOffset = () => {
       if (componentRef.current) {
         const rect = componentRef.current.getBoundingClientRect()
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+        const scrollTop = window.scrollY || document.documentElement.scrollTop
         setComponentOffsetTop(rect.top + scrollTop)
       }
     }
+
     updateComponentOffset()
     window.addEventListener("resize", updateComponentOffset)
-    const timeout = setTimeout(updateComponentOffset, 100)
+    const timeout = setTimeout(updateComponentOffset, 100) 
+
     return () => {
       window.removeEventListener("resize", updateComponentOffset)
       clearTimeout(timeout)
     }
   }, [])
 
-  const getResponsiveValues = useCallback(() => {
-    const baseMultiplier = isTablet ? 0.8 : 1
-    const translateMultiplier = isTablet ? 0.85 : 1
-   
-    return {
-      r1c2: { startOffset: -200 * translateMultiplier, settlePoint: componentOffsetTop + 200 * baseMultiplier },
-      r1c4: { startScrollPoint: componentOffsetTop + 250 * baseMultiplier, endScrollPoint: componentOffsetTop + 600 * baseMultiplier, maxTranslate: 425 * translateMultiplier },
-      r2c3: { startScrollPoint: componentOffsetTop + 700 * baseMultiplier, endScrollPoint: componentOffsetTop + 950 * baseMultiplier, maxTranslate: 425 * translateMultiplier },
-      r3c2: { startScrollPoint: componentOffsetTop + 1000 * baseMultiplier, endScrollPoint: componentOffsetTop + 1300 * baseMultiplier, maxTranslate: 309 * translateMultiplier },
-    }
-  }, [isTablet, componentOffsetTop])
+  const easeInOutSine = (x) => -(Math.cos(Math.PI * x) - 1) / 2;
 
-  const animateCards = useCallback(() => {
+  const animateElements = useCallback(() => {
     const currentScrollY = window.scrollY
-    const values = getResponsiveValues()
-    const componentStart = componentOffsetTop - 500
-    const componentEnd = componentOffsetTop + 2000
+    const values = animationValues()
+
+    const viewMargin = 500
+    const componentStart = componentOffsetTop - viewMargin
+    const componentEnd = componentOffsetTop + 2000 + viewMargin
     if (currentScrollY < componentStart || currentScrollY > componentEnd) {
-      requestAnimationFrame(animateCards)
+      requestAnimationFrame(animateElements)
       return
     }
 
-    if (r1c2Ref.current) {
-      const { startOffset, settlePoint } = values.r1c2
-      let translateY = startOffset
-      if (currentScrollY >= settlePoint) translateY = 0
-      else if (currentScrollY > componentOffsetTop) {
-        let progress = (currentScrollY - componentOffsetTop) / (settlePoint - componentOffsetTop)
-        progress = Math.min(Math.max(progress, 0), 1)
-        translateY = startOffset * (1 - progress)
-      }
-      r1c2Ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`
-    }
+    const animateRef = (ref, startScroll, endScroll, maxTranslate, isInitialOffset = false, startOffset = 0) => {
+        if (ref.current) {
+            let progress = 0;
+            if (isInitialOffset) {
+                
+                progress = currentScrollY > componentOffsetTop 
+                    ? (currentScrollY - componentOffsetTop) / (endScroll - componentOffsetTop) 
+                    : 0;
+            } else {
+                
+                progress = (currentScrollY - startScroll) / (endScroll - startScroll);
+            }
 
-    if (r1c4Ref.current) {
-      const { startScrollPoint, endScrollPoint, maxTranslate } = values.r1c4
-      let translateY = 0
-      if (currentScrollY >= endScrollPoint) translateY = maxTranslate
-      else if (currentScrollY > startScrollPoint) {
-        let progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
-        progress = Math.min(Math.max(progress, 0), 1)
-        translateY = maxTranslate * progress
-      }
-      r1c4Ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`
-    }
+            progress = Math.min(Math.max(progress, 0), 1); 
+            const easedProgress = easeInOutSine(progress);
 
-    if (r2c3Ref.current) {
-      const { startScrollPoint, endScrollPoint, maxTranslate } = values.r2c3
-      let translateY = 0
-      if (currentScrollY >= endScrollPoint) translateY = maxTranslate
-      else if (currentScrollY > startScrollPoint) {
-        let progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
-        progress = Math.min(Math.max(progress, 0), 1)
-        translateY = maxTranslate * progress
-      }
-      r2c3Ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`
-    }
+            let translateY = 0;
+            if (isInitialOffset) {
+                translateY = currentScrollY >= endScroll ? 0 : startOffset * (1 - easedProgress);
+            } else {
+                translateY = currentScrollY <= startScroll ? 0 : easedProgress * maxTranslate;
+            }
+            ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`;
+        }
+    };
+    
+    animateRef(r1c2Ref, 0, values.r1c2.settlePoint, 0, true, values.r1c2.startOffset);
+    animateRef(r1c4Ref, values.r1c4.startScrollPoint, values.r1c4.endScrollPoint, values.r1c4.maxTranslate);
+    animateRef(r2c3Ref, values.r2c3.startScrollPoint, values.r2c3.endScrollPoint, values.r2c3.maxTranslate);
+    animateRef(r3c2Ref, values.r3c2.startScrollPoint, values.r3c2.endScrollPoint, values.r3c2.maxTranslate);
 
-    if (r3c2Ref.current) {
-      const { startScrollPoint, endScrollPoint, maxTranslate } = values.r3c2
-      let translateY = 0
-      if (currentScrollY >= endScrollPoint) translateY = maxTranslate
-      else if (currentScrollY > startScrollPoint) {
-        let progress = (currentScrollY - startScrollPoint) / (endScrollPoint - startScrollPoint)
-        progress = Math.min(Math.max(progress, 0), 1)
-        translateY = maxTranslate * progress
-      }
-      r3c2Ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`
+    const animateText = (ref, startScroll, duration, startX) => {
+        if (ref.current) {
+            const endX = 0;
+            const progress = Math.min(Math.max((currentScrollY - startScroll) / duration, 0), 1);
+            const easedProgress = easeInOutSine(progress);
+            const currentX = startX + easedProgress * (endX - startX);
+            ref.current.style.transform = `translateX(${currentX}px)`;
+        }
     }
+    
+    animateText(boardTextRef, componentOffsetTop, 500, -300);
+    animateText(dateTextRef, componentOffsetTop + 400, 500, -300);
 
-    if (boardTextRef.current) {
-      const startX = -300
-      const endX = 0
-      const progress = Math.min(Math.max((currentScrollY - componentOffsetTop) / 500, 0), 1)
-      const easedProgress = 1 - Math.pow(1 - progress, 3)
-      boardTextRef.current.style.transform = `translateX(${startX + easedProgress * (endX - startX)}px)`
-    }
+    requestAnimationFrame(animateElements)
+  }, [animationValues, componentOffsetTop])
 
-    if (dateTextRef.current) {
-      const startX = -300
-      const endX = 0
-      const startScroll = componentOffsetTop + 400
-      const progress = Math.min(Math.max((currentScrollY - startScroll) / 500, 0), 1)
-      const easedProgress = 1 - Math.pow(1 - progress, 3)
-      dateTextRef.current.style.transform = `translateX(${startX + easedProgress * (endX - startX)}px)`
-    }
-
-    requestAnimationFrame(animateCards)
-  }, [getResponsiveValues, componentOffsetTop])
 
   useEffect(() => {
-    requestAnimationFrame(animateCards)
-  }, [animateCards])
+    const animationFrame = requestAnimationFrame(animateElements)
+    return () => cancelAnimationFrame(animationFrame)
+  }, [animateElements])
 
   return (
-    <div ref={componentRef} className="hidden md:flex min-h-[200vh] bg-black flex-col items-center justify-center py-6 sm:py-8 md:py-10 overflow-x-hidden">
-      <div className="h-[10vh] sm:h-[15vh] md:h-[20vh]" />
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8" style={{ minHeight: "140vh" }}>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 justify-items-start">
+    <div ref={componentRef} className="hidden lg:flex min-h-[200vh] bg-black flex-col items-center justify-center py-10 overflow-x-hidden">
+      <div className="h-[25vh]" />
+      <div className="w-full max-w-7xl mx-auto px-8" style={{ minHeight: "140vh" }}>
+        <div className="grid grid-cols-4 gap-6 justify-items-start">
+          {/* Grid items remain the same */}
           <TeamCard name="Ram Krishna" position="Chairperson" photo={ram} linkedin="https://www.linkedin.com/in/ramkrishna2967/" />
           <TeamCard name="Anubhav Batra" position="Vice Chairperson" photo={anubhav} linkedin="https://www.linkedin.com/in/anubhav-batra-9ba7271b1/" innerRef={r1c2Ref} />
           <TeamCard name="Aditya Verma" position="Secretary" photo={aditya} linkedin="https://www.linkedin.com/in/adityaverma121/" />
           <TeamCard name="Arjun Bector" position="Co-secretary" photo={arjun} linkedin="https://www.linkedin.com/in/arjun-bector/" innerRef={r1c4Ref} />
-          <div ref={boardTextRef} className="col-span-2 sm:col-span-3 lg:col-span-4 flex justify-start items-center text-yellow-400 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold py-2 sm:py-3 md:py-4 uppercase">THE BOARD</div>
+          <div ref={boardTextRef} className="col-span-4 flex justify-start items-center text-yellow-400 text-6xl font-extrabold py-4 uppercase">THE BOARD</div>
           <TeamCard name="Ansh Mehta" position="Technical Head" photo={ansh} linkedin="https://www.linkedin.com/in/anshmehta/" />
           <TeamCard name="Akshit Anand" position="Projects Head" photo={akshit} linkedin="https://www.linkedin.com/in/akshit-anand-10a90b219/" />
           <TeamCard name="Dhriti Sharma" position="Events Head" photo={dhriti} linkedin="https://www.linkedin.com/in/dhriti-sharma-b03014275/" innerRef={r2c3Ref} />
           <div></div>
-          <div ref={dateTextRef} className="col-span-full board-date text-yellow-400 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold py-2 sm:py-3 md:py-4 uppercase text-left">25–26</div>
+          <div ref={dateTextRef} className="col-span-full board-date text-yellow-400 text-6xl font-extrabold py-4 uppercase text-left">25–26</div>
           <TeamCard name="Varun Sharith" position="PnM Head" photo={varun} linkedin="https://www.linkedin.com/in/varun-shirsath-50403534b/" />
           <TeamCard name="Parth Jadhav" position="Design Head" photo={parth} linkedin="https://www.linkedin.com/in/parthjadhav2004/" innerRef={r3c2Ref} />
-          <div className="hidden sm:block"></div>
+          <div></div>
           <TeamCard name="Gouri Kanade" position="RnD Head" photo={gouri} linkedin="https://www.linkedin.com/in/gourikanade1012/" />
           <TeamCard name="Medhansh Jain" position="Web Lead" photo={medhansh} linkedin="https://www.linkedin.com/in/medhansh-jain/" />
           <div></div>
@@ -213,7 +190,7 @@ const BoardGrid = () => {
           <TeamCard name="Arya" position="IOT Lead" photo={arya} linkedin="https://www.linkedin.com/in/arya-patil-2a8366330/" />
         </div>
       </div>
-      <div className="h-[8vh] sm:h-[10vh] md:h-[15vh]" />
+      <div className="h-[15vh]" />
     </div>
   )
 }

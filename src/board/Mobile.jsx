@@ -129,6 +129,7 @@ gsap.set(scroller, { x: 0 })
         scrub: 1,
         pin: true,
         pinSpacing: true,
+        preventOverlaps: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
