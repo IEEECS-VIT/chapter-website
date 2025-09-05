@@ -27,13 +27,22 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
   >
     <div className="relative bg-gradient-to-br from-[#F8F4ED] to-[#F1ECE5] p-3 sm:p-5 rounded-2xl border border-gray-200/30 flex flex-col items-center justify-center h-full shadow-[0_6px_20px_rgba(255,255,255,0.15)]">
 
-      <div className="absolute -top-12 -right-12 sm:-top-16 sm:-right-20 md:-top-24 md:-right-28 z-30">
-        <img
-          src={pin}
-          alt="Pin"
-          className="w-20 sm:w-28 md:w-36 lg:w-44 h-auto drop-shadow-md"
-        />
-      </div>
+      <div
+      className="
+        absolute -top-10 -right-10 
+        -translate-y-1/4 translate-x-1/4 
+        sm:-top-14 sm:-right-12
+        md:-top-14 md:-right-12
+        lg:-top-14 lg:-right-12
+        z-30 rotate-[-10deg]
+      "
+     >
+      <img
+        src={pin}
+        alt="Pin"
+        className="w-58 sm:w-96 md:w-78 lg:w-86 h-auto drop-shadow-md"
+      />
+    </div>
 
       <div className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] lg:h-[300px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center bg-white/80">
         <img
@@ -78,74 +87,64 @@ export default function EventsPage() {
   const [sliderValue, setSliderValue] = useState(0);
   const [maxScroll, setMaxScroll] = useState(1000);
   
+// gsap timeline
 useEffect(() => {
-  const timeout = setTimeout(() => {
-    ScrollTrigger.refresh(); //force recalculation after preload
-  }, 100);
+  const scroller = scrollerRef.current;
+  const pin = pinRef.current;
+  if (!scroller || !pin) return;
 
-  return () => clearTimeout(timeout);
-}, []);
+  let tl;
 
-  //gsap timeline
-  useEffect(() => {
-    const scroller = scrollerRef.current;
-    const pin = pinRef.current;
-    if (!scroller || !pin) return;
+  const setupAnimation = () => {
+    if (tl) {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    }
 
-    let tl;
+    const totalScroll = scroller.scrollWidth - scroller.offsetWidth;
+    if (totalScroll <= 0) return;
 
-    const setupAnimation = () => {
-      if (tl) {
-        tl.scrollTrigger?.kill();
-        tl.kill();
-      }
+    setMaxScroll(totalScroll);
 
-      const totalScroll = scroller.scrollWidth - window.innerWidth;
-      if (totalScroll <= 0) return;
-
-      setMaxScroll(totalScroll);
-
-      tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: pin,
-          start: "top top",
-          end: () => `+=${totalScroll * 2.5}`,
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-          pinSpacing: true, 
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            // keep slider synced while scrolling
-            const clampedProgress = Math.min(1, Math.max(0, self.progress));
-            setSliderValue(clampedProgress * totalScroll);
-          },
+    tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: pin,
+        start: "top top",
+        end: () => `+=${totalScroll}`,
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const clampedProgress = Math.min(1, Math.max(0, self.progress));
+          setSliderValue(clampedProgress * totalScroll);
         },
-      });
+      },
+    });
 
-      tl.fromTo(scroller, { x: -totalScroll }, { x: 0, ease: "none" });
+    tl.fromTo(scroller, { x: -totalScroll }, { x: 0, ease: "none" });
 
-      tlRef.current = tl;
-    };
+    tlRef.current = tl;
+  };
 
+  setupAnimation();
+  ScrollTrigger.refresh(true); //force recalculation
+
+  const handleResize = () => {
     setupAnimation();
-    ScrollTrigger.refresh();
+    ScrollTrigger.refresh(true);
+  };
 
-    const handleResize = () => {
-      setupAnimation();
-      ScrollTrigger.refresh();
-    };
+  window.addEventListener("resize", handleResize);
+  window.addEventListener("orientationchange", handleResize);
 
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("orientationchange", handleResize);
-
-    return () => {
-      tl?.scrollTrigger?.kill();
-      tl?.kill();
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("orientationchange", handleResize);
-    };
-  }, []);
+  return () => {
+    tl?.scrollTrigger?.kill();
+    tl?.kill();
+    window.removeEventListener("resize", handleResize);
+    window.removeEventListener("orientationchange", handleResize);
+  };
+}, []);
 
   const handleSliderChange = (val) => {
     setSliderValue(val);
@@ -172,7 +171,7 @@ useEffect(() => {
       }}
     >
       <div className="flex flex-col items-center justify-center w-full">
-        <h1 className="text-white text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-henju mt-3 font-bold mb-8 sm:mb-12 tracking-widest text-center select-none">
+        <h1 className="text-white text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-henju mt-3 font-bold mb-8 sm:mb-12 tracking-widest text-center select-none">
           EVENTS
         </h1>
 
@@ -184,7 +183,7 @@ useEffect(() => {
         <div className="w-full overflow-hidden">
           <div
             ref={scrollerRef}
-            className="flex gap-4 sm:gap-6 md:gap-8 cursor-grab active:cursor-grabbing will-change-transform select-none pl-4 sm:pl-8 lg:pl-16"
+           className="flex gap-4 sm:gap-6 md:gap-8 cursor-grab active:cursor-grabbing will-change-transform select-none pl-4 sm:pl-8 lg:pl-16 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
           >
             {items.map((item, idx) => (
               <EventCard key={item.id} {...item} first={idx === 0} hasOverlay />
@@ -193,7 +192,7 @@ useEffect(() => {
         </div>
 
         {/*popup slider*/}
-        <div className="fixed left-1/2 bottom-[10%] transform -translate-x-1/2 bg-black/80 backdrop-blur-md shadow-lg rounded-2xl p-5 z-50 w-[95%] sm:w-[80%] md:w-[70%] lg:w-[60%] block lg:hidden">
+        <div className="absolute left-1/2 bottom-[10%] transform -translate-x-1/2 bg-black/80 backdrop-blur-md shadow-lg rounded-2xl p-5 z-50 w-[95%] sm:w-[80%] md:w-[70%] lg:w-[60%] block lg:hidden">
           <ElasticSlider
             leftIcon={
               <span className="flex items-center justify-center w-8 h-8 rounded-full bg-black text-white">
