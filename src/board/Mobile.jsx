@@ -103,85 +103,82 @@ const MobileBoard = () => {
       second: i + 1 < allCards.length ? allCards[i + 1] : null,
     })
   }
-
 useEffect(() => {
-  const scroller = scrollerRef.current
-  const pin = pinRef.current
-  if (!scroller || !pin) return
+  const scroller = scrollerRef.current;
+  const pin = pinRef.current;
+  if (!scroller || !pin) return;
+
+  let tl;
 
   const setupAnimation = () => {
-    if (tlRef.current) {
-      tlRef.current.scrollTrigger?.kill()
-      tlRef.current.kill()
-      tlRef.current = null
+    if (tl) {
+      tl.scrollTrigger?.kill();
+      tl.kill();
     }
 
-    const totalScroll = scroller.scrollWidth - window.innerWidth
-    if (totalScroll <= 0) return
+    const totalScroll = scroller.scrollWidth - scroller.offsetWidth;
+    if (totalScroll <= 0) return;
 
-    setMaxScroll(totalScroll)
-gsap.set(scroller, { x: 0 })
-    const tl = gsap.timeline({
+    setMaxScroll(totalScroll);
+
+    tl = gsap.timeline({
       scrollTrigger: {
         trigger: pin,
         start: "top top",
-        end: () => `+=${totalScroll*2}`,
+        end: () => `+=${totalScroll * 2}`,
         scrub: 1,
         pin: true,
-        pinSpacing: true,
-        preventOverlaps: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
-          const newVal = self.progress * totalScroll
-          setSliderValue(prev => 
-            Math.abs(prev - newVal) > 1 ? newVal : prev
-          )
+          const rawScroll = self.scroll();
+          const rel = rawScroll - self.start;
+          const clamped = Math.min(
+            totalScroll,
+            Math.max(0, (rel / (self.end - self.start)) * totalScroll)
+          );
+          setSliderValue(clamped);
         },
       },
-    })
+    });
 
-    tl.fromTo(scroller, { x: 0 }, { x: -totalScroll, ease: "none" })
+    tl.fromTo(scroller, { x: 0 }, { x: -totalScroll, ease: "none" });
+    tlRef.current = tl;
+  };
 
-    tlRef.current = tl
-  }
-
-  setupAnimation()
-  ScrollTrigger.refresh()
+  setupAnimation();
+  ScrollTrigger.refresh(true);
 
   const handleResize = () => {
-    setupAnimation()
-    ScrollTrigger.refresh()
-  }
+    setupAnimation();
+    ScrollTrigger.refresh(true);
+  };
 
-  window.addEventListener("resize", handleResize)
-  window.addEventListener("orientationchange", handleResize)
+  window.addEventListener("resize", handleResize);
+  window.addEventListener("orientationchange", handleResize);
 
   return () => {
-    tlRef.current?.scrollTrigger?.kill()
-    tlRef.current?.kill()
-    tlRef.current = null
-    window.removeEventListener("resize", handleResize)
-    window.removeEventListener("orientationchange", handleResize)
-  }
-}, [])
+    tl?.scrollTrigger?.kill();
+    tl?.kill();
+    window.removeEventListener("resize", handleResize);
+    window.removeEventListener("orientationchange", handleResize);
+  };
+}, []);
 
 const handleSliderChange = (val) => {
-  setSliderValue(val)
-
+  setSliderValue(val);
   requestAnimationFrame(() => {
-    const tl = tlRef.current
+    const tl = tlRef.current;
     if (tl && tl.scrollTrigger) {
-      const progress = Math.min(1, Math.max(0, val / maxScroll))
-
-      if (tl.scrollTrigger.scroll) {
-        tl.scrollTrigger.scroll(
-          progress * (tl.scrollTrigger.end - tl.scrollTrigger.start) + tl.scrollTrigger.start
-        )
-      }
+      const progress = Math.min(1, Math.max(0, val / maxScroll));
+      tl.scrollTrigger.scroll(
+        progress * (tl.scrollTrigger.end - tl.scrollTrigger.start) +
+          tl.scrollTrigger.start
+      );
     }
-  })
-}
+  });
+};
+
 
 
   return (

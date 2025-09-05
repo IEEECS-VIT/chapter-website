@@ -69,66 +69,71 @@ export default function EventsPage() {
 
   const [sliderValue, setSliderValue] = useState(0);
   const [maxScroll, setMaxScroll] = useState(1000);
+useEffect(() => {
+  const scroller = scrollerRef.current;
+  const pin = pinRef.current;
+  if (!scroller || !pin) return;
 
-  useEffect(() => {
-    const scroller = scrollerRef.current;
-    const pin = pinRef.current;
-    if (!scroller || !pin) return;
+  let tl;
 
-    let tl;
+  const setupAnimation = () => {
+    if (tl) {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    }
 
-    const setupAnimation = () => {
-      if (tl) {
-        tl.scrollTrigger?.kill();
-        tl.kill();
-      }
+    const totalScroll = scroller.scrollWidth - scroller.offsetWidth;
+    if (totalScroll <= 0) return;
 
-      const totalScroll = scroller.scrollWidth - scroller.offsetWidth;
-      if (totalScroll <= 0) return;
+    setMaxScroll(totalScroll);
 
-      setMaxScroll(totalScroll);
-
-      tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: pin,
-          start: "top top",
-          end: () => `+=${totalScroll * 2}`,
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            const clampedProgress = Math.min(1, Math.max(0, self.progress));
-            setSliderValue(clampedProgress * totalScroll);
-          },
+    tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: pin,
+        start: "top top",
+        end: () => `+=${totalScroll * 2}`,
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const rawScroll = self.scroll();
+          const rel = rawScroll - self.start;
+          const clamped = Math.min(
+            totalScroll,
+            Math.max(0, (rel / (self.end - self.start)) * totalScroll)
+          );
+          setSliderValue(clamped);
         },
-      });
+      },
+    });
 
-      tl.fromTo(scroller, { x: 0 }, { x: -totalScroll, ease: "none" });
-      tlRef.current = tl;
-    };
+    tl.fromTo(scroller, { x: 0 }, { x: -totalScroll, ease: "none" });
+    tlRef.current = tl;
+  };
 
+  setupAnimation();
+  ScrollTrigger.refresh(true);
+
+  const handleResize = () => {
     setupAnimation();
     ScrollTrigger.refresh(true);
+  };
 
-    const handleResize = () => {
-      setupAnimation();
-      ScrollTrigger.refresh(true);
-    };
+  window.addEventListener("resize", handleResize);
+  window.addEventListener("orientationchange", handleResize);
 
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("orientationchange", handleResize);
+  return () => {
+    tl?.scrollTrigger?.kill();
+    tl?.kill();
+    window.removeEventListener("resize", handleResize);
+    window.removeEventListener("orientationchange", handleResize);
+  };
+}, []);
 
-    return () => {
-      tl?.scrollTrigger?.kill();
-      tl?.kill();
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("orientationchange", handleResize);
-    };
-  }, []);
-
-  const handleSliderChange = (val) => {
-    setSliderValue(val);
+const handleSliderChange = (val) => {
+  setSliderValue(val);
+  requestAnimationFrame(() => {
     const tl = tlRef.current;
     if (tl && tl.scrollTrigger) {
       const progress = Math.min(1, Math.max(0, val / maxScroll));
@@ -137,7 +142,8 @@ export default function EventsPage() {
           tl.scrollTrigger.start
       );
     }
-  };
+  });
+};
 
   return (
     <div

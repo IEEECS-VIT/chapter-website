@@ -1,5 +1,11 @@
-import { animate, motion, useMotionValue, useMotionValueEvent, useTransform } from 'motion/react'
-import { useEffect, useRef, useState } from 'react'
+import {
+  animate,
+  motion,
+  useMotionValue,
+  useMotionValueEvent,
+  useTransform,
+} from "motion/react"
+import { useEffect, useRef, useState } from "react"
 
 const MAX_OVERFLOW = 50
 
@@ -8,14 +14,16 @@ export default function ElasticSlider({
   onChange,
   startingValue = 0,
   maxValue = 100,
-  className = '',
+  className = "",
   isStepped = false,
   stepSize = 1,
   leftIcon = <>-</>,
-  rightIcon = <>+</>
+  rightIcon = <>+</>,
 }) {
   return (
-    <div className={`flex flex-col items-center justify-center gap-4 w-full ${className}`}>
+    <div
+      className={`flex flex-col items-center justify-center gap-4 w-full ${className}`}
+    >
       <Slider
         value={value}
         onChange={onChange}
@@ -30,17 +38,27 @@ export default function ElasticSlider({
   )
 }
 
-function Slider({ value, onChange, startingValue, maxValue, isStepped, stepSize, leftIcon, rightIcon }) {
+function Slider({
+  value,
+  onChange,
+  startingValue,
+  maxValue,
+  isStepped,
+  stepSize,
+  leftIcon,
+  rightIcon,
+}) {
   const sliderRef = useRef(null)
-  const [region, setRegion] = useState('middle')
+  const [region, setRegion] = useState("middle")
   const [sliderWidth, setSliderWidth] = useState(0)
+
   const clientX = useMotionValue(0)
   const overflow = useMotionValue(0)
   const scale = useMotionValue(1)
 
   useEffect(() => {
     if (!sliderRef.current) return
-    const observer = new ResizeObserver(entries => {
+    const observer = new ResizeObserver((entries) => {
       for (let entry of entries) {
         setSliderWidth(entry.contentRect.width)
       }
@@ -49,28 +67,29 @@ function Slider({ value, onChange, startingValue, maxValue, isStepped, stepSize,
     return () => observer.disconnect()
   }, [])
 
-  useMotionValueEvent(clientX, 'change', latest => {
-    if (sliderRef.current) {
-      const { left, right } = sliderRef.current.getBoundingClientRect()
-      let newValue
-      if (latest < left) {
-        setRegion('left')
-        newValue = left - latest
-      } else if (latest > right) {
-        setRegion('right')
-        newValue = latest - right
-      } else {
-        setRegion('middle')
-        newValue = 0
-      }
-      overflow.set(decay(newValue, MAX_OVERFLOW))
+  useMotionValueEvent(clientX, "change", (latest) => {
+    if (!sliderRef.current) return
+    const { left, right } = sliderRef.current.getBoundingClientRect()
+    let newValue
+    if (latest < left) {
+      setRegion("left")
+      newValue = left - latest
+    } else if (latest > right) {
+      setRegion("right")
+      newValue = latest - right
+    } else {
+      setRegion("middle")
+      newValue = 0
     }
+    overflow.set(decay(newValue, MAX_OVERFLOW))
   })
 
-  const handlePointerMove = e => {
+  const handlePointerMove = (e) => {
     if (e.buttons > 0 && sliderWidth > 0 && sliderRef.current) {
       const { left } = sliderRef.current.getBoundingClientRect()
-      let newValue = startingValue + ((e.clientX - left) / sliderWidth) * (maxValue - startingValue)
+      let newValue =
+        startingValue +
+        ((e.clientX - left) / sliderWidth) * (maxValue - startingValue)
       if (isStepped) newValue = Math.round(newValue / stepSize) * stepSize
       newValue = Math.min(Math.max(newValue, startingValue), maxValue)
       onChange?.(newValue)
@@ -78,13 +97,14 @@ function Slider({ value, onChange, startingValue, maxValue, isStepped, stepSize,
     }
   }
 
-  const handlePointerDown = e => {
+  const handlePointerDown = (e) => {
     handlePointerMove(e)
     e.currentTarget.setPointerCapture(e.pointerId)
   }
 
-  const handlePointerUp = () => {
-    animate(overflow, 0, { type: 'spring', bounce: 0.5 })
+  const handlePointerUp = (e) => {
+    e.currentTarget.releasePointerCapture(e.pointerId)
+    animate(overflow, 0, { type: "spring", bounce: 0.5 })
   }
 
   const getRangePercentage = () => {
@@ -93,25 +113,33 @@ function Slider({ value, onChange, startingValue, maxValue, isStepped, stepSize,
     return ((value - startingValue) / totalRange) * 100
   }
 
+  // transforms
+  const scaleX = useTransform(overflow, (o) =>
+    sliderWidth > 0 ? 1 + o / sliderWidth : 1
+  )
+  const scaleY = useTransform(overflow, [0, MAX_OVERFLOW], [1, 0.8])
+  const opacity = useTransform(scale, [1, 1.2], [0.7, 1])
+  const barHeight = useTransform(scale, [1, 1.2], [12, 18])
+  const marginY = useTransform(scale, [1, 1.2], [0, -3])
+
   return (
     <motion.div
       onHoverStart={() => animate(scale, 1.2)}
       onHoverEnd={() => animate(scale, 1)}
       onTouchStart={() => animate(scale, 1.2)}
       onTouchEnd={() => animate(scale, 1)}
-      style={{
-        scale,
-        opacity: useTransform(scale, [1, 1.2], [0.7, 1])
-      }}
+      style={{ scale, opacity }}
       className="flex w-full touch-none select-none items-center justify-center gap-4"
     >
       <motion.div
         animate={{
-          scale: region === 'left' ? [1, 1.4, 1] : 1,
-          transition: { duration: 0.25 }
+          scale: region === "left" ? [1, 1.4, 1] : 1,
+          transition: { duration: 0.25 },
         }}
         style={{
-          x: useTransform(() => (region === 'left' ? -overflow.get() / scale.get() : 0))
+          x: useTransform(overflow, (o) =>
+            region === "left" ? -o / scale.get() : 0
+          ),
         }}
       >
         {leftIcon}
@@ -126,33 +154,33 @@ function Slider({ value, onChange, startingValue, maxValue, isStepped, stepSize,
       >
         <motion.div
           style={{
-            scaleX: useTransform(() => 1 + (sliderWidth > 0 ? overflow.get() / sliderWidth : 0)),
-            scaleY: useTransform(overflow, [0, MAX_OVERFLOW], [1, 0.8]),
-            transformOrigin: useTransform(() => {
-              if (sliderRef.current) {
-                const { left } = sliderRef.current.getBoundingClientRect()
-                return clientX.get() < left + sliderWidth / 2 ? 'right' : 'left'
-              }
-            }),
-            height: useTransform(scale, [1, 1.2], [12, 18]),
-            marginTop: useTransform(scale, [1, 1.2], [0, -3]),
-            marginBottom: useTransform(scale, [1, 1.2], [0, -3])
+            scaleX,
+            scaleY,
+            height: barHeight,
+            marginTop: marginY,
+            marginBottom: marginY,
+            transformOrigin: "center",
           }}
           className="flex flex-grow"
         >
           <div className="relative h-full flex-grow overflow-hidden rounded-full bg-gray-400">
-            <div className="absolute h-full bg-white rounded-full" style={{ width: `${getRangePercentage()}%` }} />
+            <div
+              className="absolute h-full bg-white rounded-full"
+              style={{ width: `${getRangePercentage()}%` }}
+            />
           </div>
         </motion.div>
       </div>
 
       <motion.div
         animate={{
-          scale: region === 'right' ? [1, 1.4, 1] : 1,
-          transition: { duration: 0.25 }
+          scale: region === "right" ? [1, 1.4, 1] : 1,
+          transition: { duration: 0.25 },
         }}
         style={{
-          x: useTransform(() => (region === 'right' ? overflow.get() / scale.get() : 0))
+          x: useTransform(overflow, (o) =>
+            region === "right" ? o / scale.get() : 0
+          ),
         }}
       >
         {rightIcon}
