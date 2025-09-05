@@ -5,20 +5,22 @@ import gsap from "gsap"
 import { Draggable } from "gsap/Draggable"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
-import bgImage from "../assets/bg.png"
-import ram from "../assets/ram.png"
-import anubhav from "../assets/anubhav.png"
-import aditya from "../assets/aditya.png"
-import akshit from "../assets/Akshit.png"
-import ansh from "../assets/ansh.png"
-import arjun from "../assets/Arjun.png"
-import arya from "../assets/arya.png"
-import dhriti from "../assets/dhriti.png"
-import gouri from "../assets/Gouri.png"
-import krish from "../assets/Krish.png"
-import varun from "../assets/varun.png"
-import parth from "../assets/parth.png"
-import medhansh from "../assets/medhansh.png"
+
+import bgImage from "../assets/board/bg.png"
+import ram from "../assets/board/ram.png"
+import anubhav from "../assets/board/anubhav.png"
+import aditya from "../assets/board/aditya.png"
+import akshit from "../assets/board/akshit.png"
+import ansh from "../assets/board/ansh.png"
+import arjun from "../assets/board/arjun.png"
+import arya from "../assets/board/arya.png"
+import dhriti from "../assets/board/dhriti.png"
+import gouri from "../assets/board/gouri.png"
+import krish from "../assets/board/krish.png"
+import varun from "../assets/board/varun.png"
+import parth from "../assets/board/parth.png"
+import medhansh from "../assets/board/medhansh.png"
+
 
 gsap.registerPlugin(Draggable, ScrollTrigger)
 
@@ -150,7 +152,7 @@ useEffect(() => {
   let scrollTriggerInstance = ScrollTrigger.create({
     trigger: wrapper,
     start: "top top",
-    end: `+=${maxKnobX * 7}`, 
+    end: `+=${maxKnobX * 15}`, 
     pin: true,
     scrub: true,
     onUpdate: (self) => {

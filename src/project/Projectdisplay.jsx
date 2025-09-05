@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import CoverPage from "./Coverpage";
-import clip1 from "../assets/clip1.png";
-import clip2 from "../assets/clip2.png";
-import texturedbg from "../assets/texturedbg.png";
-import view from "../assets/view.png";
+import clip1 from "../assets/projects/clip1.png";
+import clip2 from "../assets/projects/clip2.png";
+import texturedbg from "../assets/projects/texturedbg.png";
+
 
 const ProjectDisplay = ({ data }) => {
   const containerRef = useRef();
@@ -17,7 +17,7 @@ const ProjectDisplay = ({ data }) => {
       ref={containerRef}
       className="flex flex-col xl:flex-row pl-4 xl:pl-0 mt-6 md:mt-8 xl:mt-10 relative items-start text-[#4B3200]"
     >
-    
+
       <div className="w-full xl:w-[60%] px-4 xl:pl-20 flex flex-col items-center xl:h-screen">
         <div className="relative w-full">
           <h2 className="text-[clamp(1rem,4vh,1.875rem)] md:text-6xl xl:text-6xl text-center xl:text-left font-bold text-[#4B3200]">
@@ -29,7 +29,7 @@ const ProjectDisplay = ({ data }) => {
           <img
             src={data.image}
             alt={data.title}
-            className="rounded shadow-md w-full h-[clamp(26vh,27vh,30vh)] xl:h-[60%] object-cover"
+            className="rounded shadow-md w-[95%] h-[clamp(26vh,27vh,30vh)] xl:h-[55%] object-cover"
           />
           <img
             src={clip1}
@@ -41,18 +41,21 @@ const ProjectDisplay = ({ data }) => {
 
 
       <div className="w-full xl:w-[40%] px-8 mt-0 md:mt-0 md:px-8 xl:px-16 flex flex-col items-center relative">
-        <div className="relative w-28 h-20 xl:w-40 xl:h-60 mt-2 xl:mt-[clamp(1.5rem,4vh,2.5rem)] hidden md:flex justify-center items-center">
-          <img
-            src={view}
-            alt="view background"
-            className="absolute rotate-[0deg] w-[20vw] md:w-[16vw] xl:w-[12vw] scale-110 md:scale-115 xl:scale-150"
-          />
-          <img
-            src={view}
-            alt="view top"
-            className="rotate-[10deg] w-[20vw] md:w-[16vw] xl:w-[12vw] scale-110 md:scale-115 xl:scale-150"
-          />
-        </div>
+
+        {data.viewImage && (
+          <div className="relative w-20 h-20 xl:w-40 xl:h-60 mt-2 xl:mt-[clamp(1.5rem,4vh,2.5rem)] hidden md:flex justify-center items-center">
+            <img
+              src={data.viewImage}
+              alt="view background"
+              className="absolute rotate-[0deg] w-[19vw] md:w-[16vw] xl:w-[12vw] scale-110 md:scale-115 xl:scale-150"
+            />
+            <img
+              src={data.viewImage}
+              alt="view top"
+              className="rotate-[10deg] w-[19vw] md:w-[16vw] xl:w-[12vw] scale-110 md:scale-115 xl:scale-150"
+            />
+          </div>
+        )}
 
         <div className="relative mt-6 md:mt-8 xl:mt-[clamp(0.875rem,3vh,2rem)] w-full md:w-[100%] xl:w-[100%]">
           <img
@@ -67,7 +70,6 @@ const ProjectDisplay = ({ data }) => {
             className="absolute -top-7 md:-top-14 -left-7 w-[16vw] md:w-[14vw] xl:w-[6vw]"
           />
 
-      
           <div className="absolute inset-0 p-4 text-[clamp(0.625rem,2.5vh,0.875rem)] md:text-lg xl:text-[clamp(0.875rem,2vh,1rem)] text-left text-[#4B3200] flex items-start justify-start">
             <p>{data.text1}</p>
           </div>
@@ -77,4 +79,4 @@ const ProjectDisplay = ({ data }) => {
   );
 };
 
-export default ProjectDisplay;
+export default ProjectDisplay;

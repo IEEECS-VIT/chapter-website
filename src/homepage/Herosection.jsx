@@ -1,11 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Left from "../assets/1.png";
-import Right from "../assets/2.png";
-import MobileHero from "../assets/mobile-view.png";
+import Left from "../assets/herosection/1.png";
+import Right from "../assets/herosection/2.png";
+import MobileHero from "../assets/herosection/mobile-view.png";
 import OurStory from "./Ourstory";
-
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,26 +20,26 @@ const HeroSection = ({ contentRef }) => {
       y: 150,
       opacity: 1,
       duration: 4.5,
-      ease: "power4.out"
+      ease: "power4.out",
     });
 
     gsap.from(mobileContentRef.current, {
       y: 80,
       opacity: 1,
       duration: 4.5,
-      ease: "power4.out"
+      ease: "power4.out",
     });
 
     const mm = gsap.matchMedia();
 
     mm.add(
       {
-        isDesktop: "(min-width: 1280px)",
-        isMobile: "(max-width: 1279px)"
+        isDesktop: "(min-device-width: 1024px)",
+        isMobile: "(max-device-width: 1023px)",
       },
       (context) => {
         const { isDesktop, isMobile } = context.conditions;
-        const deviceWidth = window.screen.width; 
+
         if (isDesktop) {
           const tl = gsap.timeline({
             scrollTrigger: {
@@ -49,24 +48,24 @@ const HeroSection = ({ contentRef }) => {
               end: "+=1850",
               scrub: 2.5,
               pin: true,
-              anticipatePin: 1
-            }
+              anticipatePin: 1,
+            },
           });
 
           tl.to(contentRef.current, {
             opacity: 0,
             filter: "blur(5px)",
             scale: 0.97,
-            ease: "power4.inOut"
+            ease: "power4.inOut",
           });
 
           tl.to(
             leftRef.current,
             {
-              x: "-120%",
+              x: "-100%",
               transformOrigin: "left center",
               ease: "power4.inOut",
-              duration: 3.5
+              duration: 3.5,
             },
             "<"
           );
@@ -74,10 +73,10 @@ const HeroSection = ({ contentRef }) => {
           tl.to(
             rightRef.current,
             {
-              x: "120%",
+              x: "100%",
               transformOrigin: "right center",
               ease: "power4.inOut",
-              duration: 3.5
+              duration: 3.5,
             },
             "<"
           );
@@ -90,15 +89,18 @@ const HeroSection = ({ contentRef }) => {
             scrollTrigger: {
               trigger: ourStoryWrapperRef.current,
               start: "top top",
-              end: "+=1800",
-              scrub: 1.2,
+              end: "+=1450",
+              scrub: 0.3,
               pin: true,
-              anticipatePin: 1
-            }
+              anticipatePin: 1,
+            },
           });
         }
       }
     );
+
+   
+    ScrollTrigger.refresh();
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -108,27 +110,25 @@ const HeroSection = ({ contentRef }) => {
 
   return (
     <div className="relative w-screen overflow-x-hidden text-white bg-black">
-
       <div ref={ourStoryWrapperRef} className="relative h-screen z-10 bg-black">
         <div className="absolute top-0 left-0 w-full h-full z-0">
           <OurStory />
         </div>
 
-        <div className="hidden xl:block sticky top-10 z-20 h-screen pointer-events-auto overflow-hidden">
+
+        <div className="hidden lg:block sticky top-0 z-20 h-screen pointer-events-auto overflow-hidden">
           <div
             ref={leftRef}
             className="absolute -top-2 left-0 h-screen z-30"
             style={{
-              width: "min(51vw, 1200px)",
+              width: "51.3vw",
+              height: "104vh",
               backgroundImage: `url(${Left})`,
-               height: "104vh",
               backgroundSize: "100% 100%",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
               transformOrigin: "left center",
-              boxShadow: "4px 0 20px rgba(0,0,0,0.25)",
-             
+              
             }}
           />
 
@@ -136,31 +136,28 @@ const HeroSection = ({ contentRef }) => {
             ref={rightRef}
             className="absolute -top-2 right-0 h-screen z-30"
             style={{
-              width: "min(51.25vw, 1000px)",
+              width: "51vw",
+              height: "104vh",
               backgroundImage: `url(${Right})`,
-               height: "104vh",
               backgroundSize: "100% 100%",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
               transformOrigin: "right center",
-              boxShadow: "-4px 0 20px rgba(0,0,0,0.25)",
-             
+              
             }}
           />
 
-          <div className="absolute inset-0 flex justify-center items-top z-40">
+          <div className="absolute inset-0 flex justify-center items-start z-40">
             <div
               ref={contentRef}
               className="flex flex-col justify-start items-center text-center"
             >
-              
               <h1
                 className="text-white mt-60 font-black"
                 style={{
                   fontSize: "clamp(12rem, 10vw, 13rem)",
                   fontFamily: "Henju",
-                  lineHeight: "1.0"
+                  lineHeight: "1.0",
                 }}
               >
                 IEEE-CS
@@ -170,7 +167,7 @@ const HeroSection = ({ contentRef }) => {
                 style={{
                   fontSize: "clamp(7.2rem, 6vw, 7.5rem)",
                   fontFamily: "Henju",
-                  lineHeight: "1.0"
+                  lineHeight: "1.0",
                 }}
               >
                 WE LIVE IN A COMPUTER SOCIETY.
@@ -179,9 +176,10 @@ const HeroSection = ({ contentRef }) => {
           </div>
         </div>
 
+        {/* Mobile view */}
         <div
           ref={mobileHeroRef}
-          className="block xl:hidden sticky top-0 z-20 h-screen overflow-hidden"
+          className="block lg:hidden sticky top-0 z-20 h-screen overflow-hidden"
         >
           <img
             src={MobileHero}
@@ -189,7 +187,7 @@ const HeroSection = ({ contentRef }) => {
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/35"></div>
-          
+
           <div className="absolute inset-0 flex justify-center items-center z-30">
             <div
               ref={mobileContentRef}
@@ -200,7 +198,7 @@ const HeroSection = ({ contentRef }) => {
                 style={{
                   fontSize: "clamp(5rem, 8vw, 6rem)",
                   fontFamily: "Henju",
-                  lineHeight: "1.0"
+                  lineHeight: "1.0",
                 }}
               >
                 IEEE-CS
@@ -210,7 +208,7 @@ const HeroSection = ({ contentRef }) => {
                 style={{
                   fontSize: "clamp(2rem, 5vw, 3rem)",
                   fontFamily: "Henju",
-                  lineHeight: "1.0"
+                  lineHeight: "1.0",
                 }}
               >
                 WE LIVE IN A COMPUTER SOCIETY.
@@ -219,8 +217,6 @@ const HeroSection = ({ contentRef }) => {
           </div>
         </div>
       </div>
-
-   
     </div>
   );
 };
