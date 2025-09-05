@@ -56,6 +56,9 @@ const App = () => {
           <section className="relative w-full">
           <Event />
         </section>
+        <section className="hidden md:flex min-h-screen bg-neutral-800 items-center justify-center">
+            <Gallery />
+          </section>
           <section className="relative w-full">
             <Footer />
           </section>
@@ -63,17 +66,9 @@ const App = () => {
             <Project />
           </section>
           <section className="relative w-full">
-            {(isMobile || isTablet) ? <Events /> : <EventsD />}
-          </section>
-          <section className="relative w-full">
             {(isMobile || isTablet) ? <Mobile /> : <Board />}
           </section>
-          <section className="hidden md:flex min-h-screen bg-neutral-800 items-center justify-center">
-            <Gallery />
-          </section>
-          <section className="relative w-full">
-            <Footer />
-          </section>*/}
+          */}
         </div>
       )}
     </div>

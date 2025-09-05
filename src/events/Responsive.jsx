@@ -27,13 +27,14 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
   >
     <div className="relative bg-gradient-to-br from-[#F8F4ED] to-[#F1ECE5] p-3 sm:p-5 rounded-2xl border border-gray-200/30 flex flex-col items-center justify-center h-full shadow-[0_6px_20px_rgba(255,255,255,0.15)]">
 
-      <div className="absolute -top-12 -right-12 sm:-top-16 sm:-right-20 md:-top-24 md:-right-28 z-30">
-        <img
-          src={pin}
-          alt="Pin"
-          className="w-20 sm:w-28 md:w-36 lg:w-44 h-auto drop-shadow-md"
-        />
-      </div>
+    <div className="absolute -top-20 -right-16 sm:-top-24 sm:-right-24 md:-top-32 md:-right-32 z-30">
+      <img
+        src={pin}
+        alt="Pin"
+        className="w-48 sm:w-60 md:w-72 lg:w-80 h-auto drop-shadow-md"
+      />
+    </div>
+
 
       <div className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] lg:h-[300px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center bg-white/80">
         <img
@@ -79,12 +80,12 @@ export default function EventsPage() {
   const [maxScroll, setMaxScroll] = useState(1000);
   
 useEffect(() => {
-  const timeout = setTimeout(() => {
-    ScrollTrigger.refresh(); //force recalculation after preload
-  }, 100);
-
-  return () => clearTimeout(timeout);
+  requestAnimationFrame(() => {
+    ScrollTrigger.refresh();
+  });
 }, []);
+
+
 
   //gsap timeline
   useEffect(() => {
@@ -154,9 +155,7 @@ useEffect(() => {
       const tl = tlRef.current;
       if (tl && tl.scrollTrigger) {
         const progress = Math.min(1, Math.max(0, val / maxScroll)); // clamp
-        tl.scrollTrigger.scroll(
-          progress * (tl.scrollTrigger.end - tl.scrollTrigger.start) + tl.scrollTrigger.start
-        );
+        tl.progress(progress);
       }
     });
   };
@@ -209,7 +208,7 @@ useEffect(() => {
                 </svg>
               </span>
             }
-            defaultValue={sliderValue}
+            
             maxValue={maxScroll}
             isStepped
             stepSize={10}
