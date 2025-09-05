@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ElasticSlider from "./ElasticSlider";
-
 import event from "../assets/events/event.png";
 import bg from "../assets/events/backgrnd.jpg";
 import pin from "../assets/events/pin.png";
@@ -18,7 +17,7 @@ import ec from "../assets/events/ec.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Event Card
+//Event card template 
 const EventCard = ({ title, image, hasOverlay = false, overlayText, first = false }) => (
   <div
     className={`relative flex-shrink-0 w-[180px] sm:w-[240px] md:w-[280px] lg:w-[320px] xl:w-[360px] ${
@@ -27,7 +26,7 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
     style={{ fontFamily: "Special Elite, cursive" }}
   >
     <div className="relative bg-gradient-to-br from-[#F8F4ED] to-[#F1ECE5] p-3 sm:p-5 rounded-2xl border border-gray-200/30 flex flex-col items-center justify-center h-full shadow-[0_6px_20px_rgba(255,255,255,0.15)]">
-      {/* Pin */}
+
       <div className="absolute -top-12 -right-12 sm:-top-16 sm:-right-20 md:-top-24 md:-right-28 z-30">
         <img
           src={pin}
@@ -36,7 +35,6 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
         />
       </div>
 
-      {/* Event Image */}
       <div className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] lg:h-[300px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center bg-white/80">
         <img
           src={image || "/placeholder.svg"}
@@ -52,7 +50,7 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
         )}
       </div>
 
-      {/* Title */}
+      
       <h3 className="text-gray-800 text-lg sm:text-xl md:text-2xl lg:text-3xl text-center tracking-wider mt-3 hover:text-gray-900 transition-colors duration-300 drop-shadow-sm">
         {title}
       </h3>
@@ -61,7 +59,7 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
 );
 
 export default function EventsPage() {
-  const items = [
+  const items = [ //update list for adding/subtracting events
     { id: 1, title: "HackBattle", image: event, overlayText: "A high-stakes coding face-off for the brave and bold minds." },
     { id: 2, title: "Cicada 3310", image: cicada, overlayText: "A virtual maze filled with puzzles and hidden messages." },
     { id: 3, title: "WTF", image: wtf, overlayText: "Tech takes a twist. Expect the unexpected in this quirky event." },
@@ -79,7 +77,8 @@ export default function EventsPage() {
   const tlRef = useRef(null);
   const [sliderValue, setSliderValue] = useState(0);
   const [maxScroll, setMaxScroll] = useState(1000);
-
+  
+  //gsap timeline
   useEffect(() => {
     const scroller = scrollerRef.current;
     const pin = pinRef.current;
@@ -108,7 +107,7 @@ export default function EventsPage() {
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
-            // update slider while scrolling
+            // keep slider synced while scrolling
             setSliderValue(self.progress * totalScroll);
           },
         },
@@ -138,14 +137,18 @@ export default function EventsPage() {
     };
   }, []);
 
-  // Slider → Scroll
   const handleSliderChange = (val) => {
     setSliderValue(val);
-    const tl = tlRef.current;
-    if (tl && tl.scrollTrigger) {
-      const progress = val / maxScroll;
-      tl.scrollTrigger.scroll(progress * (tl.scrollTrigger.end - tl.scrollTrigger.start) + tl.scrollTrigger.start);
-    }
+
+    requestAnimationFrame(() => {
+      const tl = tlRef.current;
+      if (tl && tl.scrollTrigger) {
+        const progress = Math.min(1, Math.max(0, val / maxScroll)); // clamp
+        tl.scrollTrigger.scroll(
+          progress * (tl.scrollTrigger.end - tl.scrollTrigger.start) + tl.scrollTrigger.start
+        );
+      }
+    });
   };
 
   return (
@@ -163,11 +166,11 @@ export default function EventsPage() {
           EVENTS
         </h1>
 
-        {/* Top dividers */}
+        {/*top dividers*/}
         <div className="w-screen h-0.5 bg-white mb-1 sm:mb-2 -mt-2 sm:-mt-4" />
         <div className="w-screen h-0.5 bg-white mb-6 sm:mb-10 lg:mb-16 -mt-2" />
 
-        {/* Event cards scroller */}
+        {/*event cards*/}
         <div className="w-full overflow-hidden">
           <div
             ref={scrollerRef}
@@ -179,21 +182,22 @@ export default function EventsPage() {
           </div>
         </div>
 
-        {/* Popup Slider */}
+        {/*popup slider*/}
         <div className="fixed left-1/2 bottom-[10%] transform -translate-x-1/2 bg-black/80 backdrop-blur-md shadow-lg rounded-2xl p-5 z-50 w-[95%] sm:w-[80%] md:w-[70%] lg:w-[60%] block lg:hidden">
-
           <ElasticSlider
-            leftIcon={<span className="flex items-center justify-center w-8 h-8 rounded-full bg-black text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-              </svg>
-            </span>
+            leftIcon={
+              <span className="flex items-center justify-center w-8 h-8 rounded-full bg-black text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </span>
             }
-            rightIcon={<span className="flex items-center justify-center w-8 h-8 rounded-full bg-black text-white">
-               <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-               </svg>
-            </span>
+            rightIcon={
+              <span className="flex items-center justify-center w-8 h-8 rounded-full bg-black text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
             }
             defaultValue={sliderValue}
             maxValue={maxScroll}
@@ -204,7 +208,7 @@ export default function EventsPage() {
           />
         </div>
 
-        {/* Bottom dividers */}
+        {/*bottom dividers*/}
         <div className="w-screen h-0.5 bg-white mt-8 sm:mt-10 mb-1 sm:mb-2" />
         <div className="w-screen h-0.5 bg-white mb-4 sm:mb-6" />
       </div>

@@ -56,6 +56,9 @@ const App = () => {
           <section className="relative w-full">
           <Event />
         </section>
+          <section className="relative w-full">
+            <Footer />
+          </section>
           {/*<section className="relative w-full">
             <Project />
           </section>
