@@ -131,27 +131,23 @@ useEffect(() => {
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
-          const rawScroll = self.scroll();
-          const rel = rawScroll - self.start;
-          const clamped = Math.min(
-            totalScroll,
-            Math.max(0, (rel / (self.end - self.start)) * totalScroll)
-          );
-          setSliderValue(clamped);
+          const progress = self.progress; // clean progress 0 → 1
+          const newValue = progress * totalScroll;
+          setSliderValue(newValue);
         },
       },
     });
 
     tl.fromTo(scroller, { x: 0 }, { x: -totalScroll, ease: "none" });
     tlRef.current = tl;
+
+    ScrollTrigger.refresh();
   };
 
   setupAnimation();
-  ScrollTrigger.refresh(true);
 
   const handleResize = () => {
     setupAnimation();
-    ScrollTrigger.refresh(true);
   };
 
   window.addEventListener("resize", handleResize);
@@ -167,19 +163,16 @@ useEffect(() => {
 
 const handleSliderChange = (val) => {
   setSliderValue(val);
-  requestAnimationFrame(() => {
-    const tl = tlRef.current;
-    if (tl && tl.scrollTrigger) {
-      const progress = Math.min(1, Math.max(0, val / maxScroll));
-      tl.scrollTrigger.scroll(
-        progress * (tl.scrollTrigger.end - tl.scrollTrigger.start) +
-          tl.scrollTrigger.start
-      );
-    }
-  });
+  const tl = tlRef.current;
+  if (tl && tl.scrollTrigger) {
+    const progress = Math.min(1, Math.max(0, val / maxScroll));
+    const targetScroll =
+      progress * (tl.scrollTrigger.end - tl.scrollTrigger.start) +
+      tl.scrollTrigger.start;
+
+    tl.scrollTrigger.scroll(targetScroll);
+  }
 };
-
-
 
   return (
     <div ref={pinRef} className="relative w-full bg-black">

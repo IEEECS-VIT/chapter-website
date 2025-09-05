@@ -43,7 +43,7 @@ const ProjectDisplay = ({ data }) => {
       <div className="w-full xl:w-[40%] px-8 mt-0 md:mt-0 md:px-8 xl:px-16 flex flex-col items-center relative">
 
         {data.viewImage && (
-          <div className="relative w-20 h-20 xl:w-40 xl:h-60 mt-2 xl:mt-[clamp(1.5rem,4vh,2.5rem)] hidden md:flex justify-center items-center">
+          <div className="relative w-20 h-20 xl:w-40 xl:h-60 mt-2 xl:mt-[clamp(1.5rem,4vh,2.5rem)] hidden lg:flex justify-center items-center">
             <img
               src={data.viewImage}
               alt="view background"
