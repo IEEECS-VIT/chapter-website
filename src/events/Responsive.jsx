@@ -78,6 +78,14 @@ export default function EventsPage() {
   const [sliderValue, setSliderValue] = useState(0);
   const [maxScroll, setMaxScroll] = useState(1000);
   
+useEffect(() => {
+  const timeout = setTimeout(() => {
+    ScrollTrigger.refresh(); //force recalculation after preload
+  }, 100);
+
+  return () => clearTimeout(timeout);
+}, []);
+
   //gsap timeline
   useEffect(() => {
     const scroller = scrollerRef.current;
@@ -105,10 +113,12 @@ export default function EventsPage() {
           scrub: 1,
           pin: true,
           anticipatePin: 1,
+          pinSpacing: true, 
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             // keep slider synced while scrolling
-            setSliderValue(self.progress * totalScroll);
+            const clampedProgress = Math.min(1, Math.max(0, self.progress));
+            setSliderValue(clampedProgress * totalScroll);
           },
         },
       });
@@ -154,7 +164,7 @@ export default function EventsPage() {
   return (
     <div
       ref={pinRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden select-none"
+      className="relative min-h-screen flex items-center justify-center overflow-x-hidden select-none"
       style={{
         backgroundImage: `url(${bg})`,
         backgroundSize: "cover",
