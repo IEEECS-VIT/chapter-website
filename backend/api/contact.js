@@ -1,9 +1,11 @@
 import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
+
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
+
 
   const { name, email, message } = req.body;
 
@@ -12,28 +14,40 @@ export default async function handler(req, res) {
   }
 
   try {
-    // create transporter
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
       port: Number(process.env.EMAIL_PORT),
-      secure: process.env.EMAIL_SECURE === "true", // true for 465, false for other ports
+      secure: process.env.EMAIL_SECURE === "true",
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
     });
 
-    // send email
     await transporter.sendMail({
-      from: `"${name}" <${email}>`, // sender
-      to: process.env.EMAIL_TO,     // your receiving email
+      from: `"${name}" <${email}>`,
+      to: process.env.EMAIL_TO,
       subject: "New Contact Form Submission",
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
     });
 
+   
+    res.setHeader("Access-Control-Allow-Origin", "*"); 
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  
     res.status(200).json({ message: "Email sent successfully!" });
   } catch (err) {
     console.error("Error sending email:", err);
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.status(500).json({ error: "Failed to send email" });
   }
 }
+
+// Optional: handle preflight OPTIONS request for CORS
+export const config = {
+  api: {
+    bodyParser: true,
+  },
+};
