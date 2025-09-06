@@ -10,7 +10,7 @@ import pravega from "/assets/projects/pravega.webp";
 import tc from "/assets/projects/tc.webp";
 import cdc from "/assets/projects/cdc.webp";
 import prv from "/assets/projects/prv.webp";
-export const projectData = [ //update this to change projects
+export const projectData = [//update this to change projects
   {
     id: 0,
     isCover: true,
@@ -22,18 +22,15 @@ export const projectData = [ //update this to change projects
     id: 1,
     title: "Kalaburagi Airport Project",
     image: airport,
-    viewImage: air, 
+    viewImage: air,
     text1: (
       <>
-        The{" "}
-        <span className="bg-yellow-400 px-1 rounded">
-          Kalaburagi Airport Project
-        </span>{" "}
-        in alliance with the{" "}
+        In collaboration with the{" "}
         <span className="bg-yellow-400 px-1 rounded">
           Airports Authority of India
         </span>
-        , uses technology to streamline operations and enhance experience.
+        , we enhanced airport operations with advanced systems for smoother and
+        more seamless traveler experiences.
       </>
     ),
   },
@@ -41,12 +38,15 @@ export const projectData = [ //update this to change projects
     id: 2,
     title: "IIT Kanpur TechKriti",
     image: iitk,
-    viewImage: tc, 
+    viewImage: tc,
     text1: (
       <>
-        Participated in{" "}
-        <span className="bg-yellow-400 px-1 rounded">Techkriti</span> and
-        secured a top position, showcasing innovation and technical excellence.
+        Securing a top spot at{" "}
+        <span className="bg-yellow-400 px-1 rounded">
+          IIT Kanpur’s Techkriti
+        </span>{" "}
+        festival highlighted our members’ creativity, technical skills, and
+        culture of excellence.
       </>
     ),
   },
@@ -57,11 +57,10 @@ export const projectData = [ //update this to change projects
     viewImage: cdc,
     text1: (
       <>
-        With{" "}
-        <span className="bg-yellow-400 px-1 rounded">80,000+ students</span>{" "}
-        having used the platform and{" "}
-        <span className="bg-yellow-400 px-1 rounded">5000 daily users</span>, it
-        ensures efficient tracking, notifications, and record management.
+        Our laundry management platform serves{" "}
+        <span className="bg-yellow-400 px-1 rounded">80,000+ users</span> with
+        real-time tracking, notifications, and record management, making the
+        process stress-free.
       </>
     ),
   },
@@ -72,11 +71,9 @@ export const projectData = [ //update this to change projects
     viewImage: prv,
     text1: (
       <>
-        <span className="bg-yellow-400 px-1 rounded">
-          Pravega Racing’s web app
-        </span>
-        : fast, responsive, reliable, and globally connected. Enhanced and
-        stylish visuals.
+        We helped build a fast, responsive, and visually enhanced app for{" "}
+        <span className="bg-yellow-400 px-1 rounded">Pravega Racing</span>,
+        ensuring seamless global connectivity for the team.
       </>
     ),
   },

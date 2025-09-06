@@ -58,7 +58,7 @@ const Contact = () => {
             Contact Us
           </h2>
 
-          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+          <form className="flex flex-col gap-4 " onSubmit={handleSubmit}>
             <div className="flex flex-col">
               <label className="mb-2 text-[4vw] sm:text-sm md:text-base font-semibold">
                 Full name
@@ -104,7 +104,12 @@ const Contact = () => {
             <div className="flex justify-center mt-4 md:mt-6">
               <button
                 type="submit"
-                className="px-[8vw] sm:px-10 py-2 md:px-10 md:py-3 rounded-full bg-black text-white font-semibold hover:shadow-lg transition-shadow text-[4vw] sm:text-sm md:text-base"
+                className="px-[8vw] sm:px-10 py-2 md:px-10 md:py-3 
+              rounded-full bg-black text-white font-semibold 
+              hover:scale-110 hover:shadow-lg 
+              transition-transform duration-300 ease-in-out 
+              text-[4vw] sm:text-sm md:text-base
+              "
               >
                 Submit
               </button>

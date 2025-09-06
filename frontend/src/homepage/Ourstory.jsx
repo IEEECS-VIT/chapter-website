@@ -58,9 +58,7 @@ const OurStory = () => {
             whiteSpace: "pre-line",
           }}
         >
-          IEEE Computer Society, VIT, founded in 2012 under IEEE Region 10,
-          promotes innovation and technical excellence through impactful events,
-          projects, and collaborations to solve real-world problems.
+           Founded in 2012, IEEE Computer Society, VIT, is a hub where students innovate, learn, and build skills to tackle real-world challenges.
         </p>
       </div>
 
@@ -84,11 +82,7 @@ const OurStory = () => {
             whiteSpace: "pre-line",
           }}
         >
-          IEEE Computer Society, VIT—established in February 2012 under IEEE
-          Region 10, Madras Section—drives innovation by leveraging
-          cutting-edge technology to solve real-world problems. As a globally
-          recognized hub of technical excellence, we inspire and shape
-          inquisitive minds for the challenges of tomorrow.
+Founded in 2012, IEEE Computer Society, VIT, has been fostering innovation as part of IEEE Region 10, Madras Section. Over the years, it has grown into a vibrant hub where students learn, experiment, and collaborate. Our members explore cutting-edge technology, develop real-world solutions, and build the skills needed to thrive in a fast-changing world.
         </p>
 
         <div className="absolute top-3/4 w-full flex items-center justify-center px-[2vh]">

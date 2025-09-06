@@ -51,16 +51,16 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
 
 export default function EventsPage() {
   const items = [ //update this to add/subtract events
-    { id: 1, title: "HackBattle", image: event, overlayText: "A high-stakes coding face-off for the brave and bold minds." },
-    { id: 2, title: "Cicada 3310", image: cicada, overlayText: "A virtual maze filled with puzzles and hidden messages." },
-    { id: 3, title: "WTF", image: wtf, overlayText: "Tech takes a twist. Expect the unexpected in this quirky event." },
-    { id: 4, title: "BattleCode", image: bc, overlayText: "Strategy meets code. Automate bots to battle in real-time arenas." },
-    { id: 5, title: "SDG", image: sdg, overlayText: "A retro-style game challenge where creativity meets coding." },
-    { id: 6, title: "CASA", image: casa, overlayText: "Compete to solve algorithmic challenges in a timed battle." },
-    { id: 7, title: "MozDev", image: mozdev, overlayText: "A 6 hour hands-on session on Web Development for tomorrow’s devs." },
-    { id: 8, title: "Emerald City", image: ec, overlayText: "Unravel ciphers and cryptographic challenges under pressure." },
-    { id: 9, title: "Hack For Impact", image: h4i, overlayText: "Solve problems in the shortest possible code." },
-    { id: 10, title: "Cyberbattle", image: cb, overlayText: "An adventure ride for competitive coders." },
+    { id: 1, title: "HackBattle", image: event, overlayText: "An overnight hackathon where innovators collaborate to turn ideas into impactful solutions." },
+    { id: 2, title: "Cicada 3310", image: cicada, overlayText: "A mystery-filled cipher challenge that pushes participants to discover hidden meanings and deeper purposes." },
+    { id: 3, title: "WTF", image: wtf, overlayText: "A Capture The Flag-style cybersecurity competition testing problem-solving and technical skills." },
+    { id: 4, title: "BattleCode", image: bc, overlayText: "A fast-paced coding competition designed to test strategy and programming under pressure." },
+    { id: 5, title: "SDG", image: sdg, overlayText: "A retro-style game challenge where creative coding ideas come alive." },
+    { id: 6, title: "CASA", image: casa, overlayText: "A timed algorithmic competition that challenges participants under pressure." },
+    { id: 7, title: "MozDev", image: mozdev, overlayText: "A six-hour web development workshop offering practical, hands-on experience." },
+    { id: 8, title: "Emerald City", image: ec, overlayText: "A competition focused on solving cryptographic ciphers in high-pressure settings." },
+    { id: 9, title: "Hack For Impact", image: h4i, overlayText: "A coding challenge emphasizing elegant, compact solutions." },
+    { id: 10, title: "Cyberbattle", image: cb, overlayText: "A high-stakes competition for competitive programmers to test their coding skills." },
   ];
 
   const scrollerRef = useRef(null);
