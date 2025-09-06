@@ -82,6 +82,9 @@ const Contact = () => {
                 placeholder="Enter your email..."
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                 title="Please enter a valid email address"
+
                 className="w-full px-4 py-2 rounded-xl md:rounded-full bg-[#ECE0D0] outline-none border-none text-[4vw] sm:text-sm md:text-base"
                 required
               />
