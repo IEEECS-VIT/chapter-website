@@ -6,7 +6,7 @@ import Left from "/assets/herosection/1.webp"
 import Right from "/assets/herosection/2.webp"
 import MobileHero from "/assets/herosection/mobile-view.webp"
 import OurStory from "./Ourstory"
-
+import AnimatedText from "./useFontAnimation";
 gsap.registerPlugin(ScrollTrigger)
 
 const HeroSection = ({ contentRef }) => {
@@ -35,50 +35,44 @@ const HeroSection = ({ contentRef }) => {
       ease: "power4.out",
     })
 
-    if (isDesktop) {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: ourStoryWrapperRef.current,
-          start: "top top",
-          end: "+=1850",
-          scrub: 1.5,
-          pin: true,
-          anticipatePin: 1,
-        },
-      })
+   if (isDesktop) {
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ourStoryWrapperRef.current,
+      start: "top top",
+      end: "+=1850",
+      scrub: 1.5,
+      pin: true,
+      anticipatePin: 1,
+    },
+  })
 
-      tl.to(
-        contentRef.current,
-        {
-          opacity: 0,
-          filter: "blur(8px)",
-          scale: 0.9,
-          duration: 3.5,
-          ease: "power4.inOut",
-        },
-        0
-      )
 
-      tl.to(
-        leftRef.current,
-        {
-          x: "-100%",
-          ease: "power4.inOut",
-          duration: 3.5,
-        },
-        0
-      )
+  tl.to(contentRef.current, {
+    opacity: 0,
+    filter: "blur(8px)",
+    scale: 0.9,
+    duration: 2,     
+    ease: "power4.inOut",
+  })
 
-      tl.to(
-        rightRef.current,
-        {
-          x: "100%",
-          ease: "power4.inOut",
-          duration: 3.5,
-        },
-        0
-      )
-    }
+  tl.to(leftRef.current, {
+    x: "-100%",
+    ease: "power4.inOut",
+    duration: 3.5,
+  })
+
+  tl.to(
+    rightRef.current,
+    {
+      x: "100%",
+      ease: "power4.inOut",
+      duration: 3.5,
+    },
+    "<" 
+  )
+}
+
 
     if (isMobile || isTablet) {
       gsap.to([mobileHeroRef.current, mobileContentRef.current], {
@@ -148,7 +142,12 @@ const HeroSection = ({ contentRef }) => {
                     lineHeight: "1.0",
                   }}
                 >
-                  IEEE-CS
+              <AnimatedText
+                duration={8} 
+                className="text-10xl font-bold text-white"
+              >
+                IEEE CS
+              </AnimatedText>
                 </h1>
                 <div className="mt-6 sm:mt-8 md:mt-10 lg:mt-16" />
                 <h2
@@ -191,12 +190,17 @@ const HeroSection = ({ contentRef }) => {
                     lineHeight: "1.0",
                   }}
                 >
+                  <AnimatedText
+                    duration={8} 
+                    className="text-10xl font-bold text-white"
+                  >
                   IEEE-CS
+                  </AnimatedText>
                 </h1>
                 <h2
                   className="text-[#EF9E00] font-bold -translate-y-24"
                   style={{
-                    fontSize: "clamp(2rem, 5vw, 3rem)",
+                    fontSize: "clamp(2.5rem, 5vw, 3rem)",
                     fontFamily: "Henju",
                     lineHeight: "1.0",
                   }}
