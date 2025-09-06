@@ -50,7 +50,12 @@ const LocalModelViewer = () => {
           <Model path="/models/ieeeLOGO4.glb" scale={scale} />
         </Suspense>
 
-        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={3} />
+        <OrbitControls enableZoom={false}  enablePan={false} 
+        minPolarAngle={0}     
+        maxPolarAngle={Math.PI}  
+        minAzimuthAngle={-Infinity}
+        maxAzimuthAngle={Infinity}
+        autoRotate autoRotateSpeed={3} />
       </Canvas>
     </div>
   );
