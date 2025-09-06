@@ -36,8 +36,7 @@ const LocalModelViewer = () => {
   const isMobile = useMediaQuery("(max-width: 767px)");
   const isTablet = useMediaQuery("(min-width: 768px) and (max-width: 1024px)");
 
-  // Set scale and height based on device type
-  const scale = isMobile ? 0.7 : isTablet ? 0.95 : 1.2;
+  const scale = isMobile ? 0.65 : isTablet ? 0.8 : 1.0;
   const height = isMobile ? "h-[220px]" : isTablet ? "h-[320px]" : "h-[420px]";
 
   return (

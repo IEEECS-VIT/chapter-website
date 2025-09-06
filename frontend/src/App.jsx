@@ -104,7 +104,7 @@ const App = () => {
             </div>
           </section>
 
-          <section className="hidden md:flex min-h-screen bg-neutral-800 items-center justify-center">
+          <section className="flex min-h-screen bg-neutral-800 items-center justify-center">
             <Gallery />
           </section>
 
