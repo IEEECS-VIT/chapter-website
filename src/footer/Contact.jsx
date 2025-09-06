@@ -1,7 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
+
 import LocalModelViewer from "./LocalModelView";
 
 const Contact = () => {
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState("");
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await fetch("/api/server", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, message }),
+    });
+
+    if (res.ok) {
+      setStatus("Message sent successfully!");
+      setName("");
+      setEmail("");
+      setMessage("");
+    } else {
+      setStatus("Something went wrong.");
+    }
+  } catch (err) {
+    console.error(err);
+    setStatus("Something went wrong.");
+  }
+};
+
+
   return (
     <div className="min-h-screen w-full flex flex-col font-serif bg-[#EF9E00] text-[#4B3200]">
       <header className="relative w-full h-[25vh] md:h-[30vh]">
@@ -27,7 +58,7 @@ const Contact = () => {
             Contact Us
           </h2>
 
-          <form className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="flex flex-col">
               <label className="mb-2 text-[4vw] sm:text-sm md:text-base font-semibold">
                 Full name
@@ -35,7 +66,10 @@ const Contact = () => {
               <input
                 type="text"
                 placeholder="Enter your name..."
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-2 rounded-xl md:rounded-full bg-[#ECE0D0] outline-none border-none text-[4vw] sm:text-sm md:text-base"
+                required
               />
             </div>
 
@@ -46,7 +80,10 @@ const Contact = () => {
               <input
                 type="email"
                 placeholder="Enter your email..."
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-2 rounded-xl md:rounded-full bg-[#ECE0D0] outline-none border-none text-[4vw] sm:text-sm md:text-base"
+                required
               />
             </div>
 
@@ -57,7 +94,10 @@ const Contact = () => {
               <input
                 type="text"
                 placeholder="Enter your message..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 className="w-full px-4 py-2 h-[12vw] sm:h-12 md:h-14 rounded-xl md:rounded-full bg-[#ECE0D0] outline-none border-none text-[4vw] sm:text-sm md:text-base"
+                required
               />
             </div>
 
@@ -69,6 +109,7 @@ const Contact = () => {
                 Submit
               </button>
             </div>
+             {status && <p>{status}</p>}
           </form>
         </div>
 
