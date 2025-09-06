@@ -11,7 +11,7 @@ import s8 from "/assets/gallery/s8.jpg";
 import s9 from "/assets/gallery/s9.jpg";
 import s10 from "/assets/gallery/s10.jpg";
 
-const images = [s1, s2, s7, s6, s5, s3, s4, s8, s9, s10]; //update this to change photos
+const images = [s1, s2, s7, s6, s5, s3, s4, s8, s9, s10,s1, s2, s7, s6, s5, s3, s4, s8, s9, s10,s1, s2, s7, s6, s5, s3, s4, s8, s9, s10,s1, s2, s7, s6, s5, s3, s4, s8, s9, s10]; //update this to change photos
 
 const FilmstripGallery = () => {
   const scrollRef1 = useRef(null);
@@ -30,13 +30,13 @@ const FilmstripGallery = () => {
     if (!isPaused) {
       posRef1.current += 1; 
       if (posRef1.current >= strip1.scrollWidth / 2) {
-        posRef1.current = 0; 
+        posRef1.current = posRef1.current - strip1.scrollWidth / 2;
       }
       strip1.style.transform = `translateX(-${posRef1.current}px)`;
 
       posRef2.current += 1;
       if (posRef2.current >= strip2.scrollWidth / 2) {
-        posRef2.current = 0;
+        posRef1.current = posRef1.current - strip1.scrollWidth / 2;
       }
       strip2.style.transform = `translateX(${posRef2.current}px)`;
     }
