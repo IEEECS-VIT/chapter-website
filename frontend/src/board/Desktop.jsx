@@ -25,7 +25,7 @@ const TeamCard = ({ name, position, photo, linkedin, innerRef, extraClass = "" }
       className={`relative w-full aspect-square overflow-hidden shadow-2xl flex items-center justify-center max-w-[320px] ${extraClass}`}
       style={{ 
         willChange: "transform",
-        transform: "translate3d(0, 0, 0)" // Force hardware acceleration
+        transform: "translate3d(0, 0, 0)"
       }}
     >
       <div className="absolute w-full h-full">
@@ -68,7 +68,7 @@ const BoardGrid = () => {
   const boardTextRef = useRef(null)
   const dateTextRef = useRef(null)
   
-  // Track previous scroll position and animation frame
+
   const lastScrollY = useRef(0)
   const animationFrameId = useRef(null)
   const isAnimating = useRef(false)
@@ -93,7 +93,7 @@ const BoardGrid = () => {
 
     updateComponentOffset()
     
-    // Debounced resize handler
+    //debounced resize handler
     let resizeTimeout
     const handleResize = () => {
       clearTimeout(resizeTimeout)
@@ -118,7 +118,7 @@ const BoardGrid = () => {
 
     const currentScrollY = window.scrollY
     
-    // Skip if scroll hasn't changed significantly
+  
     if (Math.abs(currentScrollY - lastScrollY.current) < 1) {
       isAnimating.current = false
       animationFrameId.current = requestAnimationFrame(animateElements)
@@ -159,8 +159,7 @@ const BoardGrid = () => {
       } else {
         translateY = currentScrollY <= startScroll ? 0 : easedProgress * maxTranslate
       }
-      
-      // Use transform3d for better performance
+
       const transform = `translate3d(0, ${translateY}px, 0)`
       if (ref.current.style.transform !== transform) {
         ref.current.style.transform = transform
@@ -195,7 +194,7 @@ const BoardGrid = () => {
   }, [animationValues, componentOffsetTop])
 
   useEffect(() => {
-    // Start animation loop
+
     animationFrameId.current = requestAnimationFrame(animateElements)
     
     return () => {
@@ -205,7 +204,6 @@ const BoardGrid = () => {
     }
   }, [animateElements])
 
-  // Initialize text elements with hardware acceleration
   useEffect(() => {
     if (boardTextRef.current) {
       boardTextRef.current.style.willChange = "transform"
@@ -217,9 +215,9 @@ const BoardGrid = () => {
     }
   }, [])
 
-  return (
+  return (//update this to modify
     <div ref={componentRef} className="hidden lg:flex min-h-[200vh] bg-black flex-col items-center justify-center py-10 overflow-x-hidden">
-      <div className="h-[20vh]" />
+      <div className="h-[20vh]" /> /
       <div className="w-full max-w-7xl mx-auto px-8" style={{ minHeight: "140vh" }}>
         <div className="grid grid-cols-4 gap-6 justify-items-start">
           <TeamCard name="Ram Krishna" position="Chairperson" photo={ram} linkedin="https://www.linkedin.com/in/ramkrishna2967/" />
@@ -232,7 +230,7 @@ const BoardGrid = () => {
           <TeamCard name="Dhriti Sharma" position="Events Head" photo={dhriti} linkedin="https://www.linkedin.com/in/dhriti-sharma-b03014275/" innerRef={r2c3Ref} />
           <div></div>
           <div ref={dateTextRef} className="col-span-full board-date text-yellow-400 text-6xl font-extrabold py-4 uppercase text-left">25–26</div>
-          <TeamCard name="Varun Sharith" position="PnM Head" photo={varun} linkedin="https://www.linkedin.com/in/varun-shirsath-50403534b/" />
+          <TeamCard name="Varun Shirsath" position="PnM Head" photo={varun} linkedin="https://www.linkedin.com/in/varun-shirsath-50403534b/" />
           <TeamCard name="Parth Jadhav" position="Design Head" photo={parth} linkedin="https://www.linkedin.com/in/parthjadhav2004/" innerRef={r3c2Ref} />
           <div></div>
           <TeamCard name="Gouri Kanade" position="RnD Head" photo={gouri} linkedin="https://www.linkedin.com/in/gourikanade1012/" />
