@@ -26,7 +26,7 @@ export default async function handler(req, res) {
       from: `"${name}" <${email}>`,
       to: process.env.EMAIL_TO,
       subject: "New Contact Form Submission",
-      text: `You have a new message from your website contact form:\n\nName: ${name}\nEmail: ${email}\nMessage: ${message}`,
+      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
     });
 
     res.status(200).json({ message: "Email sent successfully!" });
