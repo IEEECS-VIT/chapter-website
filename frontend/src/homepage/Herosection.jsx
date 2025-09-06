@@ -194,7 +194,7 @@ const HeroSection = ({ contentRef }) => {
                     duration={8} 
                     className="text-10xl font-bold text-white"
                   >
-                  IEEE-CS
+                  IEEE CS
                   </AnimatedText>
                 </h1>
                 <h2
