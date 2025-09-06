@@ -1,20 +1,21 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import bgImage from "../assets/board/bg.png"
-import ram from "../assets/board/ram.png"
-import anubhav from "../assets/board/anubhav.png"
-import aditya from "../assets/board/aditya.png"
-import akshit from "../assets/board/akshit.png"
-import ansh from "../assets/board/ansh.png"
-import arjun from "../assets/board/arjun.png"
-import arya from "../assets/board/arya.png"
-import dhriti from "../assets/board/dhriti.png"
-import gouri from "../assets/board/gouri.png"
-import krish from "../assets/board/krish.png"
-import varun from "../assets/board/varun.png"
-import parth from "../assets/board/parth.png"
-import medhansh from "../assets/board/medhansh.png"
+import bgImage from "/assets/board/bg.png"
+import ram from "/assets/board/ram.png"
+import anubhav from "/assets/board/anubhav.png"
+import aditya from "/assets/board/aditya.png"
+import akshit from "/assets/board/akshit.png"
+import ansh from "/assets/board/ansh.png"
+import arjun from "/assets/board/arjun.png"
+import arya from "/assets/board/arya.png"
+import dhriti from "/assets/board/dhriti.png"
+import gouri from "/assets/board/gouri.png"
+import krish from "/assets/board/krish.png"
+import varun from "/assets/board/varun.png"
+import parth from "/assets/board/parth.png"
+import medhansh from "/assets/board/medhansh.png"
+import linkedinIcon from "/assets/board/linkedin.svg";
 
 const TeamCard = ({ name, position, photo, linkedin, innerRef, extraClass = "" }) => {
   return (
@@ -24,7 +25,7 @@ const TeamCard = ({ name, position, photo, linkedin, innerRef, extraClass = "" }
       style={{ willChange: "transform" }}
     >
       <div className="absolute w-full h-full">
-        <img src={bgImage || "/placeholder.svg"} alt="card-bg" className="w-full h-full object-cover" />
+        <img src={bgImage || "/placeholder.svg"} alt="card-bg" className="w-full h-full object-cover" loading="lazy"/>
       </div>
       <div className="relative z-10 flex flex-col justify-between items-center w-full h-full">
         <div className="flex flex-col items-center space-y-1">
@@ -41,18 +42,18 @@ const TeamCard = ({ name, position, photo, linkedin, innerRef, extraClass = "" }
         </div>
       </div>
       {linkedin && (
-        <a href={linkedin} target="_blank" rel="noopener noreferrer" className="absolute bottom-0.5 right-0.5 z-20">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="28"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="text-black-600 hover:text-black-800 transition-colors"
-          >
-            <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.29c-.96 0-1.75-.79-1.75-1.75s.79-1.75 1.75-1.75 1.75.79 1.75 1.75-.79 1.75-1.75 1.75zm13.5 11.29h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.88v1.36h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.59v5.59z" />
-          </svg>
-        </a>
+        <a
+  href={linkedin}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="absolute bottom-0.5 right-0.5 z-20"
+>
+  <img
+    src={linkedinIcon}
+    alt="LinkedIn"
+    className="w-7 h-7 hover:opacity-80 transition-opacity"
+  />
+</a>
       )}
     </div>
   )
@@ -97,7 +98,7 @@ const BoardGrid = () => {
     }
   }, [])
 
-  const easeInOutSine = (x) => -(Math.cos(Math.PI * x) - 1) / 2;
+  const easeInOutSine = (x) => -(Math.cos(Math.PI * x) - 1) /2;
 
   const animateElements = useCallback(() => {
     const currentScrollY = window.scrollY
@@ -166,10 +167,9 @@ const BoardGrid = () => {
 
   return (
     <div ref={componentRef} className="hidden lg:flex min-h-[200vh] bg-black flex-col items-center justify-center py-10 overflow-x-hidden">
-      <div className="h-[25vh]" />
+      <div className="h-[20vh]" />
       <div className="w-full max-w-7xl mx-auto px-8" style={{ minHeight: "140vh" }}>
         <div className="grid grid-cols-4 gap-6 justify-items-start">
-          {/* Grid items remain the same */}
           <TeamCard name="Ram Krishna" position="Chairperson" photo={ram} linkedin="https://www.linkedin.com/in/ramkrishna2967/" />
           <TeamCard name="Anubhav Batra" position="Vice Chairperson" photo={anubhav} linkedin="https://www.linkedin.com/in/anubhav-batra-9ba7271b1/" innerRef={r1c2Ref} />
           <TeamCard name="Aditya Verma" position="Secretary" photo={aditya} linkedin="https://www.linkedin.com/in/adityaverma121/" />

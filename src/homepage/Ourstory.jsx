@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Logo from "../assets/logos/IEEECS.png";
-import Background from "../assets/herosection/paper_effect.png";
-import Team from "../assets/herosection/team.png";
-import MobileBoard from "../assets/herosection/mobile-board.jpg";
+import Logo from "/assets/logos/IEEECS.png";
+import Background from "/assets/herosection/paper_effect.png";
+import Team from "/assets/herosection/team.png";
+import MobileBoard from "/assets/herosection/mobile-board.jpg";
 
 const OurStory = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -19,6 +19,7 @@ const OurStory = () => {
           src={Logo}
           alt="IEEE Computer Society Logo"
           className="w-[20vh] max-w-[25vw] min-w-[8vh] object-contain"
+          loading="lazy"
         />
       </div>
 
@@ -45,6 +46,7 @@ const OurStory = () => {
               imageLoaded ? "opacity-100" : ""
             }`}
             onLoad={() => setImageLoaded(true)}
+            loading="lazy"
           />
         </div>
 
@@ -97,6 +99,7 @@ const OurStory = () => {
               imageLoaded ? "opacity-100" : ""
             }`}
             onLoad={() => setImageLoaded(true)}
+            loading="lazy"
           />
         </div>
       </div>

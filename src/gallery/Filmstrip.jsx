@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 
 
-import s1 from "../assets/gallery/s1.jpg";
-import s2 from "../assets/gallery/s2.jpg";
-import s3 from "../assets/gallery/s3.jpg";
-import s4 from "../assets/gallery/s4.jpg";
-import s5 from "../assets/gallery/s5.jpg";
-import s6 from "../assets/gallery/s6.jpg";
-import s7 from "../assets/gallery/s7.jpg";
-import s8 from "../assets/gallery/s8.jpg";
-import s9 from "../assets/gallery/s9.jpg";
-import s10 from "../assets/gallery/s10.jpg";
+import s1 from "/assets/gallery/s1.jpg";
+import s2 from "/assets/gallery/s2.jpg";
+import s3 from "/assets/gallery/s3.jpg";
+import s4 from "/assets/gallery/s4.jpg";
+import s5 from "/assets/gallery/s5.jpg";
+import s6 from "/assets/gallery/s6.jpg";
+import s7 from "/assets/gallery/s7.jpg";
+import s8 from "/assets/gallery/s8.jpg";
+import s9 from "/assets/gallery/s9.jpg";
+import s10 from "/assets/gallery/s10.jpg";
 
 const images = [s1,s2,s7,s6,s5,s3,s4,s8,s9,s10];
 
@@ -69,6 +69,7 @@ const FilmstripGallery = () => {
               className="w-[500px] h-[400px] object-cover shadow-2xl rounded-lg transition-transform duration-300 hover:scale-105 grayscale"
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
+              loading="lazy"
             />
           </div>
         ))}

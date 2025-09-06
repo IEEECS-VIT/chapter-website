@@ -1,8 +1,8 @@
 import { useRef } from "react";
 import CoverPage from "./Coverpage";
-import clip1 from "../assets/projects/clip1.png";
-import clip2 from "../assets/projects/clip2.png";
-import texturedbg from "../assets/projects/texturedbg.png";
+import clip1 from "/assets/projects/clip1.png";
+import clip2 from "/assets/projects/clip2.png";
+import texturedbg from "/assets/projects/texturedbg.png";
 
 
 const ProjectDisplay = ({ data }) => {
@@ -35,6 +35,7 @@ const ProjectDisplay = ({ data }) => {
             src={clip1}
             alt="clip1"
             className="absolute -top-6 md:-top-14 xl:-top-12 -left-4 md:-left-8 xl:-left-10 w-[12vw] md:w-[10vw] xl:w-[6vw]"
+            loading="lazy"
           />
         </div>
       </div>
@@ -48,11 +49,13 @@ const ProjectDisplay = ({ data }) => {
               src={data.viewImage}
               alt="view background"
               className="absolute rotate-[0deg] w-[19vw] md:w-[16vw] xl:w-[12vw] scale-110 md:scale-115 xl:scale-150"
+              loading="lazy"
             />
             <img
               src={data.viewImage}
               alt="view top"
               className="rotate-[10deg] w-[19vw] md:w-[16vw] xl:w-[12vw] scale-110 md:scale-115 xl:scale-150"
+              loading="lazy"
             />
           </div>
         )}
@@ -62,12 +65,14 @@ const ProjectDisplay = ({ data }) => {
             src={texturedbg}
             alt="texture background"
             className="w-full h-40 xl:h-50 rounded shadow object-cover"
+            loading="lazy"
           />
 
           <img
             src={clip2}
             alt="clip2"
             className="absolute -top-7 md:-top-14 -left-7 w-[16vw] md:w-[14vw] xl:w-[6vw]"
+            loading="lazy"
           />
 
           <div className="absolute inset-0 p-4 text-[clamp(0.625rem,2.5vh,0.875rem)] md:text-lg xl:text-[clamp(0.875rem,2vh,1rem)] text-left text-[#4B3200] flex items-start justify-start">

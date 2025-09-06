@@ -2,18 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ElasticSlider from "./ElasticSlider";
-import event from "../assets/events/event.png";
-import bg from "../assets/events/backgrnd.jpg";
-import pin from "../assets/events/pin.png";
-import cicada from "../assets/events/cicada.png";
-import bc from "../assets/events/bccb.png";
-import wtf from "../assets/events/wtf.png";
-import h4i from "../assets/events/h4i.png";
-import mozdev from "../assets/events/mozdev.jpg";
-import casa from "../assets/events/casa.jpg";
-import sdg from "../assets/events/sdg.jpg";
-import cb from "../assets/events/cyberbattle.jpg";
-import ec from "../assets/events/ec.jpg";
+import event from "/assets/events/event.png";
+import bg from "/assets/events/backgrnd.jpg";
+import pin from "/assets/events/pin.png";
+import cicada from "/assets/events/cicada.png";
+import bc from "/assets/events/bccb.png";
+import wtf from "/assets/events/wtf.png";
+import h4i from "/assets/events/h4i.png";
+import mozdev from "/assets/events/mozdev.jpg";
+import casa from "/assets/events/casa.jpg";
+import sdg from "/assets/events/sdg.jpg";
+import cb from "/assets/events/cyberbattle.jpg";
+import ec from "/assets/events/ec.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,14 +25,14 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
     style={{ fontFamily: "Special Elite, cursive" }}
   >
     <div className="relative bg-gradient-to-br from-[#F8F4ED] to-[#F1ECE5] p-3 sm:p-5 rounded-2xl border border-gray-200/30 flex flex-col items-center justify-center h-full shadow-[0_6px_20px_rgba(255,255,255,0.15)]">
-      <div className="absolute -top-10 -right-10 -translate-y-1/4 translate-x-1/4 sm:-top-14 sm:-right-12 md:-top-14 md:-right-12 lg:-top-14 lg:-right-12 z-30 rotate-[-10deg]">
+      <div className="absolute -top-10 -right-10 -translate-y-1/4 translate-x-1/4 sm:-top-14 sm:-right-12 md:-top-14 md:-right-12 lg:-top-14 lg:-right-12 z-30 rotate-[-10deg]" loading="lazy">
         <img src={pin} alt="Pin" className="w-58 sm:w-96 md:w-78 lg:w-86 h-auto drop-shadow-md" />
       </div>
       <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[300px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center bg-white/80">
         <img
           src={image || "/placeholder.svg"}
           alt={title}
-          className="w-full h-full object-contain rounded-lg grayscale hover:grayscale-0 transition-all duration-500 ease-out scale-105"
+          className="w-full h-full object-contain rounded-lg grayscale hover:grayscale-0 transition-all duration-500 ease-out scale-105" loading="lazy"
         />
         {hasOverlay && (
           <div className="absolute inset-0 bg-gradient-to-t from-[#4A4A4A]/70 via-[#6D6D6D]/50 to-transparent flex items-center justify-center p-2 sm:p-4 opacity-0 hover:opacity-100 transition-all duration-500 ease-out backdrop-blur-sm rounded-md">

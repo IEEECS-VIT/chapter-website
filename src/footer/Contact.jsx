@@ -16,7 +16,7 @@ const Contact = () => {
             fill="black"
           />
         </svg>
-        <div className="absolute top-[10%] left-1/2 transform -translate-x-1/2 w-[25vw] max-w-[240px] h-[25vw] max-h-[240px] md:w-[15vw] md:h-[15vw]">
+        <div className="absolute top-[10%] md:top-[20%] left-1/2 transform -translate-x-1/2 w-[25vw] max-w-[240px] h-[25vw] max-h-[240px] md:w-[15vw] md:h-[15vw]">
           <LocalModelViewer />
         </div>
       </header>

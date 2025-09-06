@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useMediaQuery } from "react-responsive"
-import Left from "../assets/herosection/1.png"
-import Right from "../assets/herosection/2.png"
-import MobileHero from "../assets/herosection/mobile-view.png"
+import Left from "/assets/herosection/1.png"
+import Right from "/assets/herosection/2.png"
+import MobileHero from "/assets/herosection/mobile-view.png"
 import OurStory from "./Ourstory"
 
 gsap.registerPlugin(ScrollTrigger)
@@ -16,8 +16,8 @@ const HeroSection = ({ contentRef }) => {
   const ourStoryWrapperRef = useRef(null)
   const mobileHeroRef = useRef(null)
 
-  const isDesktop = useMediaQuery({ minWidth: 1024 })
-  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1023 })
+  const isDesktop = useMediaQuery({ minWidth: 1025 })
+  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1024 })
   const isMobile = useMediaQuery({ maxWidth: 767 })
 
   useEffect(() => {
@@ -175,6 +175,7 @@ const HeroSection = ({ contentRef }) => {
               src={MobileHero}
               alt="Mobile Hero"
               className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-black/35"></div>
             <div className="absolute inset-0 flex justify-center items-center z-30">

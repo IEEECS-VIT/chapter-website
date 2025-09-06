@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import CircularText from "./CircularText";
 import CircularTextOut from "./CircularTextout";
 import gsap from "gsap";
-import ieeeLogo from "../assets/logos/ieeecs_logo.png";
+import ieeeLogo from "/assets/logos/ieeecs_logo.png";
 
 const ParticleBackground = () => {
   const canvasRef = useRef(null);
@@ -166,13 +166,13 @@ const PreLoader = ({ onEnter }) => {
         className="relative w-full h-full flex items-center justify-center preloader-wrapper"
       >
         
-        <div className="absolute z-10 font-Henju font-extralight">
+        <div className="absolute z-10  text-yellow-400 font-henju font-light">
           <CircularTextOut
             text="WE LIVE IN A COMPUTER SOCIETY "
             spinDuration={20}
           />
         </div>
-        <div className="absolute z-20 font-Henju font-extralight">
+        <div className="absolute z-20 text-yellow-400 font-henju font-light">
           <CircularText text="IEEE~COMPUTER~SOCIETY~" spinDuration={20} />
         </div>
         <div
