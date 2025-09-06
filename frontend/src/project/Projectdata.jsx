@@ -1,16 +1,16 @@
-import airport from "/assets/projects/airport.png";
-import coverBg from "/assets/projects/cover-bg.png";
-import coverImg1 from "/assets/projects/cover1.png";
-import coverImg2 from "/assets/projects/cover2.png";
-import coverImg3 from "/assets/projects/cover3.png";
-import iitk from "/assets/projects/techkriti.jpg";
-import cd from "/assets/projects/cd.png";
-import air from "/assets/projects/airport3.png";
-import pravega from "/assets/projects/pravega.png";
-import tc from "/assets/projects/tc.png";
-import cdc from "/assets/projects/cdc.png";
-import prv from "/assets/projects/prv.jpeg";
-export const projectData = [
+import airport from "/assets/projects/airport.webp";
+import coverBg from "/assets/projects/cover-bg.webp";
+import coverImg1 from "/assets/projects/cover1.webp";
+import coverImg2 from "/assets/projects/cover2.webp";
+import coverImg3 from "/assets/projects/cover3.webp";
+import iitk from "/assets/projects/techkriti.webp";
+import cd from "/assets/projects/cd.webp";
+import air from "/assets/projects/airport3.webp";
+import pravega from "/assets/projects/pravega.webp";
+import tc from "/assets/projects/tc.webp";
+import cdc from "/assets/projects/cdc.webp";
+import prv from "/assets/projects/prv.webp";
+export const projectData = [ //update this to change projects
   {
     id: 0,
     isCover: true,

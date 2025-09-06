@@ -1,31 +1,35 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import bgImage from "/assets/board/bg.png"
-import ram from "/assets/board/ram.png"
-import anubhav from "/assets/board/anubhav.png"
-import aditya from "/assets/board/aditya.png"
-import akshit from "/assets/board/akshit.png"
-import ansh from "/assets/board/ansh.png"
-import arjun from "/assets/board/arjun.png"
-import arya from "/assets/board/arya.png"
-import dhriti from "/assets/board/dhriti.png"
-import gouri from "/assets/board/gouri.png"
-import krish from "/assets/board/krish.png"
-import varun from "/assets/board/varun.png"
-import parth from "/assets/board/parth.png"
-import medhansh from "/assets/board/medhansh.png"
+import bgImage from "/assets/board/bg.webp";
+import ram from "/assets/board/ram.webp";
+import anubhav from "/assets/board/anubhav.webp";
+import aditya from "/assets/board/aditya.webp";
+import akshit from "/assets/board/akshit.webp";
+import ansh from "/assets/board/ansh.webp";
+import arjun from "/assets/board/arjun.webp";
+import arya from "/assets/board/arya.webp";
+import dhriti from "/assets/board/dhriti.webp";
+import gouri from "/assets/board/gouri.webp";
+import krish from "/assets/board/krish.webp";
+import varun from "/assets/board/varun.webp";
+import parth from "/assets/board/parth.webp";
+import medhansh from "/assets/board/medhansh.webp";
 import linkedinIcon from "/assets/board/linkedin.svg";
+
 
 const TeamCard = ({ name, position, photo, linkedin, innerRef, extraClass = "" }) => {
   return (
     <div
       ref={innerRef}
       className={`relative w-full aspect-square overflow-hidden shadow-2xl flex items-center justify-center max-w-[320px] ${extraClass}`}
-      style={{ willChange: "transform" }}
+      style={{ 
+        willChange: "transform",
+        transform: "translate3d(0, 0, 0)" // Force hardware acceleration
+      }}
     >
       <div className="absolute w-full h-full">
-        <img src={bgImage || "/placeholder.svg"} alt="card-bg" className="w-full h-full object-cover" loading="lazy"/>
+        <img src={bgImage || "/placeholder.svg"} alt="card-bg" className="w-full h-full object-cover" />
       </div>
       <div className="relative z-10 flex flex-col justify-between items-center w-full h-full">
         <div className="flex flex-col items-center space-y-1">
@@ -42,23 +46,17 @@ const TeamCard = ({ name, position, photo, linkedin, innerRef, extraClass = "" }
         </div>
       </div>
       {linkedin && (
-        <a
-  href={linkedin}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="absolute bottom-0.5 right-0.5 z-20"
->
-  <img
-    src={linkedinIcon}
-    alt="LinkedIn"
-    className="w-7 h-7 hover:opacity-80 transition-opacity"
-  />
-</a>
+        <a href={linkedin} target="_blank" rel="noopener noreferrer" className="absolute bottom-0.5 right-0.5 z-20">
+          <img
+          src={linkedinIcon}
+          alt="LinkedIn"
+          className="w-7 h-7 hover:opacity-80 transition-opacity"
+        />
+        </a>
       )}
     </div>
   )
 }
-
 
 const BoardGrid = () => {
   const [componentOffsetTop, setComponentOffsetTop] = useState(0)
@@ -69,6 +67,11 @@ const BoardGrid = () => {
   const componentRef = useRef(null)
   const boardTextRef = useRef(null)
   const dateTextRef = useRef(null)
+  
+  // Track previous scroll position and animation frame
+  const lastScrollY = useRef(0)
+  const animationFrameId = useRef(null)
+  const isAnimating = useRef(false)
 
   const animationValues = useCallback(() => {
     return {
@@ -89,81 +92,130 @@ const BoardGrid = () => {
     }
 
     updateComponentOffset()
-    window.addEventListener("resize", updateComponentOffset)
-    const timeout = setTimeout(updateComponentOffset, 100) 
+    
+    // Debounced resize handler
+    let resizeTimeout
+    const handleResize = () => {
+      clearTimeout(resizeTimeout)
+      resizeTimeout = setTimeout(updateComponentOffset, 16) // ~60fps
+    }
+    
+    window.addEventListener("resize", handleResize, { passive: true })
+    const timeout = setTimeout(updateComponentOffset, 100)
 
     return () => {
-      window.removeEventListener("resize", updateComponentOffset)
+      window.removeEventListener("resize", handleResize)
       clearTimeout(timeout)
+      clearTimeout(resizeTimeout)
     }
   }, [])
 
-  const easeInOutSine = (x) => -(Math.cos(Math.PI * x) - 1) /2;
+  const easeInOutSine = (x) => -(Math.cos(Math.PI * x) - 1) / 2
 
   const animateElements = useCallback(() => {
+    if (isAnimating.current) return
+    isAnimating.current = true
+
     const currentScrollY = window.scrollY
+    
+    // Skip if scroll hasn't changed significantly
+    if (Math.abs(currentScrollY - lastScrollY.current) < 1) {
+      isAnimating.current = false
+      animationFrameId.current = requestAnimationFrame(animateElements)
+      return
+    }
+    
+    lastScrollY.current = currentScrollY
     const values = animationValues()
 
     const viewMargin = 500
     const componentStart = componentOffsetTop - viewMargin
     const componentEnd = componentOffsetTop + 2000 + viewMargin
+    
     if (currentScrollY < componentStart || currentScrollY > componentEnd) {
-      requestAnimationFrame(animateElements)
+      isAnimating.current = false
+      animationFrameId.current = requestAnimationFrame(animateElements)
       return
     }
 
     const animateRef = (ref, startScroll, endScroll, maxTranslate, isInitialOffset = false, startOffset = 0) => {
-        if (ref.current) {
-            let progress = 0;
-            if (isInitialOffset) {
-                
-                progress = currentScrollY > componentOffsetTop 
-                    ? (currentScrollY - componentOffsetTop) / (endScroll - componentOffsetTop) 
-                    : 0;
-            } else {
-                
-                progress = (currentScrollY - startScroll) / (endScroll - startScroll);
-            }
+      if (!ref.current) return
 
-            progress = Math.min(Math.max(progress, 0), 1); 
-            const easedProgress = easeInOutSine(progress);
+      let progress = 0
+      if (isInitialOffset) {
+        progress = currentScrollY > componentOffsetTop 
+          ? (currentScrollY - componentOffsetTop) / (endScroll - componentOffsetTop) 
+          : 0
+      } else {
+        progress = (currentScrollY - startScroll) / (endScroll - startScroll)
+      }
 
-            let translateY = 0;
-            if (isInitialOffset) {
-                translateY = currentScrollY >= endScroll ? 0 : startOffset * (1 - easedProgress);
-            } else {
-                translateY = currentScrollY <= startScroll ? 0 : easedProgress * maxTranslate;
-            }
-            ref.current.style.transform = `translate3d(0, ${translateY}px, 0)`;
-        }
-    };
-    
-    animateRef(r1c2Ref, 0, values.r1c2.settlePoint, 0, true, values.r1c2.startOffset);
-    animateRef(r1c4Ref, values.r1c4.startScrollPoint, values.r1c4.endScrollPoint, values.r1c4.maxTranslate);
-    animateRef(r2c3Ref, values.r2c3.startScrollPoint, values.r2c3.endScrollPoint, values.r2c3.maxTranslate);
-    animateRef(r3c2Ref, values.r3c2.startScrollPoint, values.r3c2.endScrollPoint, values.r3c2.maxTranslate);
+      progress = Math.min(Math.max(progress, 0), 1)
+      const easedProgress = easeInOutSine(progress)
 
-    const animateText = (ref, startScroll, duration, startX) => {
-        if (ref.current) {
-            const endX = 0;
-            const progress = Math.min(Math.max((currentScrollY - startScroll) / duration, 0), 1);
-            const easedProgress = easeInOutSine(progress);
-            const currentX = startX + easedProgress * (endX - startX);
-            ref.current.style.transform = `translateX(${currentX}px)`;
-        }
+      let translateY = 0
+      if (isInitialOffset) {
+        translateY = currentScrollY >= endScroll ? 0 : startOffset * (1 - easedProgress)
+      } else {
+        translateY = currentScrollY <= startScroll ? 0 : easedProgress * maxTranslate
+      }
+      
+      // Use transform3d for better performance
+      const transform = `translate3d(0, ${translateY}px, 0)`
+      if (ref.current.style.transform !== transform) {
+        ref.current.style.transform = transform
+      }
     }
     
-    animateText(boardTextRef, componentOffsetTop, 500, -300);
-    animateText(dateTextRef, componentOffsetTop + 400, 500, -300);
+    const animateText = (ref, startScroll, duration, startX) => {
+      if (!ref.current) return
 
-    requestAnimationFrame(animateElements)
+      const endX = 0
+      const progress = Math.min(Math.max((currentScrollY - startScroll) / duration, 0), 1)
+      const easedProgress = easeInOutSine(progress)
+      const currentX = startX + easedProgress * (endX - startX)
+      
+      const transform = `translateX(${currentX}px)`
+      if (ref.current.style.transform !== transform) {
+        ref.current.style.transform = transform
+      }
+    }
+    
+    // Batch DOM updates
+    animateRef(r1c2Ref, 0, values.r1c2.settlePoint, 0, true, values.r1c2.startOffset)
+    animateRef(r1c4Ref, values.r1c4.startScrollPoint, values.r1c4.endScrollPoint, values.r1c4.maxTranslate)
+    animateRef(r2c3Ref, values.r2c3.startScrollPoint, values.r2c3.endScrollPoint, values.r2c3.maxTranslate)
+    animateRef(r3c2Ref, values.r3c2.startScrollPoint, values.r3c2.endScrollPoint, values.r3c2.maxTranslate)
+    
+    animateText(boardTextRef, componentOffsetTop, 500, -300)
+    animateText(dateTextRef, componentOffsetTop + 400, 500, -300)
+
+    isAnimating.current = false
+    animationFrameId.current = requestAnimationFrame(animateElements)
   }, [animationValues, componentOffsetTop])
 
-
   useEffect(() => {
-    const animationFrame = requestAnimationFrame(animateElements)
-    return () => cancelAnimationFrame(animationFrame)
+    // Start animation loop
+    animationFrameId.current = requestAnimationFrame(animateElements)
+    
+    return () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current)
+      }
+    }
   }, [animateElements])
+
+  // Initialize text elements with hardware acceleration
+  useEffect(() => {
+    if (boardTextRef.current) {
+      boardTextRef.current.style.willChange = "transform"
+      boardTextRef.current.style.transform = "translate3d(0, 0, 0)"
+    }
+    if (dateTextRef.current) {
+      dateTextRef.current.style.willChange = "transform"
+      dateTextRef.current.style.transform = "translate3d(0, 0, 0)"
+    }
+  }, [])
 
   return (
     <div ref={componentRef} className="hidden lg:flex min-h-[200vh] bg-black flex-col items-center justify-center py-10 overflow-x-hidden">

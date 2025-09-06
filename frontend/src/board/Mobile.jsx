@@ -6,20 +6,21 @@ import { Draggable } from "gsap/Draggable"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import linkedinIcon from "/assets/board/linkedin.svg";
 import ElasticSlider from "../events/ElasticSlider"
-import bgImage from "/assets/board/bg.png"
-import ram from "/assets/board/ram.png"
-import anubhav from "/assets/board/anubhav.png"
-import aditya from "/assets/board/aditya.png"
-import akshit from "/assets/board/akshit.png"
-import ansh from "/assets/board/ansh.png"
-import arjun from "/assets/board/arjun.png"
-import arya from "/assets/board/arya.png"
-import dhriti from "/assets/board/dhriti.png"
-import gouri from "/assets/board/gouri.png"
-import krish from "/assets/board/krish.png"
-import varun from "/assets/board/varun.png"
-import parth from "/assets/board/parth.png"
-import medhansh from "/assets/board/medhansh.png"
+import bgImage from "/assets/board/bg.webp"
+import ram from "/assets/board/ram.webp"
+import anubhav from "/assets/board/anubhav.webp"
+import aditya from "/assets/board/aditya.webp"
+import akshit from "/assets/board/akshit.webp"
+import ansh from "/assets/board/ansh.webp"
+import arjun from "/assets/board/arjun.webp"
+import arya from "/assets/board/arya.webp"
+import dhriti from "/assets/board/dhriti.webp"
+import gouri from "/assets/board/gouri.webp"
+import krish from "/assets/board/krish.webp"
+import varun from "/assets/board/varun.webp"
+import parth from "/assets/board/parth.webp"
+import medhansh from "/assets/board/medhansh.webp"
+
 
 gsap.registerPlugin(Draggable, ScrollTrigger)
 
@@ -68,7 +69,7 @@ const MobileBoard = () => {
   const [sliderValue, setSliderValue] = useState(0)
   const [maxScroll, setMaxScroll] = useState(1000)
 
-  const allCards = [
+  const allCards = [ //change this to update board
     { name: "Ram Krishna", position: "Chairperson", photo: ram, linkedin: "https://www.linkedin.com/in/ramkrishna2967/" },
     { name: "Anubhav Batra", position: "Vice Chairperson", photo: anubhav, linkedin: "https://www.linkedin.com/in/anubhav-batra-9ba7271b1/" },
     { name: "Aditya Verma", position: "Secretary", photo: aditya, linkedin: "https://www.linkedin.com/in/adityaverma121/" },

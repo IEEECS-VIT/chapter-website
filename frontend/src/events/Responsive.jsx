@@ -2,18 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ElasticSlider from "./ElasticSlider";
-import event from "/assets/events/event.png";
-import bg from "/assets/events/backgrnd.jpg";
-import pin from "/assets/events/pin.png";
-import cicada from "/assets/events/cicada.png";
-import bc from "/assets/events/bccb.png";
-import wtf from "/assets/events/wtf.png";
-import h4i from "/assets/events/h4i.png";
-import mozdev from "/assets/events/mozdev.jpg";
-import casa from "/assets/events/casa.jpg";
-import sdg from "/assets/events/sdg.jpg";
-import cb from "/assets/events/cyberbattle.jpg";
-import ec from "/assets/events/ec.jpg";
+import event from "/assets/events/event.webp";
+import bg from "/assets/events/backgrnd.webp";
+import pin from "/assets/events/pin.webp";
+import cicada from "/assets/events/cicada.webp";
+import bc from "/assets/events/bccb.webp";
+import wtf from "/assets/events/wtf.webp";
+import h4i from "/assets/events/h4i.webp";
+import mozdev from "/assets/events/mozdev.webp";
+import casa from "/assets/events/casa.webp";
+import sdg from "/assets/events/sdg.webp";
+import cb from "/assets/events/cyberbattle.webp";
+import ec from "/assets/events/ec.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -50,7 +50,7 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
 );
 
 export default function EventsPage() {
-  const items = [
+  const items = [ //update this to add/subtract events
     { id: 1, title: "HackBattle", image: event, overlayText: "A high-stakes coding face-off for the brave and bold minds." },
     { id: 2, title: "Cicada 3310", image: cicada, overlayText: "A virtual maze filled with puzzles and hidden messages." },
     { id: 3, title: "WTF", image: wtf, overlayText: "Tech takes a twist. Expect the unexpected in this quirky event." },

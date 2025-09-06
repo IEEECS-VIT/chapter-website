@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useMediaQuery } from "react-responsive"
-import Left from "/assets/herosection/1.png"
-import Right from "/assets/herosection/2.png"
-import MobileHero from "/assets/herosection/mobile-view.png"
+import Left from "/assets/herosection/1.webp"
+import Right from "/assets/herosection/2.webp"
+import MobileHero from "/assets/herosection/mobile-view.webp"
 import OurStory from "./Ourstory"
 
 gsap.registerPlugin(ScrollTrigger)

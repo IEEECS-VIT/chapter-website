@@ -11,7 +11,7 @@ import s8 from "/assets/gallery/s8.jpg";
 import s9 from "/assets/gallery/s9.jpg";
 import s10 from "/assets/gallery/s10.jpg";
 
-const images = [s1, s2, s7, s6, s5, s3, s4, s8, s9, s10];
+const images = [s1, s2, s7, s6, s5, s3, s4, s8, s9, s10]; //update this to change photos
 
 const FilmstripGallery = () => {
   const scrollRef1 = useRef(null);
@@ -79,8 +79,8 @@ const FilmstripGallery = () => {
             object-cover shadow-2xl rounded-lg transition-transform duration-300 hover:scale-105 grayscale
             w-[400px] h-[300px] 
             md:w-[500px] md:h-[400px]
-            lg:w-[600px] lg:h-[500px]
-            xl:w-[650px] xl:h-[550px]
+            lg:w-[550px] lg:h-[450px]
+            xl:w-[600px] xl:h-[500px]
           "
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
@@ -108,8 +108,8 @@ const FilmstripGallery = () => {
             
             w-[400px] h-[300px]   
             md:w-[500px] md:h-[400px]
-            lg:w-[600px] lg:h-[500px]
-            xl:w-[650px] xl:h-[550px]
+            lg:w-[550px] lg:h-[450px]
+            xl:w-[600px] xl:h-[500px]
           "
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}

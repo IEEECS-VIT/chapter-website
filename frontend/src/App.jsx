@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
@@ -23,6 +24,10 @@ const App = () => {
   const heroContentRef = useRef(null);
   const mainAppRef = useRef(null);
   const smoothContentRef = useRef(null);
+
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
+  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1023 });
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const handleEnter = () => {
     setContentReady(true);
@@ -48,17 +53,28 @@ const App = () => {
         effects: true,
         smoothTouch: 2,
       });
+
       if (smoothContentRef.current) {
         gsap.set(smoothContentRef.current, {
           opacity: 1,
           visibility: "visible",
         });
       }
+
       ScrollTrigger.refresh();
     }, mainAppRef);
 
     return () => ctx.revert();
   }, [contentReady]);
+
+  const prevBreakpoint = useRef("");
+  useEffect(() => {
+    let currentBreakpoint = isDesktop ? "desktop" : isTablet ? "tablet" : "mobile";
+    if (prevBreakpoint.current && prevBreakpoint.current !== currentBreakpoint) {
+      window.location.reload();
+    }
+    prevBreakpoint.current = currentBreakpoint;
+  }, [isDesktop, isTablet, isMobile]);
 
   return (
     <div ref={mainAppRef} className="min-w-screen min-h-screen relative bg-black">

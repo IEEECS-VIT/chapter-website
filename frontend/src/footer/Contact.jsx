@@ -47,7 +47,7 @@ const Contact = () => {
             fill="black"
           />
         </svg>
-        <div className="absolute top-[10%] md:top-[20%] left-1/2 transform -translate-x-1/2 w-[25vw] max-w-[240px] h-[25vw] max-h-[240px] md:w-[15vw] md:h-[15vw]">
+        <div className="absolute top-[10%] md:top-[20%] left-1/2 transform -translate-x-1/2 w-[45vw] max-w-[240px] h-[25vw] max-h-[240px] md:w-[35vw] md:h-[35vw]">
           <LocalModelViewer />
         </div>
       </header>
@@ -113,7 +113,7 @@ const Contact = () => {
           </form>
         </div>
 
-        <div className="w-full lg:w-2/5 flex justify-center items-center -mt-[8vh] -mb-[2vh] lg:mt-0 lg:mb-0">
+        <div className="w-full lg:w-4/5 flex justify-center items-center -mt-[8vh] -mb-[2vh] lg:mt-0 lg:mb-0">
           <LocalModelViewer /> 
         </div>
 
