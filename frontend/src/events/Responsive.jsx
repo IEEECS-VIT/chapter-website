@@ -50,17 +50,17 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
 );
 
 export default function EventsPage() {
-  const items = [ //update this to add/subtract events
+  const items = [
     { id: 1, title: "HackBattle", image: event, overlayText: "An overnight hackathon where innovators collaborate to turn ideas into impactful solutions." },
     { id: 2, title: "Cicada 3310", image: cicada, overlayText: "A mystery-filled cipher challenge that pushes participants to discover hidden meanings and deeper purposes." },
     { id: 3, title: "WTF", image: wtf, overlayText: "A Capture The Flag-style cybersecurity competition testing problem-solving and technical skills." },
     { id: 4, title: "BattleCode", image: bc, overlayText: "A fast-paced coding competition designed to test strategy and programming under pressure." },
-    { id: 5, title: "SDG", image: sdg, overlayText: "A retro-style game challenge where creative coding ideas come alive." },
-    { id: 6, title: "CASA", image: casa, overlayText: "A timed algorithmic competition that challenges participants under pressure." },
+    { id: 5, title: "SDG", image: sdg, overlayText: "An IEEE CS SDG event at VIT drives tech-powered awareness and action toward the UN’s 17 Sustainable Development Goals." },
+    { id: 6, title: "CASA", image: casa, overlayText: "An IEEE CS CASA event at VIT raises awareness and promotes action against substance abuse through technology." },
     { id: 7, title: "MozDev", image: mozdev, overlayText: "A six-hour web development workshop offering practical, hands-on experience." },
-    { id: 8, title: "Emerald City", image: ec, overlayText: "A competition focused on solving cryptographic ciphers in high-pressure settings." },
+    { id: 8, title: "Emerald City", image: ec, overlayText: "A competition focused on solving  ciphers in high-pressure settings." },
     { id: 9, title: "Hack For Impact", image: h4i, overlayText: "A coding challenge emphasizing elegant, compact solutions." },
-    { id: 10, title: "Cyberbattle", image: cb, overlayText: "A high-stakes competition for competitive programmers to test their coding skills." },
+    { id: 10, title: "Cyberbattle", image: cb, overlayText: "A hands on cybersecurity workshop to help people develop more secure applications " },
   ];
 
   const scrollerRef = useRef(null);

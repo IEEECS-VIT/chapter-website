@@ -28,7 +28,7 @@ const Contact = () => {
     }
   } catch (err) {
     console.error(err);
-    setStatus("Something went wrong.");
+    setStatus("error:Something went wrong.");
   }
 };
 
@@ -117,7 +117,7 @@ const Contact = () => {
                 Submit
               </button>
             </div>
-             {status && <p className="text-green-600 bg-green-100 border border-green-300 rounded-lg px-4 py-2 text-center font-semibold shadow-sm">
+             {status && <p className="bg-yellow-400 text-black border border-white rounded-lg px-4 py-2 text-center font-semibold shadow-sm">
   {status}
 </p>
 }
