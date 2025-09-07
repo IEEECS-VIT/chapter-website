@@ -1,6 +1,6 @@
 <p align="center">
 <a href="https://www.ieeecsvit.com/">
-	<img width="400" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fin.linkedin.com%2Fcompany%2Fieee-cs-vit&psig=AOvVaw2_UTf80g0yyCjBVqbYlx9O&ust=1757310435903000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCLCPstT5xY8DFQAAAAAdAAAAABAE" alt="IEEE Computer Society VIT"/>
+	<img width="400" src="https://i.postimg.cc/jqpZMB52/ieeecs-logo.png" alt="IEEE Computer Society VIT"/>
 </a>
 	<h2 align="center">IEEE Computer Society website </h2>
 	<h4 align="center">The IEEE Computer Society VIT website is the central hub for showcasing our chapter’s events, initiatives, and opportunities. It serves as a gateway for students to connect, collaborate, and innovate within the tech community.</h4>
@@ -44,26 +44,16 @@ npm run build
     Create a pull request
 
 # Contributors
+This project was developed by:
 
-<table>
-<tr align="center">
-	<td>
-	Utkarsh
-	<p align="center">
-		<img width="150" height="150" alt="Utkarsh">
-	</p>
-		<p align="center">
-			<a href="https://github.com/utk2602">
-				<img src="http://www.iconninja.com/files/241/825/211/round-collaboration-social-github-code-circle-network-icon.svg" width="36" height="36" alt="GitHub"/>
-			</a>
-			<a href="https://www.linkedin.com/in/utkarsh-kashyap-041931285/">
-				<img src="http://www.iconninja.com/files/863/607/751/network-linkedin-social-connection-circular-circle-media-icon.svg" width="36" height="36" alt="LinkedIn"/>
-			</a>
-		</p>
-		<p align="center">
-			Website
-		</p>
-	</td>
-	<td>
-</tr>
-</table>
+- **Utkarsh** - [GitHub](https://github.com/utk2602) | [LinkedIn](https://www.linkedin.com/in/utkarsh-kashyap-041931285/)
+- **Dev Mehandru** - [GitHub](https://github.com/d-e-v-14) | [LinkedIn](https://www.linkedin.com/in/dev-mehandru-a4b15b320/)
+- **Anubhav kayal** - [GitHub](https://github.com/anubhav-kayal) 
+- **Chinmay Mahato** - [GitHub](https://github.com/chinmayyy01) | [LinkedIn](www.linkedin.com/in/chinmay-mahto-4a9891279)
+- **Anwesha laha** - [GitHub](https://github.com/an-2210) | [LinkedIn](https://www.linkedin.com/in/anwesha-laha-9456ab2a8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)
+- **Anushka Gattani** - [GitHub](https://github.com/Anushka13-bit) 
+- **Swethashree** - [GitHub](https://github.com/Swetha1856) | [LinkedIn](https://www.linkedin.com/in/swethaashrie-m-06108732b/)
+
+<p align="center">
+	Made with :heart: by <a href="https://www.ieeecsvit.com/">IEEE Computer Society VIT </a>
+</p>
