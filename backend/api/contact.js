@@ -3,7 +3,8 @@ import nodemailer from "nodemailer";
 export default async function handler(req, res) {
 
 const allowedOrigins = [
-  "https://ieee-cs-website-three.vercel.app"
+  "https://ieee-cs-website-three.vercel.app",
+  "https://ieee-cs-website-latest.vercel.app/",
 ];
 
 const origin = req.headers.origin;
