@@ -135,7 +135,7 @@ const HeroSection = ({ contentRef }) => {
                 className="flex flex-col justify-start items-center text-center"
               >
                 <h1
-                  className="text-white translate-y-1/3 font-black"
+                  className="text-white translate-y-1/3 mt-2 font-black"
                   style={{
                     fontSize: "clamp(12rem, 10vw, 13rem)",
                     fontFamily: "Henju",

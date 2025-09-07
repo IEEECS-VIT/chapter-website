@@ -10,8 +10,31 @@ import s7 from "/assets/gallery/s7.jpg";
 import s8 from "/assets/gallery/s8.jpg";
 import s9 from "/assets/gallery/s9.jpg";
 import s10 from "/assets/gallery/s10.jpg";
+import s11 from "/assets/gallery/s11.webp"
+//use webp format for faster image loading & better quality
 
-const images = [s1, s2, s7, s6, s5, s3, s4, s8, s9, s10,s1, s2, s7, s6, s5, s3, s4, s8, s9, s10,s1, s2, s7, s6, s5, s3, s4, s8, s9, s10,s1, s2, s7, s6, s5, s3, s4, s8, s9, s10]; //update this to change photos
+//update this list to add more images
+const imagesPool = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11];
+
+const images = [];
+
+
+for (let i = 0; i < 20; i++) {
+  const randomIndex = Math.floor(Math.random() * imagesPool.length);
+  images.push(imagesPool[randomIndex]);
+}
+
+function addRandomImage() {
+  const randomIndex = Math.floor(Math.random() * imagesPool.length);
+  images.push(imagesPool[randomIndex]);
+  return images;
+}
+
+setInterval(() => {
+  addRandomImage();
+  console.log(images); 
+}, 1000);
+
 
 const FilmstripGallery = () => {
   const scrollRef1 = useRef(null);
@@ -29,15 +52,11 @@ const FilmstripGallery = () => {
   const step = () => {
     if (!isPaused) {
       posRef1.current += 1; 
-      if (posRef1.current >= strip1.scrollWidth / 2) {
-        posRef1.current = posRef1.current - strip1.scrollWidth / 2;
-      }
+     
       strip1.style.transform = `translateX(-${posRef1.current}px)`;
 
       posRef2.current += 1;
-      if (posRef2.current >= strip2.scrollWidth / 2) {
-        posRef1.current = posRef1.current - strip1.scrollWidth / 2;
-      }
+     
       strip2.style.transform = `translateX(${posRef2.current}px)`;
     }
     animationRef.current = requestAnimationFrame(step);
