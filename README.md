@@ -1,6 +1,6 @@
 <p align="center">
 <a href="https://www.ieeecsvit.com/">
-	<img width="400" src="https://i.postimg.cc/jqpZMB52/ieeecs-logo.png" alt="IEEE Computer Society VIT"/>
+	<img width="400" src="https://i.ibb.co/JwHB8L2d/lo-removebg-preview.png" alt="IEEE Computer Society VIT"/>
 </a>
 	<h2 align="center">IEEE Computer Society website </h2>
 	<h4 align="center">The IEEE Computer Society VIT website is the central hub for showcasing our chapter’s events, initiatives, and opportunities. It serves as a gateway for students to connect, collaborate, and innovate within the tech community.</h4>
@@ -51,7 +51,7 @@ This project was developed by:
 - **Anubhav kayal** - [GitHub](https://github.com/anubhav-kayal) 
 - **Chinmay Mahato** - [GitHub](https://github.com/chinmayyy01) | [LinkedIn](www.linkedin.com/in/chinmay-mahto-4a9891279)
 - **Anwesha laha** - [GitHub](https://github.com/an-2210) | [LinkedIn](https://www.linkedin.com/in/anwesha-laha-9456ab2a8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)
-- **Anushka Gattani** - [GitHub](https://github.com/Anushka13-bit) 
+- **Anushka Gattani** - [GitHub](https://github.com/Anushka13-bit)  | [LinkedIn](https://www.linkedin.com/in/anushka-gattani?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app)
 - **Swethashree** - [GitHub](https://github.com/Swetha1856) | [LinkedIn](https://www.linkedin.com/in/swethaashrie-m-06108732b/)
 
 <p align="center">
