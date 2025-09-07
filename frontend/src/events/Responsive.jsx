@@ -19,7 +19,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const EventCard = ({ title, image, hasOverlay = false, overlayText, first = false }) => (
   <div
-    className={`relative flex-shrink-0 w-[200px] sm:w-[280px] md:w-[280px] lg:w-[320px] xl:w-[360px] ${
+    className={`relative flex-shrink-0 mb-8 w-[235px] sm:w-[280px] md:w-[280px] lg:w-[320px] xl:w-[360px] ${
       first ? "ml-4 sm:ml-8" : "ml-4"
     } last:mr-4 sm:last:mr-8`}
     style={{ fontFamily: "Special Elite, cursive" }}
@@ -28,7 +28,7 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
       <div className="absolute -top-10 -right-10 -translate-y-1/4 translate-x-1/4 sm:-top-14 sm:-right-12 md:-top-14 md:-right-12 lg:-top-14 lg:-right-12 z-30 rotate-[-10deg]" loading="lazy">
         <img src={pin} alt="Pin" className="w-58 sm:w-96 md:w-78 lg:w-86 h-auto drop-shadow-md" />
       </div>
-      <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[300px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center bg-white/80">
+      <div className="relative w-full h-[235px] sm:h-[240px] md:h-[280px] lg:h-[300px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center bg-white/80">
         <img
           src={image || "/placeholder.svg"}
           alt={title}
@@ -151,11 +151,11 @@ const handleSliderChange = (val) => {
       }}
     >
       <div className="flex flex-col items-center justify-center w-full">
-        <h1 className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-henju mt-3 font-bold mb-8 sm:mb-12 tracking-widest text-center select-none">
+        <h1 className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-henju -mt-1 font-bold mb-8 sm:mb-12 tracking-widest text-center select-none">
           EVENTS
         </h1>
         <div className="w-screen h-0.5 bg-white mb-1 sm:mb-2" />
-        <div className="w-screen h-0.5 bg-white mb-4 sm:mb-8 lg:mb-14" />
+        <div className="w-screen h-0.5 bg-white mb-8 sm:mb-8 lg:mb-14" />
         <div className="w-full overflow-hidden">
           <div
             ref={scrollerRef}
@@ -188,8 +188,8 @@ const handleSliderChange = (val) => {
             onChange={handleSliderChange}
           />
         </div>
-        <div className="w-screen h-0.5 bg-white mt-8 sm:mt-10 mb-1 sm:mb-2" />
-        <div className="w-screen h-0.5 bg-white mb-4 sm:mb-6" />
+        <div className="w-screen h-0.5 bg-white mt-3 sm:mt-10 mb-1 sm:mb-2" />
+        <div className="w-screen h-0.5 bg-white mb-3 sm:mb-6" />
       </div>
     </div>
   );
