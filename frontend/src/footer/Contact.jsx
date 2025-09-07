@@ -47,9 +47,7 @@ const Contact = () => {
             fill="black"
           />
         </svg>
-        <div className="absolute top-[10%] md:top-[20%] left-1/2 transform -translate-x-1/2 w-[45vw] max-w-[240px] h-[25vw] max-h-[240px] md:w-[35vw] md:h-[35vw]">
-          <LocalModelViewer />
-        </div>
+        
       </header>
 
       <div className="flex flex-col-reverse lg:flex-row items-start justify-center w-full px-5 sm:px-8 md:px-10 lg:px-20 gap-8 lg:gap-10 relative">
