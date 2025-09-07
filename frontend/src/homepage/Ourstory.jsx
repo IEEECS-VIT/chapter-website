@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Logo from "/assets/logos/IEEECS.png";
 import Background from "/assets/herosection/paper_effect.webp";
 import Team from "/assets/herosection/team.webp";
-import MobileBoard from "/assets/herosection/mobile-board.webp";
+import MobileBoard from "/assets/gallery/s11.webp";
 
 const OurStory = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -58,7 +58,7 @@ const OurStory = () => {
             whiteSpace: "pre-line",
           }}
         >
-           Founded in 2012, IEEE Computer Society, VIT, is a hub where students innovate, learn, and build skills to tackle real-world challenges.
+           Founded in 2012, IEEE Computer Society, VIT, has been fostering innovation as part of IEEE Region 10, Madras Section. Over the years, it has grown into a vibrant hub where students learn, experiment, and collaborate. Our members explore cutting-edge technology, develop real-world solutions, and build the skills needed to thrive in a fast-changing world.
         </p>
       </div>
 
