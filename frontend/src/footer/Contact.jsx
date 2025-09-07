@@ -12,9 +12,10 @@ const Contact = () => {
   const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const serviceId = "service_6dmfxn6";
-  const templateId = "template_1cjqc5f";
-  const publicKey = "kEKJE8y48LrNtriT_";
+const serviceId = import.meta.env.VITE_APP_SERVICE_ID;
+const templateId = import.meta.env.VITE_APP_TEMPLATE_ID;
+const publicKey = import.meta.env.VITE_APP_PUBLIC_KEY;
+
 
 const templateParams = {
   from_name: name,  
