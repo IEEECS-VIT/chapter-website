@@ -35,7 +35,6 @@ const Project = () => {
   const pages = projectData.length;
   const flips = pages - 1;
 
-  // Handle responsive screen check
   useEffect(() => {
     const handleResize = () => setIsLargeScreen(window.innerWidth >= 1024);
     window.addEventListener("resize", handleResize);
@@ -53,7 +52,6 @@ const Project = () => {
 
     liftMaxRef.current = computeLiftMax();
 
-    // Initialize page visibilities
     topPageRefs.current.forEach((el, i) =>
       gsap.set(el, { autoAlpha: i === 0 ? 1 : 0 })
     );
@@ -181,7 +179,6 @@ const Project = () => {
       className="bg-black relative w-full min-h-screen overflow-x-hidden lg:overflow-x-visible text-[#4B3200]"
     >
       <section className="relative w-full lg:min-h-[100vh]">
-        {/* Top strip */}
         {isLargeScreen && (
           <div
             className="mx-auto bg-[#fdfaf3] w-[95vw] lg:w-[90vw] max-w-7xl h-7 lg:h-[7vh] rounded-b-3xl relative"
@@ -189,7 +186,6 @@ const Project = () => {
           />
         )}
 
-        {/* Binding */}
         {isLargeScreen ? (
           <div className="relative">
             <Binding />
@@ -200,18 +196,15 @@ const Project = () => {
           </div>
         )}
 
-        <div className="mt-8 flex flex-col lg:items-center lg:justify-center relative">
-          {/* Book container */}
+        <div className="lg:mt-8 flex flex-col lg:items-center lg:justify-center relative mt-[14vh]">
           <div
             className="relative w-full lg:w-[90vw] max-w-7xl rounded-3xl"
             style={{ perspective: "8000px", transformStyle: "preserve-3d" }}
           >
-            {/* Shadows */}
             <div className="absolute w-full h-[74vh] lg:h-[79vh] bg-[#1B231A] rounded-3xl z-0 border border-amber-100" />
             <div className="absolute w-full h-[72vh] lg:h-[77vh] bg-[#fdfaf4be] rounded-3xl z-0" />
             <div className="absolute w-full h-[71vh] lg:h-[76vh] bg-[#fdfaf4eb] rounded-3xl z-0" />
 
-            {/* Bottom page */}
             <div
               ref={bottomPaperRef}
               className="absolute inset-0 h-[70vh] lg:h-[75vh] bg-[#fdfaf3] rounded-3xl shadow-2xl overflow-hidden z-10 text-[#4B3200]"
@@ -234,7 +227,6 @@ const Project = () => {
               ))}
             </div>
 
-            {/* Top page */}
             <div
               ref={topPaperRef}
               className="relative z-30 h-[70vh] lg:h-[75vh] bg-[#fdfaf3] rounded-3xl shadow-2xl overflow-hidden text-[#4B3200]"
@@ -256,7 +248,6 @@ const Project = () => {
             </div>
           </div>
 
-          {/* Tabs - desktop only using window width */}
           {isLargeScreen && (
             <div className="mx-auto max-w-7xl z-20">
               <ProjectTabs

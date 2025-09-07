@@ -43,12 +43,12 @@ const ProjectDisplay = ({ data }) => {
             <img
               src={data.viewImage}
               alt="view background"
-              className="absolute rotate-[0deg] w-[18vw] lg:w-[9vw] scale-150"
+              className="absolute rotate-[0deg] w-[18vw] lg:w-[8vw] scale-150"
             />
             <img
               src={data.viewImage}
               alt="view top"
-              className="rotate-[10deg] w-[18vw] lg:w-[9vw] scale-150"
+              className="rotate-[10deg] w-[18vw] lg:w-[8vw] scale-150"
             />
           </div>
         )}
