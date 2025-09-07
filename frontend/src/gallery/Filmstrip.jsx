@@ -10,28 +10,21 @@ import s7 from "/assets/gallery/s7.jpg";
 import s8 from "/assets/gallery/s8.jpg";
 import s9 from "/assets/gallery/s9.jpg";
 import s10 from "/assets/gallery/s10.jpg";
-import s11 from "/assets/gallery/s11.webp";
+
 //update this to modfy images
-const imagesPool = [s1, s2, s5, s4, s3, s6, s7, s8, s10, s9, s11];
+const imagesPool = [s1, s2, s5, s4, s3, s6, s7, s8, s10, s9];
 
 const images = [];
 
-for (let i = 0; i >0; i++) {
-  const randomIndex = Math.floor(Math.random() * imagesPool.length);
-  images.push(imagesPool[randomIndex]);
-}
 
 function addRandomImage() {
   const randomIndex = Math.floor(Math.random() * imagesPool.length);
   images.push(imagesPool[randomIndex]);
-  return images;
 }
 
-
-setInterval(() => {
-  addRandomImage();
-  console.log(images);
-}, 1000);
+const interval = setInterval(() => {
+  addRandomImage(); 
+}, 1); 
 
 const FilmstripGallery = () => {
   const scrollRef1 = useRef(null);
