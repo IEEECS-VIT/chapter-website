@@ -2,10 +2,13 @@ import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
   const allowedOrigins = ["https://ieee-cs-website-latest.vercel.app"];
-
   const origin = req.headers.origin;
+
   if (allowedOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
+  } else {
+    // fallback for debugging (remove later)
+    res.setHeader("Access-Control-Allow-Origin", "*");
   }
 
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
