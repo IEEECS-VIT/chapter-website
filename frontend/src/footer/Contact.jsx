@@ -12,7 +12,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    const res = await fetch("https://ieee-cs-website-backend.vercel.app/", {
+    const res = await fetch("https://ieee-cs-website-backend.vercel.app/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, message }),
