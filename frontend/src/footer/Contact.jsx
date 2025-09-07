@@ -12,9 +12,9 @@ const Contact = () => {
   const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const serviceId = "service_67e8ey7";
-  const templateId = "template_7a6qj9a";
-  const publicKey = "3uayWu7imywpmWJAo";
+  const serviceId = "service_6dmfxn6";
+  const templateId = "template_1cjqc5f";
+  const publicKey = "kEKJE8y48LrNtriT_";
 
 const templateParams = {
   from_name: name,  
