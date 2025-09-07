@@ -1,0 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');@tailwind base;@tailwind components;@tailwind utilities;html,body{overflow-x:hidden}@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}.animate-scroll{animation:scroll 30s linear infinite}@font-face{font-family:'Henju';src:url('/fonts/Henju-Regular.otf') format('opentype');font-weight:400;font-style:normal}*{user-select:none!important}@keyframes flipPhone{0%{transform:rotate(90deg)}40%{transform:rotate(0deg)}60%{transform:rotate(0deg)}100%{transform:rotate(90deg)}}
+html, body {
+  overflow-x: hidden;
+  overscroll-behavior: none;
+}

@@ -1,0 +1,104 @@
+import React, { useState } from "react";
+import Logo from "/assets/logos/IEEECS.png";
+import Background from "/assets/herosection/paper_effect.webp";
+import Team from "/assets/herosection/team.webp";
+import MobileBoard from "/assets/herosection/mobile-board.webp";
+
+const OurStory = () => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  return (
+    <div className="relative w-screen h-screen overflow-hidden bg-white text-black z-0">
+      <div
+        className="absolute inset-0 bg-cover bg-center brightness-100 z-0"
+        style={{ backgroundImage: `url(${Background})` }}
+      />
+
+      <div className="absolute top-[2vh] left-[2vh] p-[1vh] z-10">
+        <img
+          src={Logo}
+          alt="IEEE Computer Society Logo"
+          className="w-[20vh] max-w-[25vw] min-w-[8vh] object-contain"
+          loading="lazy"
+        />
+      </div>
+
+      <div className="lg:hidden relative z-10 flex flex-col items-center text-center px-[4vw] pt-[10vh]">
+        <h1
+          className="text-[#0b0b0a] tracking-wide font-semibold"
+          style={{
+            fontFamily: "Special Elite,serif",
+            fontSize: "clamp(3.5vh, 6vh, 6.5vh)",
+            lineHeight: "1.1",
+          }}
+        >
+          OUR STORY
+        </h1>
+
+        <div
+          className="relative w-full flex items-center justify-center px-[2vh] mt-[1vh]"
+          style={{ filter: "grayscale(100%)" }}
+        >
+          <img
+            src={MobileBoard}
+            alt="IEEE Computer Society Team"
+            className={`rounded-xl opacity-0 translate-y-[3vh] transition-opacity duration-700 w-auto max-h-[40vh] object-cover ${
+              imageLoaded ? "opacity-100" : ""
+            }`}
+            onLoad={() => setImageLoaded(true)}
+            loading="lazy"
+          />
+        </div>
+
+        <p
+          className="text-[#0b0b0a] max-w-[80vw] leading-relaxed mt-[4vh]"
+          style={{
+            fontFamily: "Special Elite",
+            fontSize: "clamp(1.2vh, 2vh, 2.4vh)",
+            whiteSpace: "pre-line",
+          }}
+        >
+           Founded in 2012, IEEE Computer Society, VIT, is a hub where students innovate, learn, and build skills to tackle real-world challenges.
+        </p>
+      </div>
+
+      <div className="hidden lg:flex relative z-10 flex-col items-center text-center px-[6vw] pt-[12vh]">
+        <h1
+          className="text-[#0b0b0a] tracking-wide"
+          style={{
+            fontFamily: "Special Elite",
+            fontSize: "clamp(6vh, 10vh, 12vh)",
+            lineHeight: "1.0",
+          }}
+        >
+          OUR STORY
+        </h1>
+
+        <p
+          className="mt-[2vh] text-[#0b0b0a] max-w-[70vw] leading-relaxed"
+          style={{
+            fontFamily: "Special Elite",
+            fontSize: "clamp(3.0vh, 2.4vh, 3.5vh)",
+            whiteSpace: "pre-line",
+          }}
+        >
+Founded in 2012, IEEE Computer Society, VIT, has been fostering innovation as part of IEEE Region 10, Madras Section. Over the years, it has grown into a vibrant hub where students learn, experiment, and collaborate. Our members explore cutting-edge technology, develop real-world solutions, and build the skills needed to thrive in a fast-changing world.
+        </p>
+
+        <div className="absolute top-3/4 w-full flex items-center justify-center px-[2vh]">
+          <img
+            src={Team}
+            alt="IEEE Computer Society Team"
+            className={`rounded-xl opacity-0 transition-opacity duration-700 w-screen h-[70vh] object-cover ${
+              imageLoaded ? "opacity-100" : ""
+            }`}
+            onLoad={() => setImageLoaded(true)}
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OurStory;
