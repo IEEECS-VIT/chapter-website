@@ -12,11 +12,11 @@ import s9 from "/assets/gallery/s9.jpg";
 import s10 from "/assets/gallery/s10.jpg";
 import s11 from "/assets/gallery/s11.webp";
 //update this to modfy images
-const imagesPool = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11];
+const imagesPool = [s1, s2, s5, s4, s3, s6, s7, s8, s10, s9, s11];
 
 const images = [];
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i >0; i++) {
   const randomIndex = Math.floor(Math.random() * imagesPool.length);
   images.push(imagesPool[randomIndex]);
 }
