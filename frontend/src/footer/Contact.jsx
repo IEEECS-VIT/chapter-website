@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import emailjs from "@emailjs/browser";
 import LocalModelViewer from "./LocalModelView";
 
 const Contact = () => {
@@ -11,25 +11,32 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
-  try {
-    const res = await fetch("https://ieee-cs-website-backend.vercel.app/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, message }),
-    });
 
-    if (res.ok) {
+const serviceId = import.meta.env.VITE_APP_SERVICE_ID;
+const templateId = import.meta.env.VITE_APP_TEMPLATE_ID;
+const publicKey = import.meta.env.VITE_APP_PUBLIC_KEY;
+
+
+const templateParams = {
+  from_name: name,  
+  message: message, 
+  reply_to: email,   
+  to_name: "IEEE CS VIT"
+};
+
+
+  emailjs.send(serviceId, templateId, templateParams, publicKey)
+    .then((response) => {
+      console.log("Email sent", response);
       setStatus("Message sent successfully!");
       setName("");
       setEmail("");
       setMessage("");
-    } else {
-      setStatus("Something went wrong.");
-    }
-  } catch (err) {
-    console.error(err);
-    setStatus("error:Something went wrong.");
-  }
+    })
+    .catch((error) => {
+      console.error("Error sending mail:", error);
+      setStatus("Failed to send message. Please try again.");
+    });
 };
 
 
@@ -80,7 +87,7 @@ const Contact = () => {
                 placeholder="Enter your email..."
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}" 
                  title="Please enter a valid email address"
 
                 className="w-full px-4 py-2 rounded-xl md:rounded-full bg-[#ECE0D0] outline-none border-none text-[4vw] sm:text-sm md:text-base"
