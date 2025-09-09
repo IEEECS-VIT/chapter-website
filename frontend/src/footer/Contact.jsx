@@ -4,30 +4,34 @@ import LocalModelViewer from "./LocalModelView";
 import axios from "axios";
 
 const Contact = () => {
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus("Sending...");
+  e.preventDefault();
+  try {
+    const res = await fetch("https://ieee-cs-website-vwmd.vercel.app/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, message }),
+    });
 
-    try {
-      const res = await axios.post("https://ieee-cs-website-vwmd.vercel.app/api/contact", {
-        name,
-        email,
-        message,
-      });
-      setStatus(res.data.message);
+    if (res.ok) {
+      setStatus("Message sent successfully!");
       setName("");
       setEmail("");
       setMessage("");
-    } catch (err) {
-      console.error(err);
-      setStatus("Failed to send email.");
+    } else {
+      setStatus("Something went wrong.");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setStatus("error:Something went wrong.");
+  }
+};
 
   return (
     <div className="min-h-screen w-full flex flex-col font-serif bg-[#EF9E00] text-[#4B3200]">
