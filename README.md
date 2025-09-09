@@ -1,7 +1,7 @@
 # 🌐 IEEE Computer Society VIT – Website  
 
 <p align="center">
-  <img src="./public/logo.png" alt="IEEE CS VIT Logo" width="200"/>
+  <img src="frontend/public/logo.png" alt="IEEE CS VIT Logo" width="500" />
 </p>
 
 The **official website** of the IEEE Computer Society VIT chapter 🚀  
