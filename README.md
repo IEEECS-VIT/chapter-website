@@ -1,29 +1,31 @@
+# 🌐 IEEE Computer Society VIT – Website  
+
 <p align="center">
-<a href="https://www.ieeecsvit.com/">
-	<img width="400" src="https://i.ibb.co/JwHB8L2d/lo-removebg-preview.png" alt="IEEE Computer Society VIT"/>
-</a>
-	<h2 align="center">IEEE Computer Society website </h2>
-	<h4 align="center">The IEEE Computer Society VIT website is the central hub for showcasing our chapter’s events, initiatives, and opportunities. It serves as a gateway for students to connect, collaborate, and innovate within the tech community.</h4>
+  <img src="./public/logo.png" alt="IEEE CS VIT Logo" width="200"/>
 </p>
 
-## Dependencies
-- React 19.1.1
-- Vite 5.4.0
-- Framer Motion 11.14.4
-- Tailwind CSS 3.4.1
-- React Router DOM 6.28.0
-- Gsap 3.12.5
-- Lucide React 0.437.0
-- React Icons 5.3.0
+The **official website** of the IEEE Computer Society VIT chapter 🚀  
+A central hub to showcase events, initiatives, and opportunities – connecting students to innovate, collaborate, and grow within the tech community.  
 
-## Running
+---
+
+## 🛠️ Tech Stack
+![React](https://img.shields.io/badge/React-19.1.1-blue?logo=react)
+![Vite](https://img.shields.io/badge/Vite-5.4.0-646CFF?logo=vite)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-11.14.4-ff77ff?logo=framer)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4.1-38bdf8?logo=tailwindcss)
+![GSAP](https://img.shields.io/badge/GSAP-3.12.5-88CE02?logo=greensock)
+![React Router](https://img.shields.io/badge/React_Router-6.28.0-CA4245?logo=reactrouter)
+
+---
+
+## 🚀 Getting Started  
 
 Clone the repository and install dependencies:
 ```bash
-git clone [text](https://github.com/utk2602)
+git clone https://github.com/utk2602/ieee-cs-vit.git
 cd frontend
 npm install
-```
 Start the development server:
 ```shellscript
 npm run dev
@@ -46,13 +48,15 @@ npm run build
 # Contributors
 This project was developed by:
 
-- **Utkarsh** - [GitHub](https://github.com/utk2602) | [LinkedIn](https://www.linkedin.com/in/utkarsh-kashyap-041931285/)
-- **Dev Mehandru** - [GitHub](https://github.com/d-e-v-14) | [LinkedIn](https://www.linkedin.com/in/dev-mehandru-a4b15b320/)
-- **Anubhav kayal** - [GitHub](https://github.com/anubhav-kayal) 
-- **Chinmay Mahato** - [GitHub](https://github.com/chinmayyy01) | [LinkedIn](www.linkedin.com/in/chinmay-mahto-4a9891279)
-- **Anwesha laha** - [GitHub](https://github.com/an-2210) | [LinkedIn](https://www.linkedin.com/in/anwesha-laha-9456ab2a8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)
-- **Anushka Gattani** - [GitHub](https://github.com/Anushka13-bit)  | [LinkedIn](https://www.linkedin.com/in/anushka-gattani?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app)
-- **Swethashree** - [GitHub](https://github.com/Swetha1856) | [LinkedIn](https://www.linkedin.com/in/swethaashrie-m-06108732b/)
+| Name | GitHub | LinkedIn |
+|------|--------|----------|
+| Utkarsh | [GitHub](https://github.com/utk2602) | [LinkedIn](https://www.linkedin.com/in/utkarsh/) |
+| Dev Mehandru | [GitHub](https://github.com/d-e-v-14) | [LinkedIn](https://www.linkedin.com/in/dev-mehandru/) |
+| Anubhav Kayal | [GitHub](https://github.com/anubhavkayal) | [LinkedIn](https://www.linkedin.com/in/anubhav-kayal-87252932b/) |
+| Chinmay Mahto | [GitHub](https://github.com/chinmay) | [LinkedIn](https://www.linkedin.com/in/chinmay/) |
+| Anwesha Laha | [GitHub](https://github.com/anwesha) | [LinkedIn](https://www.linkedin.com/in/anwesha/) |
+| Anushka Gattani | [GitHub](https://github.com/anushka) | [LinkedIn](https://www.linkedin.com/in/anushka/) |
+| Swethashree | [GitHub](https://github.com/swethashree) | [LinkedIn](https://www.linkedin.com/in/swethashree/) |
 
 <p align="center">
 	Made with :heart: by <a href="https://www.ieeecsvit.com/">IEEE Computer Society VIT </a>
