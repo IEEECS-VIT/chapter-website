@@ -31,7 +31,8 @@ export default async function handler(req, res) {
     });
 
     await transporter.sendMail({
-      from: `"IEEE CS VIT Website"`,
+      from: `"${name} <${email}>" <${process.env.SMTP_USER}>`,
+      replyTo: email, 
       to: process.env.EMAIL_TO,
       subject: "New Contact Form Submission – IEEE CS VIT",
       html: `
