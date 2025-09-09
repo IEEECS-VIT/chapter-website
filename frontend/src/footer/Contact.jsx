@@ -14,7 +14,7 @@ const Contact = () => {
     setStatus("Sending...");
 
     try {
-      const res = await axios.post("http://localhost:5000/send-email", {
+      const res = await axios.post("https://ieee-cs-website-vwmd.vercel.app/send-mail", {
         name,
         email,
         message,
