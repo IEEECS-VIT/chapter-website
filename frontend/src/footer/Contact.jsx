@@ -1,44 +1,33 @@
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
 import LocalModelViewer from "./LocalModelView";
+import axios from "axios";
 
 const Contact = () => {
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    setStatus("Sending...");
 
-const serviceId = import.meta.env.VITE_APP_SERVICE_ID;
-const templateId = import.meta.env.VITE_APP_TEMPLATE_ID;
-const publicKey = import.meta.env.VITE_APP_PUBLIC_KEY;
-
-
-const templateParams = {
-  from_name: name,  
-  message: message, 
-  reply_to: email,   
-  to_name: "IEEE CS VIT"
-};
-
-
-  emailjs.send(serviceId, templateId, templateParams, publicKey)
-    .then((response) => {
-      console.log("Email sent", response);
-      setStatus("Message sent successfully!");
+    try {
+      const res = await axios.post("http://localhost:5000/send-email", {
+        name,
+        email,
+        message,
+      });
+      setStatus(res.data.message);
       setName("");
       setEmail("");
       setMessage("");
-    })
-    .catch((error) => {
-      console.error("Error sending mail:", error);
-      setStatus("Failed to send message. Please try again.");
-    });
-};
-
+    } catch (err) {
+      console.error(err);
+      setStatus("Failed to send email.");
+    }
+  };
 
   return (
     <div className="min-h-screen w-full flex flex-col font-serif bg-[#EF9E00] text-[#4B3200]">
