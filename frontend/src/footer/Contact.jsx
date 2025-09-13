@@ -161,7 +161,7 @@ const templateParams = {
             />
           </button>
           <div className="flex flex-col lg:flex-row mb:gap-4 lg:gap-[2vw] items-center lg:items- text-[5vw] sm:text-sm md:text-base">
-            <p>utkarshkashyap4549@gmail.com</p>
+            <p>ieeecs@vit.ac.in</p>
             <p>+91 9380302937</p>
           </div>
         </div>
