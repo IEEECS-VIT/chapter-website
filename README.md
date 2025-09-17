@@ -48,9 +48,9 @@ npm run build
 # Contributors
 This project was developed by:
 
-| Name | GitHub | LinkedIn |
-|------|--------|----------|
-| Utkarsh | [GitHub](https://github.com/utk2602) | 
+| Name | GitHub | 
+|------|--------|
+| Utkarsh | [GitHub](https://github.com/utk2602) |
 | Dev Mehandru | [GitHub](https://github.com/d-e-v-14) |
 | Anubhav Kayal | [GitHub](https://github.com/anubhav-kayal) | 
 | Chinmay Mahto | [GitHub](https://github.com/chinmayyy01) | 
