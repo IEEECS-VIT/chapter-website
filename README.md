@@ -50,13 +50,13 @@ This project was developed by:
 
 | Name | GitHub | LinkedIn |
 |------|--------|----------|
-| Utkarsh | [GitHub](https://github.com/utk2602) | [LinkedIn](https://www.linkedin.com/in/utkarsh/) |
-| Dev Mehandru | [GitHub](https://github.com/d-e-v-14) | [LinkedIn](https://www.linkedin.com/in/dev-mehandru/) |
-| Anubhav Kayal | [GitHub](https://github.com/anubhavkayal) | [LinkedIn](https://www.linkedin.com/in/anubhav-kayal-87252932b/) |
-| Chinmay Mahto | [GitHub](https://github.com/chinmay) | [LinkedIn](https://www.linkedin.com/in/chinmay/) |
-| Anwesha Laha | [GitHub](https://github.com/anwesha) | [LinkedIn](https://www.linkedin.com/in/anwesha/) |
-| Anushka Gattani | [GitHub](https://github.com/anushka) | [LinkedIn](https://www.linkedin.com/in/anushka/) |
-| Swethashree | [GitHub](https://github.com/swethashree) | [LinkedIn](https://www.linkedin.com/in/swethashree/) |
+| Utkarsh | [GitHub](https://github.com/utk2602) | 
+| Dev Mehandru | [GitHub](https://github.com/d-e-v-14) |
+| Anubhav Kayal | [GitHub](https://github.com/anubhav-kayal) | 
+| Chinmay Mahto | [GitHub](https://github.com/chinmayyy01) | 
+| Anwesha Laha | [GitHub](https://github.com/an-2210) |
+| Anushka Gattani | [GitHub](https://github.com/Anushka13-bit) |
+| Swethashree | [GitHub](https://github.com/Swetha1856) 
 
 <p align="center">
 	Made with :heart: by <a href="https://www.ieeecsvit.com/">IEEE Computer Society VIT </a>
