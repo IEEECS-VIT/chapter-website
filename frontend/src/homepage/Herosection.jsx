@@ -107,9 +107,9 @@ const HeroSection = ({ contentRef }) => {
           <div className="sticky top-0 z-20 h-screen overflow-hidden">
             <div
               ref={leftRef}
-              className="absolute -top-2 left-0 h-screen z-30"
+              className="absolute -top-2 -left-4 h-screen z-30"
               style={{
-                width: "51.3%",
+                width: "52.4%",
                 height: "104%",
                 backgroundImage: `url(${Left})`,
                 backgroundSize: "100% 100%",
@@ -119,9 +119,9 @@ const HeroSection = ({ contentRef }) => {
             />
             <div
               ref={rightRef}
-              className="absolute -top-2 right-0 h-screen z-30"
+              className="absolute -top-2 -right-4 h-screen z-30"
               style={{
-                width: "51%",
+                width: "52.4%",
                 height: "104%",
                 backgroundImage: `url(${Right})`,
                 backgroundSize: "100% 100%",
@@ -174,7 +174,6 @@ const HeroSection = ({ contentRef }) => {
               src={MobileHero}
               alt="Mobile Hero"
               className="absolute inset-0 w-full h-full object-cover"
-              loading="lazy"
             />
             <div className="absolute inset-0 bg-black/35"></div>
             <div className="absolute inset-0 flex justify-center items-center z-30">
