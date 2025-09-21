@@ -183,7 +183,7 @@ const handleSliderChange = (val) => {
       </div>
 
       {/* popup slider */}
-      <div className="absolute left-1/2 bottom-[1%] bg-transparent transform -translate-x-1/2 rounded-2xl p-5 z-50 w-[95%] sm:w-[80%] md:w-[70%] lg:w-[60%] block lg:hidden">
+      <div className="absolute left-1/2 bottom-[1%] transform -translate-x-1/2 rounded-2xl p-5 z-50 w-[95%] sm:w-[80%] md:w-[70%] lg:w-[60%] block lg:hidden">
         <ElasticSlider
          
           //defaultValue={sliderValue}

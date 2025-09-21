@@ -166,7 +166,7 @@ const handleSliderChange = (val) => {
             ))}
           </div>
         </div>
-        <div className="absolute left-1/2 bottom-[10%] transform -translate-x-1/2 bg-transparent backdrop-blur-md shadow-lg rounded-2xl p-5 z-50 w-[95%] sm:w-[80%] md:w-[70%] lg:w-[60%] block lg:hidden">
+        <div className="absolute left-1/2 bottom-[10%] transform -translate-x-1/2 rounded-2xl p-5 z-50 w-[95%] sm:w-[80%] md:w-[70%] lg:w-[60%] block lg:hidden">
           <ElasticSlider
 
             value={sliderValue}

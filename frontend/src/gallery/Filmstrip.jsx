@@ -82,7 +82,7 @@ const FilmstripGallery = () => {
                 src={src}
                 alt={`Gallery image ${(i % images.length) + 1}`}
                 className="object-cover shadow-2xl rounded-lg transition-transform duration-300 hover:scale-105 grayscale
-                  w-[400px] h-[300px] md:w-[500px] md:h-[400px] lg:w-[550px] lg:h-[450px] xl:w-[600px] xl:h-[500px]"
+                  w-[350px] h-[250px] md:w-[450px] md:h-[350px] lg:w-[500px] lg:h-[400px] xl:w-[550px] xl:h-[450px]"
                 onMouseEnter={() => (isPausedRef.current = true)}
                 onMouseLeave={() => (isPausedRef.current = false)}
                 loading="lazy"
@@ -105,7 +105,7 @@ const FilmstripGallery = () => {
                 src={src}
                 alt={`Gallery image ${(i % images.length) + 1}`}
                 className="object-cover shadow-xl rounded-lg transition-transform duration-300 hover:scale-105 grayscale
-                  w-[400px] h-[300px] md:w-[500px] md:h-[400px] lg:w-[550px] lg:h-[450px] xl:w-[600px] xl:h-[500px]"
+                  w-[350px] h-[250px] md:w-[450px] md:h-[350px] lg:w-[500px] lg:h-[400px] xl:w-[550px] xl:h-[450px]"
                 onMouseEnter={() => (isPausedRef.current = true)}
                 onMouseLeave={() => (isPausedRef.current = false)}
                 loading="lazy"
