@@ -127,7 +127,7 @@ useEffect(() => {
       },
     });
 
-    tl.fromTo(scroller, { xPercent: 0 }, { x: -totalScroll, ease: "none" });
+    tl.fromTo(scroller, { x: 0 }, { x: -totalScroll, ease: "none" });
     tlRef.current = tl;
 
     ScrollTrigger.refresh();
