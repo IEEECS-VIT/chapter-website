@@ -92,7 +92,7 @@ useEffect(() => {
         trigger: pin,
         start: "top top",
         end: () => `+=${totalScroll * 2}`,
-        scrub: 1,
+        scrub: 0.5,
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,

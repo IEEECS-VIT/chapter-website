@@ -49,15 +49,17 @@ const App = () => {
       const smoother = ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
         content: "#smooth-content",
-        smooth: 1.5,
+        smooth: 1,
         effects: true,
-        smoothTouch: 2,
+        smoothTouch: 1.2,
       });
 
       if (smoothContentRef.current) {
         gsap.set(smoothContentRef.current, {
           opacity: 1,
           visibility: "visible",
+           force3D: true,
+           willChange: "transform, opacity"
         });
       }
 
