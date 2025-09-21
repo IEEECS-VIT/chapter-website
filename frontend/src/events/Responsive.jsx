@@ -42,7 +42,7 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
           </div>
         )}
       </div>
-      <h3 className="text-gray-800 text-lg sm:text-xl md:text-2xl lg:text-3xl text-center tracking-wider mt-3 hover:text-gray-900 transition-colors duration-300 drop-shadow-sm">
+      <h3 className="text-gray-800 text-xl sm:text-xl md:text-2xl lg:text-3xl text-center tracking-wider mt-3 hover:text-gray-900 transition-colors duration-300 drop-shadow-sm">
         {title}
       </h3>
     </div>
