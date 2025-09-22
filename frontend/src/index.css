@@ -3,3 +3,9 @@ html, body {
   overflow-x: hidden;
   overscroll-behavior: none;
 }
+.animated-element {
+  will-change: transform, opacity;
+}
+.gpu-layer {
+  transform: translateZ(0);
+}
