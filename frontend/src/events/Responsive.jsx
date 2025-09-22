@@ -95,6 +95,7 @@ useEffect(() => {
         scrub: 0.5,
         pin: true,
         anticipatePin: 1,
+        pinType: "transform",
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           const progress = self.progress;
@@ -143,7 +144,7 @@ const handleSliderChange = (val) => {
   return (
     <div
       ref={pinRef}
-      className="relative min-h-screen flex items-center justify-center overflow-x-hidden select-none"
+      className="transform-gpu will-change-transform [contain:paint] bg-scroll backface-hidden relative min-h-screen flex items-center justify-center overflow-x-hidden select-none"
       style={{
         backgroundImage: `url(${bg})`,
         backgroundSize: "cover",
@@ -159,7 +160,7 @@ const handleSliderChange = (val) => {
         <div className="w-full overflow-hidden">
           <div
             ref={scrollerRef}
-            className="flex gap-4 sm:gap-6 md:gap-8 cursor-grab active:cursor-grabbing will-change-transform select-none pl-4 sm:pl-8 lg:pl-16 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+            className="flex gap-4 sm:gap-6 md:gap-8 cursor-grab active:cursor-grabbing will-change-transform select-none pl-4 sm:pl-8 lg:pl-16 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] transform-gpu backface-hidde"
           >
             {items.map((item, idx) => (
               <EventCard key={item.id} {...item} first={idx === 0} hasOverlay />
