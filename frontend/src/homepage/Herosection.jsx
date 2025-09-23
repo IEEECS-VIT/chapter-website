@@ -107,10 +107,10 @@ const HeroSection = ({ contentRef }) => {
           <div className="sticky top-0 z-20 h-screen overflow-hidden">
             <div
               ref={leftRef}
-              className="absolute -top-2 -left-4 h-screen z-30"
+              className="absolute -top-5 -left-4 h-screen z-30"
               style={{
-                width: "52.4%",
-                height: "104%",
+                width: "52.45vw",
+                height: "104vh",
                 backgroundImage: `url(${Left})`,
                 backgroundSize: "100% 100%",
                 backgroundRepeat: "no-repeat",
@@ -119,37 +119,39 @@ const HeroSection = ({ contentRef }) => {
             />
             <div
               ref={rightRef}
-              className="absolute -top-2 -right-4 h-screen z-30"
+              className="absolute -top-5 -right-9 h-screen z-30"
               style={{
-                width: "52.4%",
-                height: "104%",
+                width: "54.29vw",
+                height: "104vh",
                 backgroundImage: `url(${Right})`,
                 backgroundSize: "100% 100%",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
               }}
             />
-            <div className="absolute inset-0 flex justify-center items-start z-40">
-              <div
-                ref={contentRef}
-                className="flex flex-col justify-center items-center text-center"
-              >
+        <div className="absolute inset-0 flex justify-center items-center z-40"
+        style={{bottom:"25%"}}
+        >
+          <div
+            ref={contentRef}
+            className="flex flex-col items-center text-center"
+          >
                 <h1
-                  className="text-white translate-y-1/4 mt-2 font-black"
+                  className="text-white font-black"
                   style={{
                     fontSize: "clamp(12rem, 10vw, 13rem)",
                     fontFamily: "Henju",
                     lineHeight: "1.0",
                   }}
                 >
-              <AnimatedText
-                duration={8} 
-                className="text-10xl font-bold text-white"
-              >
-                IEEE CS
-              </AnimatedText>
+                  <AnimatedText
+                    duration={8}
+                    className="text-10xl font-bold text-white"
+                  >
+                    IEEE CS
+                  </AnimatedText>
                 </h1>
-                <div className="mt-6 sm:mt-8 md:mt-10 lg:mt-16" />
+
                 <h2
                   className="text-[#EF9E00] font-black"
                   style={{
