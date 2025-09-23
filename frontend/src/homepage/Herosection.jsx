@@ -82,7 +82,7 @@ const HeroSection = ({ contentRef }) => {
           trigger: ourStoryWrapperRef.current,
           start: "top top",
           end: "+=1450",
-          scrub: 0.5,
+          scrub: 0.35,
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
@@ -132,10 +132,10 @@ const HeroSection = ({ contentRef }) => {
             <div className="absolute inset-0 flex justify-center items-start z-40">
               <div
                 ref={contentRef}
-                className="flex flex-col justify-start items-center text-center"
+                className="flex flex-col justify-center items-center text-center"
               >
                 <h1
-                  className="text-white translate-y-1/3 mt-2 font-black"
+                  className="text-white translate-y-1/4 mt-2 font-black"
                   style={{
                     fontSize: "clamp(12rem, 10vw, 13rem)",
                     fontFamily: "Henju",
