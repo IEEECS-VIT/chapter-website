@@ -24,7 +24,7 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
     } last:mr-4 sm:last:mr-8`}
     style={{ fontFamily: "Special Elite, cursive" }}
   >
-    <div className="relative bg-gradient-to-br from-[#F8F4ED] to-[#F1ECE5] p-3 sm:p-5 rounded-2xl border border-gray-200/30 flex flex-col items-center justify-center h-full shadow-[0_6px_20px_rgba(255,255,255,0.15)]">
+    <div className="relative group bg-gradient-to-br from-[#F8F4ED] to-[#F1ECE5] p-3 sm:p-5 rounded-2xl border border-gray-200/30 flex flex-col items-center justify-center h-full shadow-[0_6px_20px_rgba(255,255,255,0.15)]">
       <div className="absolute -top-10 -right-10 -translate-y-1/4 translate-x-1/4 sm:-top-14 sm:-right-12 md:-top-14 md:-right-12 lg:-top-14 lg:-right-12 z-30 rotate-[-10deg]" loading="lazy">
         <img src={pin} alt="Pin" className="w-58 sm:w-96 md:w-78 lg:w-86 h-auto drop-shadow-md" />
       </div>
@@ -35,7 +35,7 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
           className="w-full h-full object-contain bg-black rounded-lg grayscale hover:grayscale-0 transition-all duration-500 ease-out scale-105" loading="lazy"
         />
         {hasOverlay && (
-          <div className="absolute inset-0 bg-gradient-to-t from-[#4A4A4A]/70 via-[#6D6D6D]/50 to-transparent flex items-center justify-center p-2 sm:p-4 opacity-0 hover:opacity-100 transition-all duration-500 ease-out backdrop-blur-sm rounded-md">
+          <div className="absolute inset-0 bg-gradient-to-t from-[#4A4A4A]/70 via-[#6D6D6D]/50 to-transparent flex items-center justify-center p-2 sm:p-4 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out backdrop-blur-sm rounded-md">
             <p className="text-white text-xs sm:text-sm md:text-base lg:text-lg text-center tracking-wide leading-relaxed px-2 sm:px-4 break-words">
               {overlayText}
             </p>
@@ -160,7 +160,7 @@ const handleSliderChange = (val) => {
         <div className="w-full overflow-hidden">
           <div
             ref={scrollerRef}
-            className="flex gap-4 sm:gap-6 md:gap-8 cursor-grab active:cursor-grabbing will-change-transform select-none pl-4 sm:pl-8 lg:pl-16 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] transform-gpu backface-hidde"
+            className="flex gap-4 sm:gap-6 md:gap-8  will-change-transform select-none pl-4 sm:pl-8 lg:pl-16 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] transform-gpu backface-hidden"
           >
             {items.map((item, idx) => (
               <EventCard key={item.id} {...item} first={idx === 0} hasOverlay />
