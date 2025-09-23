@@ -134,7 +134,7 @@ const HeroSection = ({ contentRef }) => {
         >
           <div
             ref={contentRef}
-            className="flex flex-col items-center text-center min-h-screen"
+            className="flex flex-col items-center text-center justify-center min-h-screen"
           >
                 <h1
                   className="text-white font-black"
