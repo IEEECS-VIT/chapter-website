@@ -130,11 +130,11 @@ const HeroSection = ({ contentRef }) => {
               }}
             />
         <div className="absolute inset-0 flex justify-center items-center z-40"
-        style={{bottom:"25%"}}
+        
         >
           <div
             ref={contentRef}
-            className="flex flex-col items-center text-center"
+            className="flex flex-col items-center text-center min-h-screen"
           >
                 <h1
                   className="text-white font-black"
@@ -145,8 +145,8 @@ const HeroSection = ({ contentRef }) => {
                   }}
                 >
                   <AnimatedText
-                    duration={8}
-                    className="text-10xl font-bold text-white"
+                    duration={2}
+                    className="text-9xl font-bold text-white"
                   >
                     IEEE CS
                   </AnimatedText>
@@ -155,7 +155,7 @@ const HeroSection = ({ contentRef }) => {
                 <h2
                   className="text-[#EF9E00] font-black"
                   style={{
-                    fontSize: "clamp(7.2rem, 6vw, 7.5rem)",
+                    fontSize: "clamp(5.2rem, 4vw, 5.5rem)",
                     fontFamily: "Henju",
                     lineHeight: "1.0",
                   }}
