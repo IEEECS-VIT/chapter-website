@@ -24,25 +24,25 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
     } last:mr-4 sm:last:mr-8`}
     style={{ fontFamily: "Special Elite, cursive" }}
   >
-    <div className="relative bg-gradient-to-br from-[#F8F4ED] to-[#F1ECE5] p-3 sm:p-5 rounded-2xl border border-gray-200/30 flex flex-col items-center justify-center h-full shadow-[0_6px_20px_rgba(255,255,255,0.15)]">
+    <div className="relative group bg-gradient-to-br from-[#F8F4ED] to-[#F1ECE5] p-3 sm:p-5 rounded-2xl border border-gray-200/30 flex flex-col items-center justify-center h-full shadow-[0_6px_20px_rgba(255,255,255,0.15)]">
       <div className="absolute -top-10 -right-10 -translate-y-1/4 translate-x-1/4 sm:-top-14 sm:-right-12 md:-top-14 md:-right-12 lg:-top-14 lg:-right-12 z-30 rotate-[-10deg]" loading="lazy">
         <img src={pin} alt="Pin" className="w-58 sm:w-96 md:w-78 lg:w-86 h-auto drop-shadow-md" />
       </div>
-      <div className="relative w-full h-[235px] sm:h-[240px] md:h-[280px] lg:h-[300px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center bg-white/80">
+      <div className="relative w-[85%] h-[78%] sm:h-[240px] md:h-[280px] lg:h-[300px] overflow-hidden rounded-xl shadow-inner flex items-center justify-center bg-white/80">
         <img
           src={image || "/placeholder.svg"}
           alt={title}
-          className="w-full h-full object-contain rounded-lg grayscale hover:grayscale-0 transition-all duration-500 ease-out scale-105" loading="lazy"
+          className="w-full h-full object-contain bg-black rounded-lg grayscale hover:grayscale-0 transition-all duration-500 ease-out scale-105" loading="lazy"
         />
         {hasOverlay && (
-          <div className="absolute inset-0 bg-gradient-to-t from-[#4A4A4A]/70 via-[#6D6D6D]/50 to-transparent flex items-center justify-center p-2 sm:p-4 opacity-0 hover:opacity-100 transition-all duration-500 ease-out backdrop-blur-sm rounded-md">
+          <div className="absolute inset-0 bg-gradient-to-t from-[#4A4A4A]/70 via-[#6D6D6D]/50 to-transparent flex items-center justify-center p-2 sm:p-4 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out backdrop-blur-sm rounded-md">
             <p className="text-white text-xs sm:text-sm md:text-base lg:text-lg text-center tracking-wide leading-relaxed px-2 sm:px-4 break-words">
               {overlayText}
             </p>
           </div>
         )}
       </div>
-      <h3 className="text-gray-800 text-lg sm:text-xl md:text-2xl lg:text-3xl text-center tracking-wider mt-3 hover:text-gray-900 transition-colors duration-300 drop-shadow-sm">
+      <h3 className="text-gray-800 text-xl sm:text-xl md:text-2xl lg:text-3xl text-center tracking-wider mt-3 hover:text-gray-900 transition-colors duration-300 drop-shadow-sm">
         {title}
       </h3>
     </div>
@@ -58,7 +58,7 @@ export default function EventsPage() {
     { id: 5, title: "SDG", image: sdg, overlayText: "An IEEE CS SDG event at VIT drives tech-powered awareness and action toward the UN’s 17 Sustainable Development Goals." },
     { id: 6, title: "CASA", image: casa, overlayText: "An IEEE CS CASA event at VIT raises awareness and promotes action against substance abuse through technology." },
     { id: 7, title: "MozDev", image: mozdev, overlayText: "A six-hour web development workshop offering practical, hands-on experience." },
-    { id: 8, title: "Emerald City", image: ec, overlayText: "A competition focused on solving  ciphers in high-pressure settings." },
+    { id: 8, title: "Emerald City", image: ec, overlayText: "Compete to solve cryptographic ciphers and challenges in a high-pressure environment.." },
     { id: 9, title: "Hack For Impact", image: h4i, overlayText: "A coding challenge emphasizing elegant, compact solutions." },
     { id: 10, title: "Cyberbattle", image: cb, overlayText: "A hands on cybersecurity workshop to help people develop more secure applications " },
   ];
@@ -92,12 +92,13 @@ useEffect(() => {
         trigger: pin,
         start: "top top",
         end: () => `+=${totalScroll * 2}`,
-        scrub: 1,
+        scrub: 0.5,
         pin: true,
         anticipatePin: 1,
+        pinType: "transform",
         invalidateOnRefresh: true,
         onUpdate: (self) => {
-          const progress = self.progress; // clean progress 0 → 1
+          const progress = self.progress;
           const newValue = progress * totalScroll;
           setSliderValue(newValue);
         },
@@ -143,7 +144,7 @@ const handleSliderChange = (val) => {
   return (
     <div
       ref={pinRef}
-      className="relative min-h-screen flex items-center justify-center overflow-x-hidden select-none"
+      className="transform-gpu will-change-transform [contain:paint] bg-scroll backface-hidden relative min-h-screen flex items-center justify-center overflow-x-hidden select-none"
       style={{
         backgroundImage: `url(${bg})`,
         backgroundSize: "cover",
@@ -159,29 +160,16 @@ const handleSliderChange = (val) => {
         <div className="w-full overflow-hidden">
           <div
             ref={scrollerRef}
-            className="flex gap-4 sm:gap-6 md:gap-8 cursor-grab active:cursor-grabbing will-change-transform select-none pl-4 sm:pl-8 lg:pl-16 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+            className="flex gap-4 sm:gap-6 md:gap-8  will-change-transform select-none pl-4 sm:pl-8 lg:pl-16 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] transform-gpu backface-hidden"
           >
             {items.map((item, idx) => (
               <EventCard key={item.id} {...item} first={idx === 0} hasOverlay />
             ))}
           </div>
         </div>
-        <div className="absolute left-1/2 bottom-[10%] transform -translate-x-1/2 bg-black/80 backdrop-blur-md shadow-lg rounded-2xl p-5 z-50 w-[95%] sm:w-[80%] md:w-[70%] lg:w-[60%] block lg:hidden">
+        <div className="absolute left-1/2 bottom-[10%] transform -translate-x-1/2 rounded-2xl p-5 z-50 w-[95%] sm:w-[80%] md:w-[70%] lg:w-[60%] block lg:hidden">
           <ElasticSlider
-            leftIcon={
-              <span className="flex items-center justify-center w-8 h-8 rounded-full bg-black text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                </svg>
-              </span>
-            }
-            rightIcon={
-              <span className="flex items-center justify-center w-8 h-8 rounded-full bg-black text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </span>
-            }
+
             value={sliderValue}
             maxValue={maxScroll}
             stepSize={10}

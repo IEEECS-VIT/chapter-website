@@ -40,11 +40,11 @@ const LocalModelViewer = () => {
   const height = isMobile ? "h-[220px]" : isTablet ? "h-[320px]" : "h-[420px]";
 
   return (
-    <div className={`w-full ${height}`}>
+    <div className={`w-3/5 ${height}`}>
       <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
         <ambientLight intensity={2.9} />
-        <directionalLight position={[5, 5, 5]} intensity={2.9} />
-        <hemisphereLight skyColor="#ffffff" groundColor="#444444" intensity={0.9} />
+        <directionalLight position={[5,5,5]} intensity={2.9} />
+        <hemisphereLight skyColor="#ffffff" groundColor="#444444" intensity={1.2} />
 
         <Suspense fallback={null}>
           <Model path="/models/ieeeLOGO4.glb" scale={scale} />

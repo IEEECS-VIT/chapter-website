@@ -129,7 +129,7 @@ const templateParams = {
           </form>
         </div>
 
-        <div className="w-full lg:w-4/5 flex justify-center items-center -mt-[8vh] -mb-[2vh] lg:mt-0 lg:mb-0">
+        <div className="w-full lg:w-2/5 flex justify-center items-center -mt-[8vh] -mb-[2vh] lg:mt-0 lg:mb-0">
           <LocalModelViewer /> 
         </div>
 

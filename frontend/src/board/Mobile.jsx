@@ -120,7 +120,7 @@ useEffect(() => {
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
-          const progress = self.progress; // clean progress 0 → 1
+          const progress = self.progress;
           const newValue = progress * totalScroll;
           setSliderValue(newValue);
         },
@@ -185,20 +185,7 @@ const handleSliderChange = (val) => {
       {/* popup slider */}
       <div className="absolute left-1/2 bottom-[1%] transform -translate-x-1/2 rounded-2xl p-5 z-50 w-[95%] sm:w-[80%] md:w-[70%] lg:w-[60%] block lg:hidden">
         <ElasticSlider
-          leftIcon={
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-black text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-              </svg>
-            </span>
-          }
-          rightIcon={
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-black text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </span>
-          }
+         
           //defaultValue={sliderValue}
           maxValue={maxScroll}
           isStepped

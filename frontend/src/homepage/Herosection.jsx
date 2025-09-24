@@ -82,7 +82,7 @@ const HeroSection = ({ contentRef }) => {
           trigger: ourStoryWrapperRef.current,
           start: "top top",
           end: "+=1450",
-          scrub: 0.5,
+          scrub: 0.35,
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
@@ -107,10 +107,10 @@ const HeroSection = ({ contentRef }) => {
           <div className="sticky top-0 z-20 h-screen overflow-hidden">
             <div
               ref={leftRef}
-              className="absolute -top-2 left-0 h-screen z-30"
+              className="absolute -top-5 -left-4 h-screen z-30"
               style={{
-                width: "51.3%",
-                height: "104%",
+                width: "52.45vw",
+                height: "104vh",
                 backgroundImage: `url(${Left})`,
                 backgroundSize: "100% 100%",
                 backgroundRepeat: "no-repeat",
@@ -119,41 +119,43 @@ const HeroSection = ({ contentRef }) => {
             />
             <div
               ref={rightRef}
-              className="absolute -top-2 right-0 h-screen z-30"
+              className="absolute -top-5 -right-9 h-screen z-30"
               style={{
-                width: "51%",
-                height: "104%",
+                width: "54.29vw",
+                height: "104vh",
                 backgroundImage: `url(${Right})`,
                 backgroundSize: "100% 100%",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
               }}
             />
-            <div className="absolute inset-0 flex justify-center items-start z-40">
-              <div
-                ref={contentRef}
-                className="flex flex-col justify-start items-center text-center"
-              >
+        <div className="absolute inset-0 flex justify-center items-center z-40"
+        
+        >
+          <div
+            ref={contentRef}
+            className="flex flex-col items-center text-center justify-center min-h-screen"
+          >
                 <h1
-                  className="text-white translate-y-1/3 mt-2 font-black"
+                  className="text-white font-black"
                   style={{
                     fontSize: "clamp(12rem, 10vw, 13rem)",
                     fontFamily: "Henju",
                     lineHeight: "1.0",
                   }}
                 >
-              <AnimatedText
-                duration={8} 
-                className="text-10xl font-bold text-white"
-              >
-                IEEE CS
-              </AnimatedText>
+                  <AnimatedText
+                    duration={2}
+                    className="text-9xl font-bold text-white"
+                  >
+                    IEEE CS
+                  </AnimatedText>
                 </h1>
-                <div className="mt-6 sm:mt-8 md:mt-10 lg:mt-16" />
+
                 <h2
                   className="text-[#EF9E00] font-black"
                   style={{
-                    fontSize: "clamp(7.2rem, 6vw, 7.5rem)",
+                    fontSize: "clamp(5.2rem, 4vw, 5.5rem)",
                     fontFamily: "Henju",
                     lineHeight: "1.0",
                   }}
@@ -174,7 +176,6 @@ const HeroSection = ({ contentRef }) => {
               src={MobileHero}
               alt="Mobile Hero"
               className="absolute inset-0 w-full h-full object-cover"
-              loading="lazy"
             />
             <div className="absolute inset-0 bg-black/35"></div>
             <div className="absolute inset-0 flex justify-center items-center z-30">
