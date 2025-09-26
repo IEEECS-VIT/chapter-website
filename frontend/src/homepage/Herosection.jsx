@@ -192,7 +192,7 @@ const HeroSection = ({ contentRef }) => {
                   }}
                 >
                   <AnimatedText
-                    duration={8} 
+                    duration={2} 
                     className="text-10xl font-bold text-white"
                   >
                   IEEE CS
