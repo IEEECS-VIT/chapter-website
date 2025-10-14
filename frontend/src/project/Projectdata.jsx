@@ -30,7 +30,7 @@ export const projectData = [//update this to change projects
           Airports Authority of India
         </span>
         , focused on modernizing and streamlining operations and services via MIS 
-        and Multimodal Transport System.”
+        and Multimodal Transport System.
       </>
     ),
   },
@@ -41,12 +41,12 @@ export const projectData = [//update this to change projects
     viewImage: tc,
     text1: (
       <>
-        Securing a top spot at{" "}
+        Securing Second Place  at{" "}
         <span className="bg-yellow-400 px-1 rounded">
           IIT Kanpur’s Techkriti
         </span>{" "}
-        festival highlighted our members’ creativity, technical skills, and
-        culture of excellence.
+        in collaboration with NFRA winning ₹1,00,000 for 
+        developing Financial Insights Analyzer and Summarizer
       </>
     ),
   },
@@ -57,10 +57,9 @@ export const projectData = [//update this to change projects
     viewImage: cdc,
     text1: (
       <>
-        Our laundry management platform serves{" "}
-        <span className="bg-yellow-400 px-1 rounded">80,000+ users</span> with
-        real-time tracking, notifications, and record management, making the
-        process stress-free.
+        Chota Dhobi by IEEECS VIT, a laundry management app for VIT hostels, efficiently{" "}
+        <span className="bg-yellow-400 px-1 rounded">served 50,000 users</span> 
+        reflecting the chapter’s impactful innovation.
       </>
     ),
   },

@@ -58,7 +58,7 @@ export default function EventsPage() {
     { id: 5, title: "SDG", image: sdg, overlayText: "An IEEE CS SDG event at VIT drives tech-powered awareness and action toward the UN’s 17 Sustainable Development Goals." },
     { id: 6, title: "CASA", image: casa, overlayText: "An IEEE CS CASA event at VIT raises awareness and promotes action against substance abuse through technology." },
     { id: 7, title: "MozDev", image: mozdev, overlayText: "A six-hour web development workshop offering practical, hands-on experience." },
-    { id: 8, title: "Emerald City", image: ec, overlayText: "Compete to solve cryptographic ciphers and challenges in a high-pressure environment.." },
+    { id: 8, title: "Emerald City", image: ec, overlayText: "Emerald City is a thrilling treasure hunt where participants solve technical riddles across campus, with winners taking home exciting prizes." },
     { id: 9, title: "Hack For Impact", image: h4i, overlayText: "A coding challenge emphasizing elegant, compact solutions." },
     { id: 10, title: "Cyberbattle", image: cb, overlayText: "A hands on cybersecurity workshop to help people develop more secure applications " },
   ];
