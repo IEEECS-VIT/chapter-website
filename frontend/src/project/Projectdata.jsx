@@ -29,8 +29,8 @@ export const projectData = [//update this to change projects
         <span className="bg-yellow-400 px-1 rounded">
           Airports Authority of India
         </span>
-        , we enhanced airport operations with advanced systems for smoother and
-        more seamless traveler experiences.
+        , focused on modernizing and streamlining operations and services via MIS 
+        and Multimodal Transport System.”
       </>
     ),
   },
