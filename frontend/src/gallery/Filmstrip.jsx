@@ -91,7 +91,7 @@ const FilmstripGallery = () => {
                 src={src}
                 alt={`Gallery image ${(i % images.length) + 1}`}
                 className="object-cover shadow-2xl rounded-lg transition-transform duration-300 hover:scale-105 grayscale
-                  w-[400px] h-[300px] md:w-[500px] md:h-[400px] lg:w-[550px] lg:h-[450px] xl:w-[600px] xl:h-[500px]"
+                  w-[400px] h-[270px] sm:h-[300px] md:w-[500px] md:h-[400px] lg:w-[550px] lg:h-[450px] xl:w-[600px] xl:h-[500px] max-w-full max-h-full"
                 onMouseEnter={() => (isPausedRef.current = true)}
                 onMouseLeave={() => (isPausedRef.current = false)}
                 onTouchStart={() => (isPausedRef.current = true)}
@@ -120,7 +120,7 @@ const FilmstripGallery = () => {
                 src={src}
                 alt={`Gallery image ${(i % images.length) + 1}`}
                 className="object-cover shadow-xl rounded-lg transition-transform duration-300 hover:scale-105 grayscale
-                  w-[400px] h-[300px] md:w-[500px] md:h-[400px] lg:w-[550px] lg:h-[450px] xl:w-[600px] xl:h-[500px]"
+                  w-[400px] h-[270px] sm:h-[300px] md:w-[500px] md:h-[400px] lg:w-[550px] lg:h-[450px] xl:w-[600px] xl:h-[500px]"
                 onMouseEnter={() => (isPausedRef.current = true)}
                 onMouseLeave={() => (isPausedRef.current = false)}
                 onTouchStart={() => (isPausedRef.current = true)}
