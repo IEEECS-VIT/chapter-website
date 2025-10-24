@@ -164,7 +164,7 @@ const PreLoader = ({ onEnter }) => {
       />
 
       <p className="text-center mt-1 md:mt-4 font-henju font-light text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl">
-        Office Of<span className="block md:inline" />Students' Welfare
+        Office Of <span className="block md:inline" />Students' Welfare
       </p>
 
       <img
