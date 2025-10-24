@@ -156,8 +156,7 @@ const PreLoader = ({ onEnter }) => {
     >
       <ParticleBackground />
       
-      <div className="absolute top-5 left-0 right-0 flex items-center justify-between px-4 z-40">
-
+      <div className="absolute top-5 -left-2 right-0 flex items-center justify-between px-4 z-40">
       <img
         src={vitv}
         alt="VIT Vellore"
