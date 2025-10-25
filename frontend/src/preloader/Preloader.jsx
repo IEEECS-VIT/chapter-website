@@ -5,6 +5,7 @@ import CircularText from "./CircularText";
 import CircularTextOut from "./CircularTextout";
 import gsap from "gsap";
 import ieeeLogo from "/assets/logos/ieeecs_logo.png";
+import vitv from "/assets/logos/vitv.png";
 
 const ParticleBackground = () => {
   const canvasRef = useRef(null);
@@ -154,13 +155,25 @@ const PreLoader = ({ onEnter }) => {
       className="fixed inset-0 bg-black text-white flex items-center justify-center z-50"
     >
       <ParticleBackground />
-      <div className="absolute top-5 left-5 z-40">
-          <img
-            src={ieeeLogo}
-            alt="IEEE Computer Society Logo"
-            className="h-12 w-auto"
-          />
-        </div>
+      
+      <div className="absolute top-5 -left-2 right-0 flex items-center justify-between px-4 z-40">
+      <img
+        src={vitv}
+        alt="VIT Vellore"
+        className="h-8 md:h-16 w-auto"
+      />
+
+      <p className="text-center mt-1 md:mt-4 font-henju font-light text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl">
+        Office Of <span className="block md:inline" />Students' Welfare
+      </p>
+
+      <img
+        src={ieeeLogo}
+        alt="IEEE Computer Society Logo"
+        className="h-6 md:h-14 w-auto"
+      />
+    </div>
+
       <div
         ref={wrapperRef}
         className="relative w-full h-full flex items-center justify-center preloader-wrapper"
