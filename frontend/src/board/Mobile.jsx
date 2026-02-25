@@ -7,20 +7,21 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import linkedinIcon from "/assets/board/linkedin.svg";
 import ElasticSlider from "../events/ElasticSlider"
 import bgImage from "/assets/board/bg.webp"
-import ram from "/assets/board/ram.webp"
-import anubhav from "/assets/board/anubhav.webp"
-import aditya from "/assets/board/aditya.webp"
-import akshit from "/assets/board/akshit.webp"
-import ansh from "/assets/board/ansh.webp"
-import arjun from "/assets/board/arjun.webp"
-import arya from "/assets/board/arya.webp"
-import dhriti from "/assets/board/dhriti.webp"
-import gouri from "/assets/board/gouri.webp"
-import krish from "/assets/board/krish.webp"
-import varun from "/assets/board/varun.webp"
-import parth from "/assets/board/parth.webp"
-import medhansh from "/assets/board/medhansh.webp"
 
+// Updated imports based on file explorer screenshot
+import raghav from "/assets/board/Raghav.webp";
+import devraj from "/assets/board/devraj.webp";
+import diya from "/assets/board/diya.webp";
+import utkarsh from "/assets/board/Utkarsh.webp";
+import kshitij from "/assets/board/kshitij.webp";
+import atharv from "/assets/board/atharv.webp";
+import aryan from "/assets/board/Aryan.webp";
+import ani from "/assets/board/ani.webp";
+import saanvi from "/assets/board/Saanvi.webp";
+import jeevesh from "/assets/board/Jeevesh.webp";
+import vishwa from "/assets/board/Vishwa.webp";
+import samanvi from "/assets/board/samanvee.webp";
+import ananya from "/assets/board/ananya.webp";
 
 gsap.registerPlugin(Draggable, ScrollTrigger)
 
@@ -32,12 +33,11 @@ const TeamCard = ({ name, position, photo, linkedin }) => {
         alt="card-bg"
         className="absolute w-full h-full object-cover "
         loading="lazy"
-        
       />
       <div className="relative z-10 flex flex-col items-center w-full h-full justify-between">
-        <div className="flex flex-col items-center space-y-1 text-center">
+        <div className="flex flex-col items-center space-y-1 text-center pt-2">
           <div className="text-yellow-400 text-3xl font-caveat leading-tight">{name}</div>
-          <div className="text-black text-sm" style={{ fontFamily: "Special Elite" }}>{position}</div>
+          <div className="text-black text-sm px-2" style={{ fontFamily: "Special Elite" }}>{position}</div>
         </div>
         <div className="w-[240px] h-[240px] flex items-center justify-center relative">
           <img src={photo} alt={name} className="w-[240px] h-[240px] object-contain -translate-x-3" />
@@ -52,7 +52,7 @@ const TeamCard = ({ name, position, photo, linkedin }) => {
               <img
                   src={linkedinIcon}
                   alt="LinkedIn"
-                  className="w-7 h-7 translate-x-2 hover:opacity-80 transition-opacity"
+                  className="w-5 h-5 translate-x-2 -translate-y-2 hover:opacity-80 transition-opacity"
                 />
             </a>
           )}
@@ -69,20 +69,21 @@ const MobileBoard = () => {
   const [sliderValue, setSliderValue] = useState(0)
   const [maxScroll, setMaxScroll] = useState(1000)
 
-  const allCards = [ //change this to update board
-    { name: "Ram Krishna", position: "Chairperson", photo: ram, linkedin: "https://www.linkedin.com/in/ramkrishna2967/" },
-    { name: "Anubhav Batra", position: "Vice Chairperson", photo: anubhav, linkedin: "https://www.linkedin.com/in/anubhav-batra-9ba7271b1/" },
-    { name: "Aditya Verma", position: "Secretary", photo: aditya, linkedin: "https://www.linkedin.com/in/adityaverma121/" },
-    { name: "Arjun Bector", position: "Co-secretary", photo: arjun, linkedin: "https://www.linkedin.com/in/arjun-bector/" },
-    { name: "Ansh Mehta", position: "Technical Head", photo: ansh, linkedin: "https://www.linkedin.com/in/anshmehta/" },
-    { name: "Akshit Anand", position: "Projects Head", photo: akshit, linkedin: "https://www.linkedin.com/in/akshit-anand-10a90b219/" },
-    { name: "Dhriti Sharma", position: "Events Head", photo: dhriti, linkedin: "https://www.linkedin.com/in/dhriti-sharma-b03014275/" },
-    { name: "Varun Shirsath", position: "PnM Head", photo: varun, linkedin: "https://www.linkedin.com/in/varun-shirsath-50403534b/" },
-    { name: "Parth Jadhav", position: "Design Head", photo: parth, linkedin: "https://www.linkedin.com/in/parthjadhav2004/" },
-    { name: "Gouri Kanade", position: "RnD Head", photo: gouri, linkedin: "https://www.linkedin.com/in/gourikanade1012/" },
-    { name: "Medhansh Jain", position: "Web Lead", photo: medhansh, linkedin: "https://www.linkedin.com/in/medhansh-jain/" },
-    { name: "Krish Mehta", position: "App Lead", photo: krish, linkedin: "https://www.linkedin.com/in/krish1604/" },
-    { name: "Arya Patil", position: "IOT Lead", photo: arya, linkedin: "https://www.linkedin.com/in/arya-patil-2a8366330/" },
+  // Updated Board Members 25-26 with LinkedIn
+  const allCards = [
+    { name: "Raghav Sejpal", position: "Chairperson", photo: raghav, linkedin: "https://www.linkedin.com/in/raghav-sejpal/" },
+    { name: "Devraj K Chandani", position: "Vice Chairperson", photo: devraj, linkedin: "https://www.linkedin.com/in/devraj-chandani-098438293/" },
+    { name: "Diya Aravind", position: "Secretary", photo: diya, linkedin: "https://www.linkedin.com/in/diya-aravind-760462290/" },
+    { name: "Utkarsh Kashyap", position: "Co Secretary", photo: utkarsh, linkedin: "https://www.linkedin.com/in/utkarsh-kashyap-041931285/" },
+    { name: "Kshitij Vankar", position: "Events Head", photo: kshitij, linkedin: "https://www.linkedin.com/in/kshitijvankar/" },
+    { name: "Atharv Gupta", position: "Publicity & Marketing Head", photo: atharv, linkedin: "https://www.linkedin.com/in/atharv-gupta-037005245/" },
+    { name: "Aryan Jain", position: "Technical Head", photo: aryan, linkedin: "https://www.linkedin.com/in/jainaryan04/" },
+    { name: "Aniruddha Neema", position: "Projects Head", photo: ani, linkedin: "https://www.linkedin.com/in/aniruddhaneema/" },
+    { name: "Saanvi Goel", position: "Design Head", photo: saanvi, linkedin: "https://www.linkedin.com/in/saanvi-goel17777/" },
+    { name: "Jeevesh Malhotra", position: "App Lead", photo: jeevesh, linkedin: "https://www.linkedin.com/in/jeeveshmalhotra/" },
+    { name: "P Vishwajith", position: "AI/ML Lead", photo: vishwa, linkedin: "https://www.linkedin.com/in/vishwajith-p/" },
+    { name: "Samanvi Rajput", position: "Technical Community Lead", photo: samanvi, linkedin: "https://www.linkedin.com/in/samanvi-rajput-5b90b3279/" },
+    { name: "Ananya Deo", position: "Editorial Lead", photo: ananya, linkedin: "https://www.linkedin.com/in/ananya-deo-774713298/" },
   ]
 
   const cardPairs = []
@@ -92,76 +93,77 @@ const MobileBoard = () => {
       second: i + 1 < allCards.length ? allCards[i + 1] : null,
     })
   }
-useEffect(() => {
-  const scroller = scrollerRef.current;
-  const pin = pinRef.current;
-  if (!scroller || !pin) return;
 
-  let tl;
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    const pin = pinRef.current;
+    if (!scroller || !pin) return;
 
-  const setupAnimation = () => {
-    if (tl) {
-      tl.scrollTrigger?.kill();
-      tl.kill();
-    }
+    let tl;
 
-    const totalScroll = scroller.scrollWidth - scroller.offsetWidth;
-    if (totalScroll <= 0) return;
+    const setupAnimation = () => {
+      if (tl) {
+        tl.scrollTrigger?.kill();
+        tl.kill();
+      }
 
-    setMaxScroll(totalScroll);
+      const totalScroll = scroller.scrollWidth - scroller.offsetWidth;
+      if (totalScroll <= 0) return;
 
-    tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: pin,
-        start: "top top",
-        end: () => `+=${totalScroll * 2}`,
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          const newValue = progress * totalScroll;
-          setSliderValue(newValue);
+      setMaxScroll(totalScroll);
+
+      tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pin,
+          start: "top top",
+          end: () => `+=${totalScroll * 2}`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            const newValue = progress * totalScroll;
+            setSliderValue(newValue);
+          },
         },
-      },
-    });
+      });
 
-    tl.fromTo(scroller, { x: 0 }, { x: -totalScroll, ease: "none" });
-    tlRef.current = tl;
+      tl.fromTo(scroller, { x: 0 }, { x: -totalScroll, ease: "none" });
+      tlRef.current = tl;
 
-    ScrollTrigger.refresh();
-  };
+      ScrollTrigger.refresh();
+    };
 
-  setupAnimation();
-
-  const handleResize = () => {
     setupAnimation();
+
+    const handleResize = () => {
+      setupAnimation();
+    };
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+
+    return () => {
+      tl?.scrollTrigger?.kill();
+      tl?.kill();
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+    };
+  }, []);
+
+  const handleSliderChange = (val) => {
+    setSliderValue(val);
+    const tl = tlRef.current;
+    if (tl && tl.scrollTrigger) {
+      const progress = Math.min(1, Math.max(0, val / maxScroll));
+      const targetScroll =
+        progress * (tl.scrollTrigger.end - tl.scrollTrigger.start) +
+        tl.scrollTrigger.start;
+
+      tl.scrollTrigger.scroll(targetScroll);
+    }
   };
-
-  window.addEventListener("resize", handleResize);
-  window.addEventListener("orientationchange", handleResize);
-
-  return () => {
-    tl?.scrollTrigger?.kill();
-    tl?.kill();
-    window.removeEventListener("resize", handleResize);
-    window.removeEventListener("orientationchange", handleResize);
-  };
-}, []);
-
-const handleSliderChange = (val) => {
-  setSliderValue(val);
-  const tl = tlRef.current;
-  if (tl && tl.scrollTrigger) {
-    const progress = Math.min(1, Math.max(0, val / maxScroll));
-    const targetScroll =
-      progress * (tl.scrollTrigger.end - tl.scrollTrigger.start) +
-      tl.scrollTrigger.start;
-
-    tl.scrollTrigger.scroll(targetScroll);
-  }
-};
 
   return (
     <div ref={pinRef} className="relative w-full bg-black">
@@ -185,8 +187,6 @@ const handleSliderChange = (val) => {
       {/* popup slider */}
       <div className="absolute left-1/2 bottom-[1%] transform -translate-x-1/2 rounded-2xl p-5 z-50 w-[95%] sm:w-[80%] md:w-[70%] lg:w-[60%] block lg:hidden">
         <ElasticSlider
-         
-          //defaultValue={sliderValue}
           maxValue={maxScroll}
           isStepped
           stepSize={10}
