@@ -1,7 +1,11 @@
+"use client"
+
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ElasticSlider from "./ElasticSlider";
+import ElasticSlider from "./ElasticSlider"; // Adjust path if needed
+
+// Asset Imports
 import event from "/assets/events/event.webp";
 import bg from "/assets/events/backgrnd.webp";
 import pin from "/assets/events/pin.webp";
@@ -14,6 +18,7 @@ import casa from "/assets/events/casa.webp";
 import sdg from "/assets/events/sdg.webp";
 import cb from "/assets/events/cyberbattle.webp";
 import ec from "/assets/events/ec.webp";
+import ma from "/assets/events/ModelArena.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,7 +26,7 @@ const EventCard = ({ title, image, hasOverlay = false, overlayText, first = fals
   <div
     className={`relative flex-shrink-0 mb-8 w-[235px] sm:w-[280px] md:w-[280px] lg:w-[320px] xl:w-[360px] ${
       first ? "ml-4 sm:ml-8" : "ml-4"
-    } last:mr-4 sm:last:mr-8`}
+    }`}
     style={{ fontFamily: "Special Elite, cursive" }}
   >
     <div className="relative group bg-gradient-to-br from-[#F8F4ED] to-[#F1ECE5] p-3 sm:p-5 rounded-2xl border border-gray-200/30 flex flex-col items-center justify-center h-full shadow-[0_6px_20px_rgba(255,255,255,0.15)]">
@@ -61,6 +66,7 @@ export default function EventsPage() {
     { id: 8, title: "Emerald City", image: ec, overlayText: "Emerald City is a thrilling treasure hunt where participants solve technical riddles across campus, with winners taking home exciting prizes." },
     { id: 9, title: "Hack For Impact", image: h4i, overlayText: "A coding challenge emphasizing elegant, compact solutions." },
     { id: 10, title: "Cyberbattle", image: cb, overlayText: "A hands on cybersecurity workshop to help people develop more secure applications " },
+    { id: 11, title: "Model Arena", image: ma, overlayText: "The first machine learning hack in the VIT campus" }
   ];
 
   const scrollerRef = useRef(null);
@@ -69,77 +75,79 @@ export default function EventsPage() {
 
   const [sliderValue, setSliderValue] = useState(0);
   const [maxScroll, setMaxScroll] = useState(1000);
-useEffect(() => {
-  const scroller = scrollerRef.current;
-  const pin = pinRef.current;
-  if (!scroller || !pin) return;
 
-  let tl;
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    const pin = pinRef.current;
+    if (!scroller || !pin) return;
 
-  const setupAnimation = () => {
-    if (tl) {
-      tl.scrollTrigger?.kill();
-      tl.kill();
-    }
+    let tl;
 
-    const totalScroll = scroller.scrollWidth - scroller.offsetWidth;
-    if (totalScroll <= 0) return;
+    const setupAnimation = () => {
+      if (tl) {
+        tl.scrollTrigger?.kill();
+        tl.kill();
+      }
 
-    setMaxScroll(totalScroll);
+      // Calculate total scroll amount. 
+      const totalScroll = scroller.scrollWidth - scroller.offsetWidth;
+      if (totalScroll <= 0) return;
 
-    tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: pin,
-        start: "top top",
-        end: () => `+=${totalScroll * 2}`,
-        scrub: 0.5,
-        pin: true,
-        anticipatePin: 1,
-        pinType: "transform",
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          const newValue = progress * totalScroll;
-          setSliderValue(newValue);
+      setMaxScroll(totalScroll);
+
+      tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pin,
+          start: "top top",
+          end: () => `+=${totalScroll * 2}`,
+          scrub: 0.5,
+          pin: true,
+          anticipatePin: 1,
+          pinType: "transform",
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            const newValue = progress * totalScroll;
+            setSliderValue(newValue);
+          },
         },
-      },
-    });
+      });
 
-    tl.fromTo(scroller, { x: 0 }, { x: -totalScroll, ease: "none" });
-    tlRef.current = tl;
+      tl.fromTo(scroller, { x: 0 }, { x: -totalScroll, ease: "none" });
+      tlRef.current = tl;
 
-    ScrollTrigger.refresh();
-  };
+      ScrollTrigger.refresh();
+    };
 
-  setupAnimation();
-
-  const handleResize = () => {
     setupAnimation();
+
+    const handleResize = () => {
+      setupAnimation();
+    };
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+
+    return () => {
+      tl?.scrollTrigger?.kill();
+      tl?.kill();
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+    };
+  }, []);
+
+  const handleSliderChange = (val) => {
+    setSliderValue(val);
+    const tl = tlRef.current;
+    if (tl && tl.scrollTrigger) {
+      const progress = Math.min(1, Math.max(0, val / maxScroll));
+      const targetScroll =
+        progress * (tl.scrollTrigger.end - tl.scrollTrigger.start) +
+        tl.scrollTrigger.start;
+
+      tl.scrollTrigger.scroll(targetScroll);
+    }
   };
-
-  window.addEventListener("resize", handleResize);
-  window.addEventListener("orientationchange", handleResize);
-
-  return () => {
-    tl?.scrollTrigger?.kill();
-    tl?.kill();
-    window.removeEventListener("resize", handleResize);
-    window.removeEventListener("orientationchange", handleResize);
-  };
-}, []);
-
-const handleSliderChange = (val) => {
-  setSliderValue(val);
-  const tl = tlRef.current;
-  if (tl && tl.scrollTrigger) {
-    const progress = Math.min(1, Math.max(0, val / maxScroll));
-    const targetScroll =
-      progress * (tl.scrollTrigger.end - tl.scrollTrigger.start) +
-      tl.scrollTrigger.start;
-
-    tl.scrollTrigger.scroll(targetScroll);
-  }
-};
 
   return (
     <div
@@ -160,7 +168,8 @@ const handleSliderChange = (val) => {
         <div className="w-full overflow-hidden">
           <div
             ref={scrollerRef}
-            className="flex gap-4 sm:gap-6 md:gap-8  will-change-transform select-none pl-4 sm:pl-8 lg:pl-16 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] transform-gpu backface-hidden"
+            // Ensure pr-[20px] is present here for the margin requirement
+            className="flex gap-4 sm:gap-6 md:gap-8 will-change-transform select-none pl-4 sm:pl-8 lg:pl-16 pr-[20px] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] transform-gpu backface-hidden"
           >
             {items.map((item, idx) => (
               <EventCard key={item.id} {...item} first={idx === 0} hasOverlay />
@@ -169,7 +178,6 @@ const handleSliderChange = (val) => {
         </div>
         <div className="absolute left-1/2 bottom-[10%] transform -translate-x-1/2 rounded-2xl p-5 z-50 w-[95%] sm:w-[80%] md:w-[70%] lg:w-[60%] block lg:hidden">
           <ElasticSlider
-
             value={sliderValue}
             maxValue={maxScroll}
             stepSize={10}

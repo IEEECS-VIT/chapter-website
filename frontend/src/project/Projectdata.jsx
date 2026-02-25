@@ -76,4 +76,30 @@ export const projectData = [//update this to change projects
       </>
     ),
   },
+  {
+    id: 5,
+    title: "BattleCode",
+    image: pravega,
+    viewImage: prv,
+    text1: (
+      <>
+        We helped build a fast, responsive, and visually enhanced app for{" "}
+        <span className="bg-yellow-400 px-1 rounded">Pravega Racing</span>,
+        ensuring seamless global connectivity for the team.
+      </>
+    ),
+  },
+  {
+    id: 6,
+    title: "Echo",
+    image: pravega,
+    viewImage: prv,
+    text1: (
+      <>
+        We helped build a fast, responsive, and visually enhanced app for{" "}
+        <span className="bg-yellow-400 px-1 rounded">Pravega Racing</span>,
+        ensuring seamless global connectivity for the team.
+      </>
+    ),
+  },
 ];
