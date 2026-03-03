@@ -232,25 +232,25 @@ const BoardGrid = () => {
           <div ref={boardTextRef} className="col-span-4 flex justify-start items-center text-yellow-400 text-6xl font-extrabold py-4 uppercase" style={{ fontFamily: "'Gloock', serif" }}>THE BOARD</div>
           
           {/* Row 3 */}
-          <TeamCard name="Kshitij Vankar" position="Events Head" photo={kshitij} linkedin="https://www.linkedin.com/in/kshitijvankar/" />
-          <TeamCard name="Atharv Gupta" position="Publicity & Marketing Head" photo={atharv} linkedin="https://www.linkedin.com/in/atharv-gupta-037005245/" />
-          <TeamCard name="Aryan Jain" position="Technical Head" photo={aryan} linkedin="https://www.linkedin.com/in/jainaryan04/" innerRef={r2c3Ref} />
+          <TeamCard name="Aryan Jain" position="Technical Head" photo={aryan} linkedin="https://www.linkedin.com/in/jainaryan04/" />
+          <TeamCard name="Aniruddha Neema" position="Projects Head" photo={ani} linkedin="https://www.linkedin.com/in/aniruddhaneema/" />
+          <TeamCard name="P Vishwajith" position="AI/ML Lead" photo={vishwa} linkedin="https://www.linkedin.com/in/vishwajith-p/" innerRef={r2c3Ref} />
           
 
           {/* Row 4: Date */}
           <div ref={dateTextRef} className="col-span-full board-date text-yellow-400 text-6xl font-extrabold py-4 uppercase text-left" style={{ fontFamily: "'Gloock', serif" }}>25–26</div>
           
           {/* Row 5 */}
-          <TeamCard name="Saanvi Goel" position="Design Head" photo={saanvi} linkedin="https://www.linkedin.com/in/saanvi-goel17777/" />
-          <TeamCard name="Jeevesh Malhotra" position="App Lead" photo={jeevesh} linkedin="https://www.linkedin.com/in/jeeveshmalhotra/" innerRef={r3c2Ref} />
+          <TeamCard name="Atharv Gupta" position="Publicity & Marketing Head" photo={atharv} linkedin="https://www.linkedin.com/in/atharv-gupta-037005245/" />
+          <TeamCard name="Kshitij Vankar" position="Events Head" photo={kshitij} linkedin="https://www.linkedin.com/in/kshitijvankar/" innerRef={r3c2Ref} />
           <div></div>
-          <TeamCard name="Samanvi Rajput" position="Technical Community Lead" photo={samanvi} linkedin="https://www.linkedin.com/in/samanvi-rajput-5b90b3279/" />
+          <TeamCard name="Saanvi Goel" position="Design Head" photo={saanvi} linkedin="https://www.linkedin.com/in/saanvi-goel17777/" />
 
           {/* Row 6 */}
-          <TeamCard name="P Vishwajith" position="AI/ML Lead" photo={vishwa} linkedin="https://www.linkedin.com/in/vishwajith-p/" />
+          <TeamCard name="Jeevesh Malhotra" position="App Lead" photo={jeevesh} linkedin="https://www.linkedin.com/in/jeeveshmalhotra/" />
           <div></div>
+          <TeamCard name="Samanvi Rajput" position="Technical Community Lead" photo={samanvi} linkedin="https://www.linkedin.com/in/samanvi-rajput-5b90b3279/" />
           <TeamCard name="Ananya Deo" position="Editorial Lead" photo={ananya} linkedin="https://www.linkedin.com/in/ananya-deo-774713298/" />
-          <TeamCard name="Aniruddha Neema" position="Projects Head" photo={ani} linkedin="https://www.linkedin.com/in/aniruddhaneema/" />
           <div></div>
           <div></div>
         </div>
