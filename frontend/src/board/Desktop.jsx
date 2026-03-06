@@ -2,20 +2,22 @@
 
 import { useState, useEffect, useRef, useCallback } from "react"
 import bgImage from "/assets/board/bg.webp";
-import ram from "/assets/board/ram.webp";
-import anubhav from "/assets/board/anubhav.webp";
-import aditya from "/assets/board/aditya.webp";
-import akshit from "/assets/board/akshit.webp";
-import ansh from "/assets/board/ansh.webp";
-import arjun from "/assets/board/arjun.webp";
-import arya from "/assets/board/arya.webp";
-import dhriti from "/assets/board/dhriti.webp";
-import gouri from "/assets/board/gouri.webp";
-import krish from "/assets/board/krish.webp";
-import varun from "/assets/board/varun.webp";
-import parth from "/assets/board/parth.webp";
-import medhansh from "/assets/board/medhansh.webp";
 import linkedinIcon from "/assets/board/linkedin.svg";
+
+// Updated imports based on 2025-26 Board and File Explorer
+import raghav from "/assets/board/Raghav.webp";
+import devraj from "/assets/board/devraj.webp";
+import diya from "/assets/board/diya.webp";
+import utkarsh from "/assets/board/Utkarsh.webp";
+import kshitij from "/assets/board/kshitij.webp";
+import atharv from "/assets/board/atharv.webp";
+import aryan from "/assets/board/Aryan.webp";
+import ani from "/assets/board/ani.webp";
+import saanvi from "/assets/board/Saanvi.webp";
+import jeevesh from "/assets/board/Jeevesh.webp";
+import vishwa from "/assets/board/Vishwa.webp";
+import samanvi from "/assets/board/samanvee.webp";
+import ananya from "/assets/board/ananya.webp";
 
 
 const TeamCard = ({ name, position, photo, linkedin, innerRef, extraClass = "" }) => {
@@ -32,17 +34,17 @@ const TeamCard = ({ name, position, photo, linkedin, innerRef, extraClass = "" }
         <img src={bgImage || "/placeholder.svg"} alt="card-bg" className="w-full h-full object-cover" />
       </div>
       <div className="relative z-10 flex flex-col justify-between items-center w-full h-full">
-        <div className="flex flex-col items-center space-y-1">
-          <div className="text-yellow-400 text-4xl sm:text-4xl font-caveat">{name}</div>
+        <div className="flex flex-col items-center space-y-1 pt-4">
+          <div className="text-yellow-400 text-4xl sm:text-4xl font-caveat text-center leading-none">{name}</div>
           <div
-            className="text-black text-sm sm:text-base"
+            className="text-black text-sm sm:text-base text-center px-2"
             style={{ fontFamily: "'Special Elite', cursive" }}
           >
             {position}
           </div>
         </div>
-        <div className="w-[275px] h-[275px] overflow-hidden flex justify-center">
-          <img src={photo} alt={name} className="w-[275px] h-[275px] object-contain" />
+        <div className="w-[275px] h-[275px] overflow-hidden flex justify-center items-end">
+          <img src={photo} alt={name} className="w-[220px] h-[200px] object-contain" />
         </div>
       </div>
       {linkedin && (
@@ -215,29 +217,42 @@ const BoardGrid = () => {
     }
   }, [])
 
-  return (//update this to modify
+  return (
     <div ref={componentRef} className="hidden lg:flex min-h-[200vh] bg-black flex-col items-center justify-center py-10 overflow-x-hidden">
-      <div className="h-[20vh]" /> /
+      <div className="h-[20vh]" /> 
       <div className="w-full max-w-7xl mx-auto px-8" style={{ minHeight: "140vh" }}>
         <div className="grid grid-cols-4 gap-6 justify-items-start">
-          <TeamCard name="Ram Krishna" position="Chairperson" photo={ram} linkedin="https://www.linkedin.com/in/ramkrishna2967/" />
-          <TeamCard name="Anubhav Batra" position="Vice Chairperson" photo={anubhav} linkedin="https://www.linkedin.com/in/anubhav-batra-9ba7271b1/" innerRef={r1c2Ref} />
-          <TeamCard name="Aditya Verma" position="Secretary" photo={aditya} linkedin="https://www.linkedin.com/in/adityaverma121/" />
-          <TeamCard name="Arjun Bector" position="Co-secretary" photo={arjun} linkedin="https://www.linkedin.com/in/arjun-bector/" innerRef={r1c4Ref} />
-          <div ref={boardTextRef} className="col-span-4 flex justify-start items-center text-yellow-400 text-6xl font-extrabold py-4 uppercase">THE BOARD</div>
-          <TeamCard name="Ansh Mehta" position="Technical Head" photo={ansh} linkedin="https://www.linkedin.com/in/anshmehta/" />
-          <TeamCard name="Akshit Anand" position="Projects Head" photo={akshit} linkedin="https://www.linkedin.com/in/akshit-anand-10a90b219/" />
-          <TeamCard name="Dhriti Sharma" position="Events Head" photo={dhriti} linkedin="https://www.linkedin.com/in/dhriti-sharma-b03014275/" innerRef={r2c3Ref} />
+          {/* Row 1 */}
+          <TeamCard name="Raghav Sejpal" position="Chairperson" photo={raghav} linkedin="https://www.linkedin.com/in/raghav-sejpal/" />
+          <TeamCard name="Devraj K Chandani" position="Vice Chairperson" photo={devraj} linkedin="https://www.linkedin.com/in/devraj-chandani-098438293/" innerRef={r1c2Ref} />
+          <TeamCard name="Diya Aravind" position="Secretary" photo={diya} linkedin="https://www.linkedin.com/in/diya-aravind-760462290/" />
+          <TeamCard name="Utkarsh Kashyap" position="Co Secretary" photo={utkarsh} linkedin="https://www.linkedin.com/in/utkarsh-kashyap-041931285/" innerRef={r1c4Ref} />
+          
+          {/* Row 2: Text */}
+          <div ref={boardTextRef} className="col-span-4 flex justify-start items-center text-yellow-400 text-6xl font-extrabold py-4 uppercase" style={{ fontFamily: "'Gloock', serif" }}>THE BOARD</div>
+          
+          {/* Row 3 */}
+          <TeamCard name="Aryan Jain" position="Technical Head" photo={aryan} linkedin="https://www.linkedin.com/in/jainaryan04/" />
+          <TeamCard name="Aniruddha Neema" position="Projects Head" photo={ani} linkedin="https://www.linkedin.com/in/aniruddhaneema/" />
+          <TeamCard name="P Vishwajith" position="AI/ML Lead" photo={vishwa} linkedin="https://www.linkedin.com/in/vishwajith-p/" innerRef={r2c3Ref} />
+          
+
+          {/* Row 4: Date */}
+          <div ref={dateTextRef} className="col-span-full board-date text-yellow-400 text-6xl font-extrabold py-4 uppercase text-left" style={{ fontFamily: "'Gloock', serif" }}>25–26</div>
+          
+          {/* Row 5 */}
+          <TeamCard name="Atharv Gupta" position="Publicity & Marketing Head" photo={atharv} linkedin="https://www.linkedin.com/in/atharv-gupta-037005245/" />
+          <TeamCard name="Kshitij Vankar" position="Events Head" photo={kshitij} linkedin="https://www.linkedin.com/in/kshitijvankar/" innerRef={r3c2Ref} />
           <div></div>
-          <div ref={dateTextRef} className="col-span-full board-date text-yellow-400 text-6xl font-extrabold py-4 uppercase text-left">25–26</div>
-          <TeamCard name="Varun Shirsath" position="PnM Head" photo={varun} linkedin="https://www.linkedin.com/in/varun-shirsath-50403534b/" />
-          <TeamCard name="Parth Jadhav" position="Design Head" photo={parth} linkedin="https://www.linkedin.com/in/parthjadhav2004/" innerRef={r3c2Ref} />
+          <TeamCard name="Saanvi Goel" position="Design Head" photo={saanvi} linkedin="https://www.linkedin.com/in/saanvi-goel17777/" />
+
+          {/* Row 6 */}
+          <TeamCard name="Jeevesh Malhotra" position="App Lead" photo={jeevesh} linkedin="https://www.linkedin.com/in/jeeveshmalhotra/" />
           <div></div>
-          <TeamCard name="Gouri Kanade" position="RnD Head" photo={gouri} linkedin="https://www.linkedin.com/in/gourikanade1012/" />
-          <TeamCard name="Medhansh Jain" position="Web Lead" photo={medhansh} linkedin="https://www.linkedin.com/in/medhansh-jain/" />
+          <TeamCard name="Samanvi Rajput" position="Technical Community Lead" photo={samanvi} linkedin="https://www.linkedin.com/in/samanvi-rajput-5b90b3279/" />
+          <TeamCard name="Ananya Deo" position="Editorial Lead" photo={ananya} linkedin="https://www.linkedin.com/in/ananya-deo-774713298/" />
           <div></div>
-          <TeamCard name="Krish Mehta" position="App Lead" photo={krish} linkedin="https://www.linkedin.com/in/krish1604/" />
-          <TeamCard name="Arya" position="IOT Lead" photo={arya} linkedin="https://www.linkedin.com/in/arya-patil-2a8366330/" />
+          <div></div>
         </div>
       </div>
       <div className="h-[15vh]" />
