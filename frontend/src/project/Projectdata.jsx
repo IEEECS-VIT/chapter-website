@@ -10,7 +10,11 @@ import pravega from "/assets/projects/pravega.webp";
 import tc from "/assets/projects/tc.webp";
 import cdc from "/assets/projects/cdc.webp";
 import prv from "/assets/projects/prv.webp";
-export const projectData = [//update this to change projects
+import battlecode from "/Users/anubhavkayal/chapter-website/frontend/public/assets/projects/battlecode.jpeg";
+import echo from "/assets/projects/echo.jpeg";
+import bc from "/assets/projects/battlecode2.jpeg";
+import echo2 from "/assets/projects/echo2.jpeg";
+export const projectData = [
   {
     id: 0,
     isCover: true,
@@ -63,35 +67,31 @@ export const projectData = [//update this to change projects
       </>
     ),
   },
+  // {
+  //   id: 4,
+  //   title: "BattleCode",
+  //   image: battlecode,
+  //   viewImage: bc,
+  //   text1: (
+  //     <>
+  //       Developing <span className="bg-yellow-400 px-1 rounded">BattleCode</span>, a dynamic competitive coding platform built to host and manage our chapter's multi-round programming events.
+  //     </>
+  //   ),
+  // },
+  // {
+  //   id: 5,
+  //   title: "Echo",
+  //   image: echo,
+  //   viewImage: echo2,
+  //   text1: (
+  //     <>
+  //       Creating <span className="bg-yellow-400 px-1 rounded">Echo</span>, a custom Discord-inspired communication platform tailored for seamless internal discussions and collaboration.
+  //     </>
+  //   ),
+  // },
   {
     id: 4,
     title: "Pravega Racing Web App",
-    image: pravega,
-    viewImage: prv,
-    text1: (
-      <>
-        We helped build a fast, responsive, and visually enhanced app for{" "}
-        <span className="bg-yellow-400 px-1 rounded">Pravega Racing</span>,
-        ensuring seamless global connectivity for the team.
-      </>
-    ),
-  },
-  {
-    id: 5,
-    title: "BattleCode",
-    image: pravega,
-    viewImage: prv,
-    text1: (
-      <>
-        We helped build a fast, responsive, and visually enhanced app for{" "}
-        <span className="bg-yellow-400 px-1 rounded">Pravega Racing</span>,
-        ensuring seamless global connectivity for the team.
-      </>
-    ),
-  },
-  {
-    id: 6,
-    title: "Echo",
     image: pravega,
     viewImage: prv,
     text1: (
