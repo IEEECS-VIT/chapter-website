@@ -5,17 +5,17 @@ import bgImage from "/assets/board/bg.webp";
 import linkedinIcon from "/assets/board/linkedin.svg";
 
 // Updated imports based on 2025-26 Board and File Explorer
-import raghav from "/assets/board/raghav.webp";
+import raghav from "/assets/board/Raghav.webp";
 import devraj from "/assets/board/devraj.webp";
 import diya from "/assets/board/diya.webp";
-import utkarsh from "/assets/board/utkarsh.webp";
+import utkarsh from "/assets/board/Utkarsh.webp";
 import kshitij from "/assets/board/kshitij.webp";
 import atharv from "/assets/board/atharv.webp";
-import aryan from "/assets/board/aryan.webp";
+import aryan from "/assets/board/Aryan.webp";
 import ani from "/assets/board/ani.webp";
-import saanvi from "/assets/board/saanvi.webp";
-import jeevesh from "/assets/board/jeevesh.webp";
-import vishwa from "/assets/board/vishwa.webp";
+import saanvi from "/assets/board/Saanvi.webp";
+import jeevesh from "/assets/board/Jeevesh.webp";
+import vishwa from "/assets/board/Vishwa.webp";
 import samanvi from "/assets/board/samanvee.webp";
 import ananya from "/assets/board/ananya.webp";
 
