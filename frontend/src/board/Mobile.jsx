@@ -9,17 +9,17 @@ import ElasticSlider from "../events/ElasticSlider"
 import bgImage from "/assets/board/bg.webp"
 
 // Updated imports based on file explorer screenshot
-import raghav from "/assets/board/Raghav.webp";
+import raghav from "/assets/board/raghav.webp";
 import devraj from "/assets/board/devraj.webp";
 import diya from "/assets/board/diya.webp";
-import utkarsh from "/assets/board/Utkarsh.webp";
+import utkarsh from "/assets/board/utkarsh.webp";
 import kshitij from "/assets/board/kshitij.webp";
 import atharv from "/assets/board/atharv.webp";
-import aryan from "/assets/board/Aryan.webp";
+import aryan from "/assets/board/aryan.webp";
 import ani from "/assets/board/ani.webp";
-import saanvi from "/assets/board/Saanvi.webp";
-import jeevesh from "/assets/board/Jeevesh.webp";
-import vishwa from "/assets/board/Vishwa.webp";
+import saanvi from "/assets/board/saanvi.webp";
+import jeevesh from "/assets/board/jeevesh.webp";
+import vishwa from "/assets/board/vishwa.webp";
 import samanvi from "/assets/board/samanvee.webp";
 import ananya from "/assets/board/ananya.webp";
 
